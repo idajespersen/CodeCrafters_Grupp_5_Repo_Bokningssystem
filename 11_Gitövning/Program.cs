@@ -6,6 +6,7 @@
         {
             Console.WriteLine("Våran Git-övning!");
             Console.Write("yes");
+            Console.WriteLine("Ändring 1");
 
         }
     }
