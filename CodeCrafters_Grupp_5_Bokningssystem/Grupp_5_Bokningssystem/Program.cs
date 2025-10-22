@@ -15,7 +15,7 @@ namespace Grupp_5_Bokningssystem
 
         static void Main(string[] args)
         {
-            while (runProgram == true)
+            while (runProgram)
             {
                 Console.WriteLine("Här är vårat framtida projekt!");
 
@@ -144,51 +144,105 @@ namespace Grupp_5_Bokningssystem
         // Create a IBookable interface with methods for booking and cancelling bookings
         public interface IBookable
         {
-            // Handle start and stop times for bookings
-            // Format date and time appropriately
-            // TimeSpan for duration of booking
+        // Handle start and stop times for bookings
+// Format date and time appropriately
+// TimeSpan for duration of booking
 
-            // - Create new bookings
-            public static void NewBooking()
-            {
-            }
-            // - Cancel a booking
-            public static void CancelBooking()
-            {
-            }
+// - Create new bookings
+void NewBooking();
+// - Cancel a booking
+void CancelBooking();
 
-            // - Update an existing booking
-            public static void UpdateBooking()
-            {
-            }
-            // - List all bookings
-            // Handle sorting of bookings
-            public static void ListBooking()
-            {
-            }
-            // - List bookings from a specific year
-            // Will be inside the ListBookings in menu
-            public static void ListBookingsByYear()
-            {
-            }
-            // - List rooms with specific properties (e.g., capacity)
-            // Implement operations for filtering and searching rooms based on criteria such as capacity and availability
-            public static void SearchRoom()
-            {
-            }
-            // - Ability to make new rooms with error handling for duplicate names
-            public static void NewRoom()
-            {
-            }
+// - Update an existing booking
+void UpdateBooking();
+// - List all bookings
+// Handle sorting of bookings
+void ListBooking();
+// - List bookings from a specific year
+// Will be inside the ListBookings in menu
+void ListBookingsByYear();
+
+// - List rooms with specific properties (e.g., capacity)
+// Implement operations for filtering and searching rooms based on criteria such as capacity and availability
+void SearchRoom();
+
+// - Ability to make new rooms with error handling for duplicate names
+void NewRoom();
+
         }
         // Use interface as return type where relevant
 
         // Create a parent class Room
         // Implement the IBookable interface in the class
-        public class Room
-        {
+       public class Room : IBookable
+ {
+     public string Name { get; private set; }
+     public int Capacity { get; private set; }
 
-        }
+     //List<IBookable> BookingsAndRooms = new List<IBookable>();
+
+     public Room(string name, int capacity)
+     {
+         Name = name;
+         Capacity = capacity;
+     }
+     public virtual void NewBooking()
+     {
+         Console.WriteLine($"Skapar ny bokning för rum: {Name}");
+
+         Console.Write("Ange namn på den som bokar: ");
+         string? userName = Console.ReadLine();
+
+         DateTime bookingDate;
+         while (true)
+         {
+             Console.Write("Ange datum för bokning (ÅÅÅÅ-MM-DD): ");
+             string dateInput = Console.ReadLine();
+
+             if (DateTime.TryParse(dateInput, out bookingDate))
+             {
+                 bookingDate = bookingDate.Date;
+                 break;
+             }
+             else
+             {
+                 Console.WriteLine("Felaktigt datumformat! Försök igen (Korrekt format: 2025-10-22).");
+             }
+         }
+
+         TimeSpan bookingStartTime;
+         while (true)
+         {
+             Console.Write("Ange bokningens starttid (HH:MM): ");
+             if (TimeSpan.TryParse(Console.ReadLine(), out bookingStartTime))
+                 break;
+             else
+                 Console.WriteLine("Felaktigt tidsformat! Försök igen (Korrekt format: 09:30).");
+         }
+         TimeSpan bookingEndTime;
+         while (true)
+         {
+             Console.Write("Ange sluttid (format: HH:MM): ");
+             string endTimeInput = Console.ReadLine();
+
+             if (!TimeSpan.TryParse(endTimeInput, out bookingEndTime))
+             {
+                 Console.WriteLine("Felaktigt tidsformat! Försök igen (Korrekt format: 09:30).");
+                 continue; 
+             }
+
+             if (bookingEndTime <= bookingStartTime)
+             {
+                 Console.WriteLine("Sluttiden måste vara efter starttiden! Försök igen.");
+                 continue;
+             }
+
+             break;
+         }
+         DateTime startTime = bookingDate + bookingStartTime;
+         DateTime endTime = bookingDate + bookingEndTime;
+             }
+}
         // Create a child class GroupRoom
         // Implement the IBookable interface in the class
         public class GroupRoom : Room
