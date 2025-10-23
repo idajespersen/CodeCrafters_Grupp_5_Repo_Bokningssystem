@@ -239,19 +239,7 @@ namespace Grupp_5_Bokningssystem
                 DateTime startTime = bookingDate + bookingStartTime;
                 DateTime endTime = bookingDate + bookingEndTime;
 
-                //IBookable b = new IBookable(userName, Name, startTime, endTime);
-
-                //bool overlap = BookingsAndRooms.Any(x => x.OverlapsWith(b));
-                //if (overlap)
-                //{
-                //    Console.WriteLine("⚠️ Den här bokningen överlappar med en befintlig bokning.");
-                //        Console.WriteLine("Bokning avbruten.");
-                //        return;
-
-                //}
-
-                //BookingsAndRooms.Add(b);
-                //Console.WriteLine($"✅ Bokning skapad: {userName} har bokat {Name} {startTime:yyyy-MM-dd HH:mm}–{endTime:HH:mm}");
+                
             }
 
             public void CancelBooking()
