@@ -28,7 +28,7 @@ namespace Grupp_5_Bokningssystem
             new GroupRoom("Grupprum 2", 8, true, true);
             new GroupRoom("Grupprum 3", 4, false, false);
 
-            while (runProgram == true)
+            while (runProgram)
             {
 
                 MainMenu();
