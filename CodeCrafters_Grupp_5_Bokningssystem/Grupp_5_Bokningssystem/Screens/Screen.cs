@@ -18,6 +18,6 @@ namespace Grupp_5_Bokningssystem.Screens
             get;
         }
 
-        public abstract void DisplayMessage();
+        public abstract void DisplayMessage(Language language);
     }
 }
