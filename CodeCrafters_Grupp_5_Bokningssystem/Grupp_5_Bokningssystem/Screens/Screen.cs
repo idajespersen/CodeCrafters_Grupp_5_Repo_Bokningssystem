@@ -19,16 +19,18 @@ namespace Grupp_5_Bokningssystem.Screens
             get;
         }
 
-        public void HandleInput()
+        public bool HandleInput()
         {
             string? str = Console.ReadLine();
 
             if (!string.IsNullOrEmpty(str))
-                HandleInput(str);
+                return HandleInput(str);
+
+            return false;
         }
 
         public abstract void DisplayMessage(Language language);
 
-        protected abstract void HandleInput(string inputString);
+        protected abstract bool HandleInput(string inputString);
     }
 }
