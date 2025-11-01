@@ -4,12 +4,6 @@ namespace Grupp_5_Bokningssystem
     {
         public static bool runProgram = true;
 
-        // Hardcoded developer names, to be replaced with file persistency
-        static string devName1 = "Daniel Skalk";
-        static string devName2 = "Ida Hägglund";
-        static string devName3 = "Sara Sundqvist";
-        static string devName4 = "Hajdar";
-
         // Implement persistency using a file to store room names
         // Implement persistency using a file to store developers names
         // Read from and write to these files as needed
@@ -78,7 +72,7 @@ namespace Grupp_5_Bokningssystem
         {
             Console.Clear();
             Console.WriteLine($"Det här programmet skapades av:\n\n" +
-                $" - CodeCrafters-Teamet - \n\n   {devName1}\n\n   {devName2}\n\n   {devName3}\n\n   {devName4}\n\n\n" +
+                $" - CodeCrafters-Teamet - \n\n   \n\n   \n\n   \n\n   \n\n\n" +
                 $"Tryck på [ENTER] för att återgå till menyn.");
             Console.ReadKey();
             Console.Clear();
