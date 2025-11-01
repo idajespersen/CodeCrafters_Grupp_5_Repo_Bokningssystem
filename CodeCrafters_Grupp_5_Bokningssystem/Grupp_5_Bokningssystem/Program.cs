@@ -1,7 +1,7 @@
 namespace Grupp_5_Bokningssystem
-    {
+{
     internal class Program
-        {
+    {
         public static bool runProgram = true;
 
         // Hardcoded developer names, to be replaced with file persistency
@@ -16,17 +16,16 @@ namespace Grupp_5_Bokningssystem
         // Read when program starts 
 
         static void Main(string[] args)
-            {
+        {
             while (runProgram == true)
-                {
-
+            {
                 MainMenu();
-
-                }
             }
+        }
+
         // Method for menu
         public static void MainMenu()
-            {
+        {
             Console.Clear();
             Console.WriteLine("\n - Bokningssystemet -\n\n" +
                     "Här kan du göra bokningar av rum och ändra dessa vid behov.\n");
@@ -36,9 +35,8 @@ namespace Grupp_5_Bokningssystem
             Console.WriteLine(" [3] - Om\n");
             Console.WriteLine(" [0] - Avsluta programmet\n");
 
-            if (int.TryParse(Console.ReadLine(), out int userChoice)) { }
-            else
-                {
+            if (!int.TryParse(Console.ReadLine(), out int userChoice))
+            {
                 Console.Clear();
                 Console.WriteLine("Felmeddelande:\n\n" +
                         "Du skrev inte en giltig siffra.\n" +
@@ -46,10 +44,10 @@ namespace Grupp_5_Bokningssystem
                         "Skriv [0] för att avsluta programmet.");
                 Console.ReadKey();
                 MainMenu();
-                }
+            }
 
             switch (userChoice)
-                {
+            {
                 case 1:
                     Console.Clear();
                     BookingMenu();
@@ -73,19 +71,21 @@ namespace Grupp_5_Bokningssystem
                         "Tryck [ENTER] för att återgå till menyn.");
                     Console.ReadKey();
                     break;
-                }
             }
+        }
+
         public static void AboutInfoscreen()
-            {
+        {
             Console.Clear();
             Console.WriteLine($"Det här programmet skapades av:\n\n" +
                 $" - CodeCrafters-Teamet - \n\n   {devName1}\n\n   {devName2}\n\n   {devName3}\n\n   {devName4}\n\n\n" +
                 $"Tryck på [ENTER] för att återgå till menyn.");
             Console.ReadKey();
             Console.Clear();
-            }
+        }
+
         public static void BookingMenu()
-            {
+        {
             Console.Clear();
             Console.WriteLine("\n - Bokningsmenyn -\n\n");
             Console.WriteLine(" [1] - Gör en ny bokning");
@@ -94,19 +94,18 @@ namespace Grupp_5_Bokningssystem
             Console.WriteLine(" [4] - Visa alla bokningar\n");
             Console.WriteLine(" [0] - Återgå till huvudmenyn\n");
 
-            if (int.TryParse(Console.ReadLine(), out int userChoice)) { }
-            else
-                {
+            if (int.TryParse(Console.ReadLine(), out int userChoice))
+            {
                 Console.Clear();
                 Console.WriteLine("Felmeddelande:\n\n" +
                         "Du skrev inte en giltig siffra.\n" +
                         "Vänligen skriv in en siffra mellan [1]-[4].\n" +
                         "Tryck [ENTER] för att återgå till menyn.");
                 Console.ReadKey();
-                }
+            }
 
             switch (userChoice)
-                {
+            {
                 case 1:
                     Console.Clear();
                     // Temporary comment for testing
@@ -146,29 +145,29 @@ namespace Grupp_5_Bokningssystem
                         "Tryck [ENTER] för att återgå till menyn.");
                     Console.ReadKey();
                     break;
-
-                }
             }
+        }
+
         public static void RoomMenu()
-            {
+        {
             Console.Clear();
             Console.WriteLine("\n - Rumshantering - \n\n");
             Console.WriteLine(" [1] - Sök efter rum");
             Console.WriteLine(" [2] - Skapa ett nytt rum\n");
             Console.WriteLine(" [0] - Återgå till menyn\n");
-            if (int.TryParse(Console.ReadLine(), out int userChoice)) { }
-            else
-                {
+
+            if (!int.TryParse(Console.ReadLine(), out int userChoice))
+            {
                 Console.Clear();
                 Console.WriteLine("Felmeddelande:\n\n" +
                         "Du skrev inte en giltig siffra.\n" +
                         "Vänligen skriv in en siffra mellan [1]-[2].\n" +
                         "Tryck [ENTER] för att återgå till menyn.");
                 Console.ReadKey();
-                }
+            }
 
             switch (userChoice)
-                {
+            {
                 case 1:
                     Console.Clear();
                     // Temporary comment for testing
@@ -196,47 +195,51 @@ namespace Grupp_5_Bokningssystem
                         "Tryck [ENTER] för att återgå till menyn.");
                     Console.ReadKey();
                     break;
-                }
             }
+        }
 
         // - Create new bookings
         public static void NewBooking()
-            {
-            }
+        {
+        }
+
         // - Cancel a booking
         public static void CancelBooking()
-            {
-            }
+        {
+        }
 
         // - Update an existing booking
         public static void UpdateBooking()
-            {
-            }
+        {
+        }
+
         // - List all bookings
         // Handle sorting of bookings
         public static void ListBookings()
-            {
-            }
+        {
+        }
+
         // - List bookings from a specific year
         // Will be inside the ListBookings in menu
         public static void ListBookingsByYear()
-            {
-            }
+        {
+        }
+
         // - List rooms with specific properties (e.g., capacity)
         // Implement operations for filtering and searching rooms based on criteria such as capacity and availability
         public static void SearchRoom()
-            {
-            }
+        {
+        }
+
         // - Ability to make new rooms with error handling for duplicate names
         public static void NewRoom()
-            {
-            }
-
+        {
+        }
 
         // Handle start and stop times for bookings
         // Format date and time appropriately
         // TimeSpan for duration of booking
 
         // Use interface as return type where relevant
-        }
     }
+}
