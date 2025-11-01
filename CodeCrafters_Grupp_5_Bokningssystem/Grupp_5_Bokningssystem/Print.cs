@@ -7,28 +7,8 @@ using System.Threading.Tasks;
 
 namespace Grupp_5_Bokningssystem
 {
-    public enum Language
-    {
-        Swedish,
-        English
-    }
-
     public static class Print
     {
-        private static Language _currentLanguage = Language.Swedish;
-
-        public static Language CurrentLanguage 
-        {
-            get { return _currentLanguage; }
-            set
-            {
-                if (_currentLanguage != value)
-                {
-                    _currentLanguage = value;
-                }
-            }
-        }
-
         /// <summary>
         /// Prints the main menu message
         /// </summary>
@@ -36,7 +16,7 @@ namespace Grupp_5_Bokningssystem
         {
             Console.Clear();
 
-            if (_currentLanguage == Language.Swedish)
+            if (DisplayLanguage.Selected == Language.Swedish)
             {
                 Console.WriteLine(" - Bokningssystemet - ");
                 Console.WriteLine();
@@ -70,7 +50,7 @@ namespace Grupp_5_Bokningssystem
         {
             Console.Clear();
 
-            if(_currentLanguage == Language.Swedish)
+            if(DisplayLanguage.Selected == Language.Swedish)
             {
                 Console.WriteLine(" - Rumshantering - ");
                 Console.WriteLine();
@@ -96,7 +76,7 @@ namespace Grupp_5_Bokningssystem
         {
             Console.Clear();
 
-            if(_currentLanguage == Language.Swedish)
+            if(DisplayLanguage.Selected == Language.Swedish)
             {
                 Console.WriteLine(" - Bokningsmenyn - ");
                 Console.WriteLine();
@@ -147,7 +127,7 @@ namespace Grupp_5_Bokningssystem
 
             Console.Clear();
 
-            if (_currentLanguage == Language.Swedish)
+            if (DisplayLanguage.Selected == Language.Swedish)
             {
                 Console.WriteLine("Det här programmet skapades av:");
                 Console.WriteLine();
@@ -185,7 +165,7 @@ namespace Grupp_5_Bokningssystem
 
             Console.Clear();
 
-            if (_currentLanguage == Language.Swedish)
+            if (DisplayLanguage.Selected == Language.Swedish)
             {
                 Console.WriteLine("Felmeddelande:");
                 Console.WriteLine();
