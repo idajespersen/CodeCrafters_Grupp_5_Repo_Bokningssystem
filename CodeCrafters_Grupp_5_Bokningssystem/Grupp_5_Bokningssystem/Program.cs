@@ -2,7 +2,7 @@ namespace Grupp_5_Bokningssystem
 {
     internal class Program
     {
-        public static bool runProgram = true;
+        private static bool _runProgram = true;
 
         // Implement persistency using a file to store room names
         // Implement persistency using a file to store developers names
@@ -11,7 +11,7 @@ namespace Grupp_5_Bokningssystem
 
         static void Main(string[] args)
         {
-            while (runProgram == true)
+            while (_runProgram == true)
             {
                 MainMenu();
             }
@@ -55,7 +55,7 @@ namespace Grupp_5_Bokningssystem
                     AboutInfoscreen();
                     break;
                 case 0:
-                    runProgram = false;
+                    _runProgram = false;
                     break;
                 default:
                     Console.Clear();
