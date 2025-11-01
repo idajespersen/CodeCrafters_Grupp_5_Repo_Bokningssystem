@@ -59,22 +59,11 @@ namespace Grupp_5_Bokningssystem
 
         public static void BookingMenu()
         {
-            Console.Clear();
-            Console.WriteLine("\n - Bokningsmenyn -\n\n");
-            Console.WriteLine(" [1] - Gör en ny bokning");
-            Console.WriteLine(" [2] - Ta bort bokning");
-            Console.WriteLine(" [3] - Ändra bokning");
-            Console.WriteLine(" [4] - Visa alla bokningar\n");
-            Console.WriteLine(" [0] - Återgå till huvudmenyn\n");
+            Print.BookingMenu();
 
             if (!int.TryParse(Console.ReadLine(), out int userChoice))
             {
-                Console.Clear();
-                Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[4].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                Console.ReadKey();
+                Print.UserInputNumberError(1, 4);
             }
 
             switch (userChoice)
@@ -111,12 +100,7 @@ namespace Grupp_5_Bokningssystem
                     Console.Clear();
                     return;
                 default:
-                    Console.Clear();
-                    Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[4].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                    Console.ReadKey();
+                    Print.UserInputNumberError(1, 4);
                     break;
             }
         }
