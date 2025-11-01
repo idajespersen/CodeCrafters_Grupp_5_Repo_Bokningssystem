@@ -107,20 +107,11 @@ namespace Grupp_5_Bokningssystem
 
         public static void RoomMenu()
         {
-            Console.Clear();
-            Console.WriteLine("\n - Rumshantering - \n\n");
-            Console.WriteLine(" [1] - Sök efter rum");
-            Console.WriteLine(" [2] - Skapa ett nytt rum\n");
-            Console.WriteLine(" [0] - Återgå till menyn\n");
+            Print.RoomMenu();
 
             if (!int.TryParse(Console.ReadLine(), out int userChoice))
             {
-                Console.Clear();
-                Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[2].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                Console.ReadKey();
+                Print.UserInputNumberError(1, 2);
             }
 
             switch (userChoice)
@@ -145,12 +136,7 @@ namespace Grupp_5_Bokningssystem
                     Console.Clear();
                     return;
                 default:
-                    Console.Clear();
-                    Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[2].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                    Console.ReadKey();
+                    Print.UserInputNumberError(1, 2);
                     break;
             }
         }
