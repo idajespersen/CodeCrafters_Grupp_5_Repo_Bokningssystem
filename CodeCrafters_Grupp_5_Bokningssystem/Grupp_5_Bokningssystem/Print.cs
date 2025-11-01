@@ -163,28 +163,7 @@ namespace Grupp_5_Bokningssystem
             if (max < min)
                 throw new ArgumentException("max must be greater than or equal to min.");
 
-            Console.Clear();
-
-            if (DisplayLanguage.Selected == Language.Swedish)
-            {
-                Console.WriteLine("Felmeddelande:");
-                Console.WriteLine();
-                Console.WriteLine("Du skrev inte en giltig siffra.");
-                Console.WriteLine($"Vänligen skriv in en siffra mellan [{min}]-[{max}].");
-                Console.WriteLine();
-                Console.Write("Tryck [ENTER] för att återgå till menyn.");
-            }
-            else
-            {
-                Console.WriteLine("Error message:");
-                Console.WriteLine();
-                Console.WriteLine("The given input is invalid.");
-                Console.WriteLine($"Please enter a number between [{min}]-[{max}].");
-                Console.WriteLine();
-                Console.Write("Press [ENTER] to return to the menu.");
-            }
-
-            Console.ReadKey();
+            
         }
     }
 }
