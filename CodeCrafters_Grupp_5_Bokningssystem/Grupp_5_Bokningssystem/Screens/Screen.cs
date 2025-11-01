@@ -11,6 +11,7 @@ namespace Grupp_5_Bokningssystem.Screens
         protected Screen(Screen? parent)
         {
             Parent = parent;
+            DisplayMessage(DisplayLanguage.Selected);
         }
 
         public Screen? Parent
