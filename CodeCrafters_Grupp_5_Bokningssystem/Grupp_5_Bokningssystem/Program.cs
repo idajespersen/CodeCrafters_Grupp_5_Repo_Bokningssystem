@@ -67,7 +67,7 @@ namespace Grupp_5_Bokningssystem
             Console.WriteLine(" [4] - Visa alla bokningar\n");
             Console.WriteLine(" [0] - Återgå till huvudmenyn\n");
 
-            if (int.TryParse(Console.ReadLine(), out int userChoice))
+            if (!int.TryParse(Console.ReadLine(), out int userChoice))
             {
                 Console.Clear();
                 Console.WriteLine("Felmeddelande:\n\n" +
