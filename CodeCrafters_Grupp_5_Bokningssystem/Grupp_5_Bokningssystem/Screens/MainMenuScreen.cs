@@ -53,10 +53,10 @@ namespace Grupp_5_Bokningssystem.Screens
                     ScreenManager.Instance.Pop();
                     return;
                 case 1:
-
+                    ScreenManager.Instance.Push(new BookingMenuScreen());
                     break;
                 case 2:
-
+                    ScreenManager.Instance.Push(new RoomMenuScreen());
                     break;
                 case 3:
                     ScreenManager.Instance.Push(new AboutInfoScreen());
