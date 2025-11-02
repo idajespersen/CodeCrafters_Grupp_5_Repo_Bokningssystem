@@ -8,29 +8,21 @@ namespace Grupp_5_Bokningssystem.Screens
 {
     public abstract class Screen
     {
-        protected Screen(Screen? parent)
+        protected Screen()
         {
-            Parent = parent;
-            DisplayMessage(DisplayLanguage.Selected);
+            Console.Clear();
         }
 
-        public Screen? Parent
-        {
-            get;
-        }
-
-        public bool HandleInput()
+        public void HandleInput()
         {
             string? str = Console.ReadLine();
 
             if (!string.IsNullOrEmpty(str))
-                return HandleInput(str);
-
-            return false;
+                HandleInput(str);
         }
 
         public abstract void DisplayMessage(Language language);
 
-        protected abstract bool HandleInput(string inputString);
+        protected abstract void HandleInput(string inputString);
     }
 }

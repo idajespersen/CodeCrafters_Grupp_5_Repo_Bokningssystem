@@ -16,34 +16,7 @@ namespace Grupp_5_Bokningssystem
         {
             Console.Clear();
 
-            if (DisplayLanguage.Selected == Language.Swedish)
-            {
-                Console.WriteLine(" - Bokningssystemet - ");
-                Console.WriteLine();
-                Console.WriteLine("Här kan du göra bokningar av rum och ändra dessa vid behov.");
-                Console.WriteLine();
-                Console.WriteLine(" - Huvudmeny - ");
-                Console.WriteLine(" [1] - Bokningshantering");
-                Console.WriteLine(" [2] - Rumshantering");
-                Console.WriteLine(" [3] - Om");
-                Console.WriteLine();
-                Console.WriteLine(" [0] - Avsluta programmet");
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine(" - Booking system - ");
-                Console.WriteLine();
-                Console.WriteLine("Here you can book rooms and change them if needed.");
-                Console.WriteLine();
-                Console.WriteLine(" - Main menu - ");
-                Console.WriteLine(" [1] - Booking manager");
-                Console.WriteLine(" [2] - Room manager");
-                Console.WriteLine(" [3] - About");
-                Console.WriteLine();
-                Console.WriteLine(" [0] - Exit the program");
-                Console.WriteLine();
-            }
+            
         }
 
         public static void RoomMenu()

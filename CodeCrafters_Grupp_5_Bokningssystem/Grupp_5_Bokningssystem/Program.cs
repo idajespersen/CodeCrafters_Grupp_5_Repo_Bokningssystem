@@ -1,3 +1,5 @@
+using Grupp_5_Bokningssystem.Screens;
+
 namespace Grupp_5_Bokningssystem
 {
     internal class Program
@@ -11,10 +13,12 @@ namespace Grupp_5_Bokningssystem
 
         static void Main(string[] args)
         {
-            while (_runProgram == true)
+            ScreenManager.Instance.Push(new LanguageSelectionScreen());
+
+            /*while (_runProgram == true)
             {
                 MainMenu();
-            }
+            }*/
         }
 
         // Method for menu

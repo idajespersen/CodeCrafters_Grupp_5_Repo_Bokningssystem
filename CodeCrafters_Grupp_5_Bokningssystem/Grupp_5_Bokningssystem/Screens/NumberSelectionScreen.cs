@@ -9,18 +9,17 @@ namespace Grupp_5_Bokningssystem.Screens
     [Flags]
     public enum InputErrorAction
     {
-        None            = 0,
-        ClearConsole    = 1,
-        AwaitEnterKey   = 2,
-        All             = ClearConsole | AwaitEnterKey
+        None                = 0,
+        ClearConsole        = 1,
+        AwaitEnterKey       = 2,
+        ClearAndAwaitKey    = ClearConsole | AwaitEnterKey
     }
 
-    public abstract class SelectionScreen : Screen
+    public abstract class NumberSelectionScreen : Screen
     {
         protected readonly InputErrorAction _errorAction;
 
-        protected SelectionScreen(Screen? parent, int maxChoice, InputErrorAction errorAction = InputErrorAction.All) 
-            : base(parent)
+        protected NumberSelectionScreen(int maxChoice, InputErrorAction errorAction = InputErrorAction.ClearAndAwaitKey)
         {
             if (maxChoice < 1)
                 throw new ArgumentException("minChoice must be lesser than or equal to maxChoice");
@@ -34,38 +33,22 @@ namespace Grupp_5_Bokningssystem.Screens
             get;
         }
 
-        public void HandleInputError()
+        /// <summary>
+        /// Handle a choice inbetween 0 and MaxChoice.
+        /// </summary>
+        /// <param name="choice">Number between 0 and MaxChoice.</param>
+        public abstract void HandleChoice(int choice);
+
+        protected override void HandleInput(string inputString)
         {
-            if ((_errorAction & InputErrorAction.ClearConsole) != 0)
-                Console.Clear();
-
-            DisplayInputErrorMessage(DisplayLanguage.Selected);
-
-            if ((_errorAction & InputErrorAction.AwaitEnterKey) != 0)
-                Console.ReadKey();
-        }
-
-        protected override bool HandleInput(string inputString)
-        {
-            if(!int.TryParse(inputString, out int choice) && (choice < 0 || choice > MaxChoice))
+            if (!int.TryParse(inputString, out int choice) && (choice < 0 || choice > MaxChoice))
             {
                 HandleInputError();
-                return false;
+                return;
             }
 
-            if(choice > 0)
-            {
-                HandleValidChoice(choice);
-            }
-
-            return true;
+            HandleChoice(choice);
         }
-
-        /// <summary>
-        /// Handle a valid choice inbetween 1 and a given maxChoice.
-        /// </summary>
-        /// <param name="choice"></param>
-        public abstract void HandleValidChoice(int choice);
 
         protected virtual void DisplayInputErrorMessage(Language language)
         {
@@ -87,6 +70,17 @@ namespace Grupp_5_Bokningssystem.Screens
                 Console.WriteLine();
                 Console.Write("Press [ENTER] to return to the menu.");
             }
-        }      
+        }
+
+        protected void HandleInputError()
+        {
+            if ((_errorAction & InputErrorAction.ClearConsole) != 0)
+                Console.Clear();
+
+            DisplayInputErrorMessage(DisplayLanguage.Selected);
+
+            if ((_errorAction & InputErrorAction.AwaitEnterKey) != 0)
+                Console.ReadKey();
+        }
     }
 }
