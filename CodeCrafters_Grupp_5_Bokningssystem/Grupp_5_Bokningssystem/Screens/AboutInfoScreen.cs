@@ -20,7 +20,7 @@ namespace Grupp_5_Bokningssystem.Screens
 
         public override void DisplayMessage(Language language)
         {
-            if (DisplayLanguage.Selected == Language.Swedish)
+            if (language == Language.Swedish)
             {
                 Console.WriteLine("Det här programmet skapades av:");
                 Console.WriteLine();
@@ -46,7 +46,7 @@ namespace Grupp_5_Bokningssystem.Screens
 
         protected override void HandleInput(string inputString)
         {
-            ScreenManager.Instance.Pop();
+            Close();
         }
 
         private void PrintMembers()

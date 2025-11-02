@@ -45,21 +45,21 @@ namespace Grupp_5_Bokningssystem.Screens
             }
         }
 
-        public override void HandleChoice(int choice)
+        public override void HandleValidChoice(int choice)
         {
             switch(choice)
             {
                 case 0:
-                    ScreenManager.Instance.Pop();
+                    Close();
                     return;
                 case 1:
-                    ScreenManager.Instance.Push(new BookingMenuScreen());
+                    DisplayScreen(new BookingMenuScreen());
                     break;
                 case 2:
-                    ScreenManager.Instance.Push(new RoomMenuScreen());
+                    DisplayScreen(new RoomMenuScreen());
                     break;
                 case 3:
-                    ScreenManager.Instance.Push(new AboutInfoScreen());
+                    DisplayScreen(new AboutInfoScreen());
                     break;
             }
         }

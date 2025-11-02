@@ -41,12 +41,12 @@ namespace Grupp_5_Bokningssystem.Screens
             }
         }
 
-        public override void HandleChoice(int choice)
+        public override void HandleValidChoice(int choice)
         {
             switch(choice)
             {
                 case 0:
-                    ScreenManager.Instance.Pop();
+                    Close();
                     return;
                 case 1:
                     // Temporary comment for testing

@@ -11,18 +11,4 @@ namespace Grupp_5_Bokningssystem
         Swedish,
         English
     }
-
-    public static class DisplayLanguage
-    {
-        private static Language _selected = Language.Swedish;
-
-        public static Language Selected
-        {
-            get { return _selected; }
-            set
-            {
-                _selected = value;
-            }
-        }
-    }
 }

@@ -13,12 +13,18 @@ namespace Grupp_5_Bokningssystem
 
         static void Main(string[] args)
         {
-            ScreenManager.Instance.Push(new LanguageSelectionScreen());
+            ScreenManager screenManager = new ScreenManager();
 
-            while(ScreenManager.Instance.ScreenCount > 0)
-            {
-                ScreenManager.Instance.DisplayCurrentScreen();
-            }
+            BookingApp app = new BookingApp(screenManager);
+
+            // Add MainMenuScreen to be the root screen.
+            screenManager.Add(new MainMenuScreen());
+
+            // Add LanguageSelectionScreen to be the active screen.
+            screenManager.Add(new LanguageSelectionScreen());
+
+            // Run the app. The app can be stopped by calling Stop() method.
+            app.Run();
 
             /*while (_runProgram == true)
             {

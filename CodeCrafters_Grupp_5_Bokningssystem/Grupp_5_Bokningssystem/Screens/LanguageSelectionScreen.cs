@@ -22,7 +22,7 @@ namespace Grupp_5_Bokningssystem.Screens
             Console.WriteLine();
         }
 
-        public override void HandleChoice(int choice)
+        public override void HandleValidChoice(int choice)
         {
             switch(choice)
             {
@@ -30,23 +30,25 @@ namespace Grupp_5_Bokningssystem.Screens
                     HandleInputError();
                     return;
                 case 1:
-                    DisplayLanguage.Selected = Language.Swedish;
+                    // Set the app language to Swedish
+                    BookingApp.Language = Language.Swedish;
                     break;
                 case 2:
-                    DisplayLanguage.Selected = Language.English;
+                    // Set the app language to English
+                    BookingApp.Language = Language.English;
                     break;
             }
 
-            // Clear the screens and make MainMenuScreen the root screen
-            ScreenManager.Instance.Clear();
-            ScreenManager.Instance.Push(new MainMenuScreen());
+            // Close this screen
+            Close();
         }
 
         protected override void DisplayInputErrorMessage(Language language)
         {
-            Console.WriteLine("Försök igen / Try again");
-            Console.WriteLine();
+            Console.WriteLine("Ogiltigt val. Försök igen.");
             Console.WriteLine("Tryck [ENTER] för att fortsätta.");
+            Console.WriteLine();
+            Console.WriteLine("Invalid choice. Try again.");
             Console.Write("Press [ENTER] to continue.");
         }
     }

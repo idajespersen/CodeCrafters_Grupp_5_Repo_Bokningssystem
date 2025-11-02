@@ -34,10 +34,10 @@ namespace Grupp_5_Bokningssystem.Screens
         }
 
         /// <summary>
-        /// Handle a choice inbetween 0 and MaxChoice.
+        /// Handle a valid choice between 0 and MaxChoice.
         /// </summary>
         /// <param name="choice">Number between 0 and MaxChoice.</param>
-        public abstract void HandleChoice(int choice);
+        public abstract void HandleValidChoice(int choice);
 
         protected override void HandleInput(string inputString)
         {
@@ -47,7 +47,21 @@ namespace Grupp_5_Bokningssystem.Screens
                 return;
             }
 
-            HandleChoice(choice);
+            HandleValidChoice(choice);
+        }
+
+        /// <summary>
+        /// Handle input error by clearing console, display error message and await key.
+        /// </summary>
+        protected void HandleInputError()
+        {
+            if ((_errorAction & InputErrorAction.ClearConsole) != 0)
+                Console.Clear();
+
+            DisplayInputErrorMessage(BookingApp.Language);
+
+            if ((_errorAction & InputErrorAction.AwaitEnterKey) != 0)
+                Console.ReadKey();
         }
 
         protected virtual void DisplayInputErrorMessage(Language language)
@@ -70,17 +84,6 @@ namespace Grupp_5_Bokningssystem.Screens
                 Console.WriteLine();
                 Console.Write("Press [ENTER] to return to the menu.");
             }
-        }
-
-        protected void HandleInputError()
-        {
-            if ((_errorAction & InputErrorAction.ClearConsole) != 0)
-                Console.Clear();
-
-            DisplayInputErrorMessage(DisplayLanguage.Selected);
-
-            if ((_errorAction & InputErrorAction.AwaitEnterKey) != 0)
-                Console.ReadKey();
         }
     }
 }
