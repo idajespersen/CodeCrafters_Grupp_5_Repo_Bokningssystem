@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Grupp_5_Bokningssystem/1.0.0": {
+        "runtime": {
+          "Grupp_5_Bokningssystem.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Grupp_5_Bokningssystem/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

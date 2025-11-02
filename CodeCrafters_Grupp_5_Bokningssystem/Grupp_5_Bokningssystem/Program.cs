@@ -300,6 +300,7 @@ namespace Grupp_5_Bokningssystem
         // Parent class accepts name, capacity and availability as parameters
         // Methods for IBookable interface implemented with NotImplementedException
         // Konstruktor för att skapa rum.
+        public virtual int MaxBookingHours => 8;
         public Room(string roomName, int roomCapacity, bool RoomIsAvailable)
         {
             RoomName = roomName;
@@ -312,6 +313,7 @@ namespace Grupp_5_Bokningssystem
         // Metod för att skapa bokning. Gjord av Sara.
         public virtual void NewBooking()
         {
+            // Skapar ett cultureinfo objekt för att läsa av lokal kultur för datum.
             CultureInfo currentCulture = CultureInfo.CurrentCulture;
 
             // Användaren skriver in sitt namn
@@ -328,11 +330,13 @@ namespace Grupp_5_Bokningssystem
             string bookerName = char.ToUpper(bookerNameInput[0]) + bookerNameInput.Substring(1).ToLower();
             DateTime bookingDate = Helper.ParseDateTime($"\nAnge datum för bokning ({currentCulture.DateTimeFormat.ShortDatePattern}): ", currentCulture);
             // Använder ReadTimeSpan metod för att läsa in bokningens start- och sluttid.
-            var (bookingStartTime, bookingEndTime) = Helper.ReadTimeSpan(bookingDate);
-
+            var (bookingStartTime, bookingEndTime) = Helper.ReadTimeSpan(bookingDate, MaxBookingHours);
+         
+          
             // Kombinerar datum och tider till DateTime objekt för bokningen.
             DateTime startTime = bookingDate + bookingStartTime;
             DateTime endTime = bookingDate + bookingEndTime;
+
             // Skapar nytt Booking objekt.
             Booking newBooking = new Booking(bookerName, RoomName, startTime, endTime);
             // Kontrollerar så att den nya bokningen inte överlappar med befintliga bokningar.
@@ -421,6 +425,8 @@ namespace Grupp_5_Bokningssystem
         {
             hasSmartBoard = iHasSmartboard;
         }
+
+        public override int MaxBookingHours => 6;
 
     }
     // Child class ClassRoom, inherits from Room and IBookable

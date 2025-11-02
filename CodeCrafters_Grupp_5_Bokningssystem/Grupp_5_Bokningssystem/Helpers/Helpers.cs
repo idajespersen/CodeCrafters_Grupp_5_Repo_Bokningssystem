@@ -63,7 +63,7 @@ namespace Grupp_5_Bokningssystem.Helpers
             }
         }
 
-        public static (TimeSpan StartTime, TimeSpan EndTime) ReadTimeSpan(DateTime bookingDate)
+        public static (TimeSpan StartTime, TimeSpan EndTime) ReadTimeSpan(DateTime bookingDate, int maxBookingHours)
         {
             TimeSpan bookingStartTime, bookingEndTime;
 
@@ -90,6 +90,12 @@ namespace Grupp_5_Bokningssystem.Helpers
                     Console.WriteLine("Du kan inte boka en tid som passerat!");
                     continue; // Skickar tillbaka användaren till början av loopen.
                 }
+                TimeSpan earliestBookingTime = TimeSpan.FromHours(8);
+                if (bookingStartTime < earliestBookingTime)
+                {
+                    Console.WriteLine($"Du kan inte boka rum innan kl 08:00");
+                    continue;
+                }
                 break; // Lämnar loopen då vi har en giltig tid.
             }
             while (true) // Loop för att säkerställa giltig sluttid.
@@ -109,6 +115,19 @@ namespace Grupp_5_Bokningssystem.Helpers
                 {
                     Console.WriteLine("Sluttiden måste vara efter starttiden!");
                     continue; // Skickar tillbaka användaren till början av loopen.
+                }
+                TimeSpan latestBookingTime = TimeSpan.FromHours(17);
+                if (bookingEndTime > latestBookingTime)
+                {
+                    Console.WriteLine($"Du kan inte boka rum efter kl 17:00");
+                    continue;
+                }
+
+                TimeSpan bookingDuration = bookingEndTime - bookingStartTime;
+                if (bookingDuration.TotalHours > maxBookingHours)
+                {
+                    Console.WriteLine($"Du kan inte boka rummet mer än {maxBookingHours} timmar!");
+                    continue;
                 }
 
                 break; // Lämnar loopen då vi har en giltig tid.

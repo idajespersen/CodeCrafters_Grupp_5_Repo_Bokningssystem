@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Grupp_5_Bokningssystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11a97ac1968cf67f97f3b883e8ba232ed70a6b90")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4324643fcd8ef9d23290b1bdfa5632b1256ff028")]
 [assembly: System.Reflection.AssemblyProductAttribute("Grupp_5_Bokningssystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Grupp_5_Bokningssystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

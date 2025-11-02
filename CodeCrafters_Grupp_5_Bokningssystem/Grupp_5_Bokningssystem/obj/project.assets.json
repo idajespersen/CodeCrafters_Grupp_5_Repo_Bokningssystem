@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\idaha\\.nuget\\packages\\": {},
+    "C:\\Users\\sarah\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\idaha\\source\\repos\\CodeCrafters_Grupp_5_Repo\\CodeCrafters_Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem.csproj",
+      "projectUniqueName": "C:\\Users\\sarah\\Source\\Repos\\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\\CodeCrafters_Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem.csproj",
       "projectName": "Grupp_5_Bokningssystem",
-      "projectPath": "C:\\Users\\idaha\\source\\repos\\CodeCrafters_Grupp_5_Repo\\CodeCrafters_Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem.csproj",
-      "packagesPath": "C:\\Users\\idaha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\idaha\\source\\repos\\CodeCrafters_Grupp_5_Repo\\CodeCrafters_Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem\\obj\\",
+      "projectPath": "C:\\Users\\sarah\\Source\\Repos\\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\\CodeCrafters_Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem.csproj",
+      "packagesPath": "C:\\Users\\sarah\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sarah\\Source\\Repos\\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\\CodeCrafters_Grupp_5_Bokningssystem\\Grupp_5_Bokningssystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\idaha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\sarah\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -33,6 +33,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
