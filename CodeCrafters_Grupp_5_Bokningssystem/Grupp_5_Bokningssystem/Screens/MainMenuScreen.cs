@@ -47,7 +47,21 @@ namespace Grupp_5_Bokningssystem.Screens
 
         public override void HandleChoice(int choice)
         {
-            
+            switch(choice)
+            {
+                case 0:
+                    ScreenManager.Instance.Pop();
+                    return;
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    ScreenManager.Instance.Push(new AboutInfoScreen());
+                    break;
+            }
         }
     }
 }

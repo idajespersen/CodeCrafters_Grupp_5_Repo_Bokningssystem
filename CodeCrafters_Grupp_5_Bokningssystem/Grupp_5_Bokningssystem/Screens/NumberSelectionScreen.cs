@@ -22,7 +22,7 @@ namespace Grupp_5_Bokningssystem.Screens
         protected NumberSelectionScreen(int maxChoice, InputErrorAction errorAction = InputErrorAction.ClearAndAwaitKey)
         {
             if (maxChoice < 1)
-                throw new ArgumentException("minChoice must be lesser than or equal to maxChoice");
+                throw new ArgumentException("maxChoice must be equal to or greater than 1");
 
             MaxChoice = maxChoice;
             _errorAction = errorAction;
@@ -41,7 +41,7 @@ namespace Grupp_5_Bokningssystem.Screens
 
         protected override void HandleInput(string inputString)
         {
-            if (!int.TryParse(inputString, out int choice) && (choice < 0 || choice > MaxChoice))
+            if (!int.TryParse(inputString, out int choice) || choice < 0 || choice > MaxChoice)
             {
                 HandleInputError();
                 return;
@@ -57,7 +57,7 @@ namespace Grupp_5_Bokningssystem.Screens
                 Console.WriteLine("Felmeddelande:");
                 Console.WriteLine();
                 Console.WriteLine("Du skrev inte en giltig siffra.");
-                Console.WriteLine($"Vänligen skriv in en siffra mellan [1]-[{MaxChoice}].");
+                Console.WriteLine($"Vänligen skriv in en siffra mellan [0]-[{MaxChoice}].");
                 Console.WriteLine();
                 Console.Write("Tryck [ENTER] för att återgå till menyn.");
             }
@@ -66,7 +66,7 @@ namespace Grupp_5_Bokningssystem.Screens
                 Console.WriteLine("Error message:");
                 Console.WriteLine();
                 Console.WriteLine("The given input is invalid.");
-                Console.WriteLine($"Please enter a number between [1]-[{MaxChoice}].");
+                Console.WriteLine($"Please enter a number between [0]-[{MaxChoice}].");
                 Console.WriteLine();
                 Console.Write("Press [ENTER] to return to the menu.");
             }

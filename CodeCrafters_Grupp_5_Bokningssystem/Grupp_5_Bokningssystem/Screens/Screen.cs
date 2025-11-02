@@ -8,17 +8,11 @@ namespace Grupp_5_Bokningssystem.Screens
 {
     public abstract class Screen
     {
-        protected Screen()
-        {
-            Console.Clear();
-        }
-
         public void HandleInput()
         {
             string? str = Console.ReadLine();
 
-            if (!string.IsNullOrEmpty(str))
-                HandleInput(str);
+            HandleInput(str!);
         }
 
         public abstract void DisplayMessage(Language language);

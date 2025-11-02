@@ -28,7 +28,6 @@ namespace Grupp_5_Bokningssystem.Screens
             {
                 case 0:
                     HandleInputError();
-                    ScreenManager.Instance.ReuseTopScreen();
                     return;
                 case 1:
                     DisplayLanguage.Selected = Language.Swedish;
@@ -47,9 +46,8 @@ namespace Grupp_5_Bokningssystem.Screens
         {
             Console.WriteLine("Försök igen / Try again");
             Console.WriteLine();
-            Console.WriteLine("Tryck [ENTER] för att fortsätta");
-            Console.WriteLine("Press [ENTER] to continue");
-            Console.WriteLine();
+            Console.WriteLine("Tryck [ENTER] för att fortsätta.");
+            Console.Write("Press [ENTER] to continue.");
         }
     }
 }

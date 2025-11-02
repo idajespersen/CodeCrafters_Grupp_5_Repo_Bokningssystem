@@ -4,7 +4,7 @@ namespace Grupp_5_Bokningssystem
 {
     internal class Program
     {
-        private static bool _runProgram = true;
+        //private static bool _runProgram = true;
 
         // Implement persistency using a file to store room names
         // Implement persistency using a file to store developers names
@@ -15,6 +15,11 @@ namespace Grupp_5_Bokningssystem
         {
             ScreenManager.Instance.Push(new LanguageSelectionScreen());
 
+            while(ScreenManager.Instance.ScreenCount > 0)
+            {
+                ScreenManager.Instance.DisplayCurrentScreen();
+            }
+
             /*while (_runProgram == true)
             {
                 MainMenu();
@@ -22,7 +27,7 @@ namespace Grupp_5_Bokningssystem
         }
 
         // Method for menu
-        public static void MainMenu()
+        /*public static void MainMenu()
         {
             Print.MainMenu();
 
@@ -48,7 +53,7 @@ namespace Grupp_5_Bokningssystem
                     AboutInfoscreen();
                     break;
                 case 0:
-                    _runProgram = false;
+                    //_runProgram = false;
                     break;
                 default:
                     Print.UserInputNumberError(1, 3);
@@ -188,5 +193,6 @@ namespace Grupp_5_Bokningssystem
         // TimeSpan for duration of booking
 
         // Use interface as return type where relevant
+        */
     }
 }

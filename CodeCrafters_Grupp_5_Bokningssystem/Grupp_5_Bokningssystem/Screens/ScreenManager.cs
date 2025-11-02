@@ -27,16 +27,21 @@ namespace Grupp_5_Bokningssystem.Screens
             _screens = new Stack<Screen>();
         }
 
+        public int ScreenCount
+        {
+            get { return _screens.Count; }
+        }
+
         public void ReuseTopScreen()
         {
-            DisplayTopScreen();
+            DisplayCurrentScreen();
         }
 
         public void Push(Screen screen)
         {
             // Push the screen onto the top of the stack
             _screens.Push(screen);
-            DisplayTopScreen();
+            DisplayCurrentScreen();
         }
 
         public Screen? Pop()
@@ -47,7 +52,7 @@ namespace Grupp_5_Bokningssystem.Screens
             if(_screens.Count > 0)
             {
                 screen = _screens.Pop();
-                DisplayTopScreen();
+                DisplayCurrentScreen();
             }
 
             return screen;
@@ -59,18 +64,16 @@ namespace Grupp_5_Bokningssystem.Screens
             Console.Clear();
         }
 
-        private void DisplayTopScreen()
+        public void DisplayCurrentScreen()
         {
-            if(_screens.Count > 0)
+            Console.Clear();
+
+            if (_screens.Count > 0)
             {
                 Screen screen = _screens.Peek();
 
                 screen.DisplayMessage(DisplayLanguage.Selected);
                 screen.HandleInput();
-            }
-            else
-            {
-                Console.Clear();
             }
         }
     }
