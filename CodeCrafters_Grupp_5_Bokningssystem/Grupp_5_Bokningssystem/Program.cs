@@ -1,3 +1,4 @@
+using Grupp_5_Bokningssystem.Helpers;
 using System.Globalization;
 
 namespace Grupp_5_Bokningssystem
@@ -41,23 +42,13 @@ namespace Grupp_5_Bokningssystem
             Console.Clear();
             Console.WriteLine("\n - Bokningssystemet -\n\n" +
                     "Här kan du göra bokningar av rum och ändra dessa vid behov.\n");
-            Console.WriteLine("\n - Huvudmeny -\n");
+            Console.WriteLine(" - Huvudmeny -");
             Console.WriteLine(" [1] - Bokningshantering");
             Console.WriteLine(" [2] - Rumshantering");
-            Console.WriteLine(" [3] - Om\n");
-            Console.WriteLine(" [0] - Avsluta programmet\n");
+            Console.WriteLine(" [3] - Om");
+            Console.WriteLine(" [0] - Avsluta programmet");
 
-            if (int.TryParse(Console.ReadLine(), out int userChoice)) { }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[3].\n" +
-                        "Skriv [0] för att avsluta programmet.");
-                Console.ReadKey();
-                MainMenu();
-            }
+            int userChoice = Helper.ParseInt("", 0, 3);
 
             switch (userChoice)
             {
@@ -78,11 +69,8 @@ namespace Grupp_5_Bokningssystem
                     break;
                 default:
                     Console.Clear();
-                    Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[3].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                    Console.ReadKey();
+                    Console.WriteLine("Vänligen skriv in en siffra mellan [1]-[3].\n");
+                    Helper.BackToMenu();
                     break;
             }
         }
@@ -90,10 +78,8 @@ namespace Grupp_5_Bokningssystem
         {
             Console.Clear();
             Console.WriteLine($"Det här programmet skapades av:\n\n" +
-                $" - CodeCrafters-Teamet - \n\n   {devName1}\n\n   {devName2}\n\n   {devName3}\n\n   {devName4}\n\n\n" +
-                $"Tryck på [ENTER] för att återgå till menyn.");
-            Console.ReadKey();
-            Console.Clear();
+                $" - CodeCrafters-Teamet - \n\n   {devName1}\n\n   {devName2}\n\n   {devName3}\n\n   {devName4}\n\n\n");
+            Helper.BackToMenu();
         }
         public static void BookingMenu()
         {
@@ -105,128 +91,129 @@ namespace Grupp_5_Bokningssystem
             Console.WriteLine(" [4] - Visa alla bokningar\n");
             Console.WriteLine(" [0] - Återgå till huvudmenyn\n");
 
-            if (int.TryParse(Console.ReadLine(), out int userChoice)) { }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[4].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                Console.ReadKey();
-            }
+            int userChoice = Helper.ParseInt("", 0, 4);
+
+            // Filtrerar alla rum i RoomRegistry och lägger endast ClassRoom/GroupRoom objekt i en lista.
+            var classRooms = RoomRegistry.AllRooms.OfType<ClassRoom>().ToList();
+            var groupRooms = RoomRegistry.AllRooms.OfType<GroupRoom>().ToList();
+            bool bookingMenuActive = true; // Variabel som styr loop för bokningsmenyn.
             // Switch meny baserat på användarens val i bokningsmenyn.
             switch (userChoice)
             {
                 case 1: // Om användaren väljer "Gör en ny bokning". Gjorts av Sara.
-                    Console.Clear();
-                    bool bookingMenuActive = true; // Variabel som styr loopen för bokningsmenyn.
                     // Loop som fortsätter så länge användaren inte väljer att återgå till huvudmenyn.
                     while (bookingMenuActive)
                     {
+                        Console.Clear();
                         Console.WriteLine("Vilken typ av bokning vill du göra?");
                         Console.WriteLine("[1] Klassrum");
                         Console.WriteLine("[2] Grupprum");
                         Console.WriteLine("[0] Återgå till bokningsmenyn");
 
-                        // Läser in användarens val och försöker konvertera till int.
-                        // Då det inte lyckas skrivs felmeddelande ut.
-                        if (!int.TryParse(Console.ReadLine(), out int choice))
-                        {
-                            Console.WriteLine("Du måste skriva in en siffra 1-2!");
-                            continue; // Skickar tillbaka användaren till början av loopen.
-                        }
+                        // Använder metod ParseInt för att be användaren välja en typ av rum.
+                        int choice = Helper.ParseInt("", 0, 2);
                         // Switch meny för att välja klassrum eller grupprum.
                         switch (choice)
                         {
                             case 1: // Om användaren väljer Klassrum.
-                                // Filtrerar alla rum i RoomRegistry och lägger endast ClassRoom-objekt i en lista.
-                                var classRooms = RoomRegistry.AllRooms.OfType<ClassRoom>().ToList();
-                                // Visar alla klassrum i listan.
-                                Console.WriteLine("\nTillgängliga klassrum:");
-                                for (int i = 0; i < classRooms.Count; i++)
-                                    Console.WriteLine($"[{i + 1}] {classRooms[i].RoomName} Kapacitet: {classRooms[i].RoomCapacity}");
+                                    // Visar alla klassrum i listan classRooms.
+                                Helper.ShowAvailableRooms("klassrum", classRooms);
 
-                                int classRoomChoice; // Variabel som ska hålla användarens val av rum.
-                                while (true) // Loop för att säkerställa giltigt val av rum.
-                                {
-                                    Console.Write("Välj rum: ");
-                                    // Läser in användarens val och försöker konvertera till int.
-                                    // Kontrollerar så att användaren väljer ett rumsnummer som finns.
-                                    if (int.TryParse(Console.ReadLine(), out classRoomChoice) &&
-                                        classRoomChoice >= 1 && classRoomChoice <= classRooms.Count)
-                                        break; // Vid giltigt val bryts loopen.
-                                    // Ifall det inte är giltigt skickas ett felmeddelande.
-                                    Console.WriteLine($"Felaktigt val. Ange ett tal mellan 1 och {classRooms.Count}.");
-                                }
+                                // Använder metod ParseInt för att be användaren välja ett rum.
+                                int classRoomChoice = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
                                 // Skapar en bokning för det valda rummet med metoden NewBooking.
                                 classRooms[classRoomChoice - 1].NewBooking();
+                                Helper.BackToMenu();
                                 break;
                             case 2: // Om användaren väljer Grupprum.
-                                // Filtrerar alla rum i RoomRegistry och lägger endast GroupRoom-objekt i en lista.
-                                var groupRooms = RoomRegistry.AllRooms.OfType<GroupRoom>().ToList();
 
                                 // Visar alla grupprum i listan.
-                                Console.WriteLine("\nTillgängliga grupprum:");
-                                for (int i = 0; i < groupRooms.Count; i++)
-                                    Console.WriteLine($"[{i + 1}] {groupRooms[i].RoomName}");
+                                Helper.ShowAvailableRooms("grupprum", groupRooms);
 
-                                int groupRoomChoice;// Variabel som ska hålla användarens val av rum.
-                                while (true) // Loop för att säkerställa giltigt val av rum.
-                                {
-                                    Console.Write("Välj rum: ");
-                                    // Läser in användarens val och försöker konvertera till int.
-                                    // Kontrollerar så att användaren väljer ett rumsnummer som finns.
-                                    if (int.TryParse(Console.ReadLine(), out groupRoomChoice) &&
-                                        groupRoomChoice >= 1 && groupRoomChoice <= groupRooms.Count)
-                                        break; // Vid giltigt val bryts loopen.
-                                    // Ifall det inte är giltigt skickas ett felmeddelande.
-                                    Console.WriteLine($"Felaktigt val. Ange ett tal mellan 1 och {groupRooms.Count}.");
-                                }
+                                // Använder metod ParseInt för att be användaren välja en typ av rum.
+                                int groupRoomChoice = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
+
                                 // Skapar en bokning för det valda rummet med metoden NewBooking.
                                 groupRooms[groupRoomChoice - 1].NewBooking();
+                                Helper.BackToMenu();
+
                                 break;
                             case 0: // Om användaren vill återgå till huvudmenyn
                                 bookingMenuActive = false; // While loopen avslutas.
                                 break;
                             default: // Om användaren skriver in något annat än 1, 2 eller 0.
                                 Console.WriteLine("Du måste skriva in en siffra 1-2!"); // Felmeddelande skrivs ut.
+                                Helper.BackToMenu();
                                 break;
                         }
 
                     }
                     break;
                 case 2:
-                    Console.Clear();
-                    // Temporary comment for testing
-                    Console.WriteLine("Här kommer en CancelBooking finnas!");
-                    Console.ReadKey();
-                    //  CancelBooking();
+                    while (bookingMenuActive)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Vilken bokning vill du ta bort?");
+                        Console.WriteLine("[1] Klassrum");
+                        Console.WriteLine("[2] Grupprum");
+                        Console.WriteLine("[0] Återgå till bokningsmenyn");
+
+                        // Använder metod ParseInt för att be användaren välja en typ av rum.
+                        int choice = Helper.ParseInt("", 0, 2);
+                        // Switch meny för att välja klassrum eller grupprum.
+                        switch (choice)
+                        {
+                            case 1: // Om användaren väljer Klassrum.
+                                Console.Clear();
+                                // Visar alla klassrum i listan.
+                                Helper.ShowAvailableRooms("klassrum", classRooms);
+                                // Använder metod ParseInt för att be användaren välja ett rum.
+                                int classRoomChoiceCancel = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
+
+                                // Avbryter en bokning för det valda rummet med metoden CancelBooking.
+                                classRooms[classRoomChoiceCancel - 1].CancelBooking();
+                                Helper.BackToMenu();
+                                break;
+                            case 2: // Om användaren väljer Grupprum.
+                                Console.Clear();
+                                // Visar alla klassrum i listan.
+                                Helper.ShowAvailableRooms("grupprum", groupRooms);
+                                // Använder metod ParseInt för att be användaren välja ett rum.
+                                int groupRoomChoiceCancel = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
+
+                                // Avbryter en bokning för det valda rummet med metoden CancelBooking.
+                                groupRooms[groupRoomChoiceCancel - 1].CancelBooking();
+                                Helper.BackToMenu();
+                                break;
+                            case 0: // Om användaren vill återgå till huvudmenyn
+                                bookingMenuActive = false; // While loopen avslutas.
+                                break;
+                            default: // Om användaren skriver in något annat än 1, 2 eller 0.
+                                Console.WriteLine("Du måste skriva in en siffra 1-2!"); // Felmeddelande skrivs ut.
+                                Helper.BackToMenu();
+                                break;
+                        }
+
+                    }
                     break;
+
                 case 3:
                     Console.Clear();
-                    // Temporary comment for testing
                     Console.WriteLine("Här kommer en UpdateBooking finnas!");
-                    Console.ReadKey();
-                    //    UpdateBooking();
+                    Helper.BackToMenu();
                     break;
                 case 4:
                     Console.Clear();
-                    // Temporary comment for testing
                     Console.WriteLine("Här kommer en ListBookings finnas!");
-                    Console.ReadKey();
-                    //  ListBookings();
+                    Helper.BackToMenu();
                     break;
                 case 0:
                     Console.Clear();
                     return;
                 default:
                     Console.Clear();
-                    Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[4].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                    Console.ReadKey();
+                    Console.WriteLine("Vänligen skriv in en siffra mellan [1]-[4].\n");
+                    Helper.BackToMenu();
                     break;
 
             }
@@ -238,16 +225,7 @@ namespace Grupp_5_Bokningssystem
             Console.WriteLine(" [1] - Sök efter rum");
             Console.WriteLine(" [2] - Skapa ett nytt rum\n");
             Console.WriteLine(" [0] - Återgå till menyn\n");
-            if (int.TryParse(Console.ReadLine(), out int userChoice)) { }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Felmeddelande:\n\n" +
-                        "Du skrev inte en giltig siffra.\n" +
-                        "Vänligen skriv in en siffra mellan [1]-[2].\n" +
-                        "Tryck [ENTER] för att återgå till menyn.");
-                Console.ReadKey();
-            }
+            int userChoice = Helper.ParseInt("", 0, 2);
 
             switch (userChoice)
             {
@@ -281,216 +259,179 @@ namespace Grupp_5_Bokningssystem
             }
         }
 
-        // Klass som håller reda på alla rum som skapats. Gjord av Sara.
-        public static class RoomRegistry
-        {
-            public static List<Room> AllRooms { get; private set; } = new();
+    }
+    // Klass som håller reda på alla rum som skapats. Gjord av Sara.
+    public static class RoomRegistry
+    {
+        public static List<Room> AllRooms { get; private set; } = new();
 
-            public static void RegisterRoom(Room room)
-            {
-                AllRooms.Add(room);
-            }
+        public static void RegisterRoom(Room room)
+        {
+            AllRooms.Add(room);
         }
-        // Interface som definierar funktionalitet som alla bokningsbara objekt måste implementera.
-        public interface IBookable
+    }
+    // Interface som definierar funktionalitet som alla bokningsbara objekt måste implementera.
+    public interface IBookable
+    {
+        void NewBooking();
+        void CancelBooking();
+        void UpdateBooking();
+        void ListBookings();
+        void ListBookingsByYear();
+        void SearchRoom();
+        void NewRoom();
+    }
+    // Handle start and stop times for bookings
+    // Format date and time appropriately
+    // TimeSpan for duration of booking
+
+    // Use interface as return type where relevant
+
+    // Basklass som implementerar IBookable interface.
+    public class Room : IBookable
+    {
+        public List<Booking> bookings = new List<Booking>();
+        // Rummets namn.
+        public string RoomName { get; }
+        // Rummets kapacitet.
+        public int RoomCapacity { get; }
+        // Rummets tillgänglighet.
+        bool RoomIsAvailable { get; }
+        // Parent class accepts name, capacity and availability as parameters
+        // Methods for IBookable interface implemented with NotImplementedException
+        // Konstruktor för att skapa rum.
+        public Room(string roomName, int roomCapacity, bool RoomIsAvailable)
         {
-            void NewBooking();
-            void CancelBooking();
-            void UpdateBooking();
-            void ListBookings();
-            void ListBookingsByYear();
-            void SearchRoom();
-            void NewRoom();
+            RoomName = roomName;
+            RoomCapacity = roomCapacity;
+            this.RoomIsAvailable = RoomIsAvailable;
+            // Registrerar rummet i den globala listan över rum.
+            RoomRegistry.RegisterRoom(this);
+
         }
-        // Handle start and stop times for bookings
-        // Format date and time appropriately
-        // TimeSpan for duration of booking
-
-        // Use interface as return type where relevant
-
-        // Basklass som implementerar IBookable interface.
-        public class Room : IBookable
+        // Metod för att skapa bokning. Gjord av Sara.
+        public virtual void NewBooking()
         {
-            public List<Booking> bookings = new List<Booking>();
-            // Rummets namn.
-            public string RoomName { get; }
-            // Rummets kapacitet.
-            public int RoomCapacity { get; }
-            // Rummets tillgänglighet.
-            bool RoomIsAvailable { get; }
-            // Parent class accepts name, capacity and availability as parameters
-            // Methods for IBookable interface implemented with NotImplementedException
-            // Konstruktor för att skapa rum.
-            public Room(string roomName, int roomCapacity, bool RoomIsAvailable)
-            {
-                RoomName = roomName;
-                RoomCapacity = roomCapacity;
-                this.RoomIsAvailable = RoomIsAvailable;
-                // Registrerar rummet i den globala listan över rum
-                RoomRegistry.RegisterRoom(this);
+            CultureInfo currentCulture = CultureInfo.CurrentCulture;
 
+            // Användaren skriver in sitt namn
+            Console.Write("Ange namn på den som bokar: ");
+            string? bookerNameInput = Console.ReadLine().Trim();
+            // Kontrollerar om namnet är tomt/whitespace. 
+            if (string.IsNullOrWhiteSpace(bookerNameInput))
+            {
+                // Skriver ut felmeddelande och användaren skickas tillbaka till bokningsmenyn.
+                Console.WriteLine("Du måste ange ett namn för att boka ett rum!");
+                return;
             }
-            // Metod för att skapa bokning. Gjord av Sara.
-            public virtual void NewBooking()
+            // Formaterar namn så första bokstaven är stor och resten små.
+            string bookerName = char.ToUpper(bookerNameInput[0]) + bookerNameInput.Substring(1).ToLower();
+            DateTime bookingDate = Helper.ParseDateTime($"\nAnge datum för bokning ({currentCulture.DateTimeFormat.ShortDatePattern}): ", currentCulture);
+            // Använder ReadTimeSpan metod för att läsa in bokningens start- och sluttid.
+            var (bookingStartTime, bookingEndTime) = Helper.ReadTimeSpan(bookingDate);
+
+            // Kombinerar datum och tider till DateTime objekt för bokningen.
+            DateTime startTime = bookingDate + bookingStartTime;
+            DateTime endTime = bookingDate + bookingEndTime;
+            // Skapar nytt Booking objekt.
+            Booking newBooking = new Booking(bookerName, RoomName, startTime, endTime);
+            // Kontrollerar så att den nya bokningen inte överlappar med befintliga bokningar.
+            bool overlap = bookings.Any(b => b.BookingsOverlap(newBooking));
+            if (overlap)
             {
-                // Användaren skriver in sitt namn
-                Console.Write("Ange namn på den som bokar: ");
-                string? bookerName = Console.ReadLine();
-                // Kontrollerar om namnet är tomt/whitespace. 
-                if (string.IsNullOrWhiteSpace(bookerName))
-                {
-                    // Skriver ut felmeddelande och användaren skickas tillbaka till bokningsmenyn.
-                    Console.WriteLine("Du måste ange ett namn för att boka ett rum!");
-                    return;
-                }
-
-                DateTime bookingDate;
-                while (true) // Loop för att säkerställa ett giltigt datum.
-                {
-                    // Användaren skriver in datum för bokning.
-                    Console.Write("Ange datum för bokning (ÅÅÅÅ-MM-DD): ");
-                    string dateInput = Console.ReadLine();
-                    // Kontrollerar om användaren skrivit in rätt format på datum. Enligt svensk standard.
-                    // Skickar ut bookingDate.
-                    if (DateTime.TryParseExact(dateInput, "yyyy-MM-dd", new CultureInfo("sv-SE"), System.Globalization.DateTimeStyles.AllowWhiteSpaces, out bookingDate))
-                    {
-                        // Kontrollerar så att datumet inte har passerat.
-                        if (bookingDate.Date < DateTime.Today)
-                        {
-                            Console.WriteLine("Du kan inte boka ett datum som passerat!");
-                            continue; // Skickar tillbaka användaren till början av loopen.
-                        }
-                        // Om datum är giltigt sparas det endast med datumdelen inte tid. Loopen bryts sedan.
-                        bookingDate = bookingDate.Date;
-                        break;
-                    }
-
-                    else
-                    {
-                        // Om användaren inte skriver datum i rätt format får de ett felmeddelande.
-                        Console.WriteLine("Felaktigt datumformat! Försök igen (Korrekt format: 2025-10-22).");
-                        continue; // Skickar tillbaka användaren till början av loopen.
-                    }
-                }
-
-                TimeSpan bookingStartTime, bookingEndTime;
-                while (true) // Loop för att säkerställa giltig starttid.
-                {
-                    // Användaren skriver in bokningens starttid.
-                    Console.Write("Ange bokningens starttid (HH:MM): ");
-                    string startTimeInput = Console.ReadLine().Replace(" ", "");
-                    // Kontrollerar om användaren skrivit in rätt format på tid. Enligt svensk standard.
-                    // Skickar ut bookingStartTime.
-                    if (!TimeSpan.TryParseExact(startTimeInput, "hh\\:mm", new CultureInfo("sv-SE"), out bookingStartTime))
-                    {
-                        Console.WriteLine("Felaktigt tidsformat! Försök igen (Korrekt format: 09:30).");
-                        continue; // Skickar tillbaka användaren till början av loopen.
-                    }
-                    // Skapar DateTime objekt med datum och starttid för jämförelse.
-                    DateTime startDateTime = bookingDate + bookingStartTime;
-                    // Kontrollerar så att starttiden inte passerat.
-                    if (startDateTime < DateTime.Now)
-                    {
-                        Console.WriteLine("Du kan inte boka en tid som passerat!");
-                        continue; // Skickar tillbaka användaren till början av loopen.
-                    }
-                    break; // Lämnar loopen då vi har en giltig tid.
-
-                }
-
-                while (true) // Loop för att säkerställa giltig sluttid.
-                {
-                    // Användaren skriver in bokningens sluttid.
-                    Console.Write("Ange sluttid (format: HH:MM): ");
-                    string endTimeInput = Console.ReadLine().Replace(" ", "");
-                    // Kontrollerar om användaren skrivit in rätt format på tid. Enligt svensk standard.
-                    // Skickar ut bookingEndTime.
-                    if (!TimeSpan.TryParseExact(endTimeInput, "hh\\:mm", new CultureInfo("sv-SE"), out bookingEndTime))
-                    {
-                        Console.WriteLine("Felaktigt tidsformat! Försök igen (Korrekt format: 09:30).");
-                        continue; // Skickar tillbaka användaren till början av loopen.
-                    }
-                    // Kontrollerar så att sluttiden inte är före starttiden.
-                    if (bookingEndTime <= bookingStartTime)
-                    {
-                        Console.WriteLine("Sluttiden måste vara efter starttiden!");
-                        continue; // Skickar tillbaka användaren till början av loopen.
-                    }
-
-                    break; // Lämnar loopen då vi har en giltig tid.
-                }
-                // Kombinerar datum och tider till DateTime objekt för bokningen.
-                DateTime startTime = bookingDate + bookingStartTime;
-                DateTime endTime = bookingDate + bookingEndTime;
-                // Skapar nytt Booking objekt.
-                Booking newBooking = new Booking(bookerName, RoomName, startTime, endTime);
-                // Kontrollerar så att den nya bokningen inte överlappar med befintliga bokningar.
-                bool overlap = bookings.Any(b => b.BookingsOverlap(newBooking));
-                if (overlap)
-                {
-                    Console.WriteLine("Tiden är redan bokad. Din bokning kunde inte genomföras.");
-                    Console.ReadKey();
-                    return; // Avbryter bokningen. Returnerar tillbaka till bokningsmenyn.
-                }
-                // Om bokningen inte överlappar med någon annan läggs den till i bookings listan.
-                bookings.Add(newBooking);
-                Console.WriteLine($"Bokning skapad: {bookerName} har bokat {RoomName} {startTime:yyyy-MM-dd HH:mm}–{endTime:HH:mm}");
+                Console.Clear();
+                Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
+                Helper.BackToMenu();
+                return; // Avbryter bokningen. Returnerar tillbaka till bokningsmenyn.
             }
-
-            public void CancelBooking()
+            // Om bokningen inte överlappar med någon annan läggs den till i bookings listan.
+            bookings.Add(newBooking);
+            Console.Clear();
+            Console.WriteLine($"\nBokning skapad: {bookerName} har bokat {RoomName} {startTime.ToString("g", currentCulture)}–{endTime.ToString("t", currentCulture)}");
+        }
+        // Metod för att ta bort bokning. Gjord av Sara.
+        public void CancelBooking()
+        {
+            // Felmeddelande om det inte gjorts några bokningar på det valda rummet.
+            if (bookings.Count == 0)
             {
-                throw new NotImplementedException();
+                Console.WriteLine($"Det finns inga bokningar för {RoomName}");
+                return; // Skickar tillbaka användaren till föregående meny.
             }
-
-            public void ListBookings()
+            // Visar bokningar på det valda rummet.
+            Console.WriteLine($"Bokningar för {RoomName}:");
+            for (int i = 0; i < bookings.Count; i++)
             {
-                throw new NotImplementedException();
+                Console.WriteLine($"[{i + 1}] {bookings[i].BookerName} - {bookings[i].StartTime} - {bookings[i].EndTime}");
             }
-
-            public void ListBookingsByYear()
+            // Använder metod ParseInt för att be användaren välja en bokning att ta bort.
+            int removeBookingChoice = Helper.ParseInt("Ange vilken bokning du vill ta bort: ", 1, bookings.Count);
+            // Variabel för att ta bort bokning. - 1 för att nå rätt index.
+            Booking bookingToRemove = bookings[removeBookingChoice - 1];
+            //Ber användaren bekräfta att bokningen ska tas bort.
+            Console.WriteLine($"Är du säker på att du vill ta bort bokningen för {bookingToRemove.BookerName} - {bookingToRemove.StartTime} - {bookingToRemove.EndTime}? (Ja/Nej)");
+            string confirmRemove = Console.ReadLine().Trim().ToLower();
+            // Om användaren skriver ja eller j tas bokningen bort.
+            // Annars avbryts det.
+            if (confirmRemove == "j" || confirmRemove == "ja")
             {
-                throw new NotImplementedException();
+                bookings.Remove(bookingToRemove);
+                Console.WriteLine($"Bokningen har tagits bort");
             }
-
-
-            public void NewRoom()
+            else
             {
-                throw new NotImplementedException();
-            }
-
-            public void SearchRoom()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UpdateBooking()
-            {
-                throw new NotImplementedException();
+                Console.WriteLine($"Borttagning har avbrutits");
             }
         }
 
-        // Child class GroupRoom, inherits from Room and IBookable
-        // Paramenters for constructor include smartboard availability
-        public class GroupRoom : Room
+        public void ListBookings()
         {
-            bool hasSmartBoard;
-            public GroupRoom(string iName, int iCapacity, bool iIsAvailable, bool iHasSmartboard)
-                : base(iName, iCapacity, iIsAvailable)
-            {
-                hasSmartBoard = iHasSmartboard;
-            }
-
+            throw new NotImplementedException();
         }
-        // Child class ClassRoom, inherits from Room and IBookable
-        // Paramenters for constructor include projector availability
-        public class ClassRoom : Room
+
+        public void ListBookingsByYear()
         {
-            bool hasProjector;
-            public ClassRoom(string iName, int iCapacity, bool iIsAvailable, bool iHasProjector)
-                : base(iName, iCapacity, iIsAvailable)
-            {
-                hasProjector = iHasProjector;
-            }
+            throw new NotImplementedException();
+        }
+
+
+        public void NewRoom()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SearchRoom()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateBooking()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    // Child class GroupRoom, inherits from Room and IBookable
+    // Paramenters for constructor include smartboard availability
+    public class GroupRoom : Room
+    {
+        bool hasSmartBoard;
+        public GroupRoom(string iName, int iCapacity, bool iIsAvailable, bool iHasSmartboard)
+            : base(iName, iCapacity, iIsAvailable)
+        {
+            hasSmartBoard = iHasSmartboard;
+        }
+
+    }
+    // Child class ClassRoom, inherits from Room and IBookable
+    // Paramenters for constructor include projector availability
+    public class ClassRoom : Room
+    {
+        bool hasProjector;
+        public ClassRoom(string iName, int iCapacity, bool iIsAvailable, bool iHasProjector)
+            : base(iName, iCapacity, iIsAvailable)
+        {
+            hasProjector = iHasProjector;
         }
     }
     // Klass som hanterar bokningar. Gjord av Sara.
