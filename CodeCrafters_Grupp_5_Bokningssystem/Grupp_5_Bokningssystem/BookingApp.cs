@@ -86,5 +86,44 @@ namespace Grupp_5_Bokningssystem
         {
 
         }
+
+
+        // - Create new bookings
+        public void NewBooking()
+        {
+        }
+
+        // - Cancel a booking
+        public void CancelBooking()
+        {
+        }
+
+        // - Update an existing booking
+        public void UpdateBooking()
+        {
+        }
+
+        // - List all bookings
+        // Handle sorting of bookings
+        public void ListBookings()
+        {
+        }
+
+        // - List bookings from a specific year
+        // Will be inside the ListBookings in menu
+        public void ListBookingsByYear()
+        {
+        }
+
+        // - List rooms with specific properties (e.g., capacity)
+        // Implement operations for filtering and searching rooms based on criteria such as capacity and availability
+        public void SearchRoom()
+        {
+        }
+
+        // - Ability to make new rooms with error handling for duplicate names
+        public void NewRoom()
+        {
+        }
     }
 }
