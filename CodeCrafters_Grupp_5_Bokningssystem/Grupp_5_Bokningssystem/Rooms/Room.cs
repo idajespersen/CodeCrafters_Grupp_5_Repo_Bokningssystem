@@ -25,8 +25,8 @@ namespace Grupp_5_Bokningssystem.Rooms
         // Variable for room availability
         public bool IsAvailable(DateTime start, DateTime end)
         {
-            if (start > end)
-                throw new Exception("Start date must occurr after End date");
+            if (start >= end)
+                return false;
 
             return true;
         }

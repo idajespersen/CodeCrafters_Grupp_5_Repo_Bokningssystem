@@ -9,17 +9,11 @@ namespace Grupp_5_Bokningssystem
 {
     public class Booking
     {
-        public Booking(IBookable bookable, string madeBy, DateTime startDate, TimeSpan duration)
+        public Booking(string madeBy, DateTime startDate, TimeSpan duration)
         {
-            Bookable = bookable;
             MadeBy = madeBy;
             StartDate = startDate;
             Duration = duration;
-        }
-
-        public IBookable Bookable
-        {
-            get;
         }
 
         public string MadeBy

@@ -9,6 +9,8 @@ namespace Grupp_5_Bokningssystem
 {
     public sealed class BookingApp
     {
+
+
         private static BookingApp _instance = null!;
 
         public static BookingApp Instance
@@ -26,6 +28,10 @@ namespace Grupp_5_Bokningssystem
 
         private BookingApp()
         {
+            FileHelper.CreateFoldersIfMissing();
+
+            Bookables = FileHelper.LoadBookables();
+
             _screenManager = new ScreenManager();
             // Add MainMenuScreen to be the root screen.
             _screenManager.Add(new MainMenuScreen());
@@ -43,6 +49,11 @@ namespace Grupp_5_Bokningssystem
             get;
             set;
         } = Language.Swedish;
+
+        public List<IBookable> Bookables
+        {
+            get;
+        }
 
         /// <exception cref="Exception">Throws an exception if the app is currently running.</exception>
         public void Run()

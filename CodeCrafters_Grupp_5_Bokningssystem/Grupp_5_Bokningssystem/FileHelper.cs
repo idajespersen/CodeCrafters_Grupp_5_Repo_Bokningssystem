@@ -10,32 +10,31 @@ namespace Grupp_5_Bokningssystem
     public static class FileHelper
     {
         public static readonly string AppName = "Bokningssystemet";
-        public static readonly string RootPath = Path.Combine(
+        public static readonly string RootFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             AppName);
-        public static readonly string ClassRoomPath = Path.Combine(RootPath, "ClassRooms");
-        public static readonly string GroupRoomPath = Path.Combine(RootPath, "GroupRooms");
+        public static readonly string RoomsFolder = Path.Combine(RootFolder, "Rooms");
+        public static readonly string BookingsFolder = Path.Combine(RootFolder, "Bookings");
 
-        private static void CreateRoomsFolders()
+        public static void CreateFoldersIfMissing()
         {
-            Directory.CreateDirectory(ClassRoomPath);
-            Directory.CreateDirectory(GroupRoomPath);
+            Directory.CreateDirectory(RootFolder);
+            Directory.CreateDirectory(RoomsFolder);
+            Directory.CreateDirectory(BookingsFolder);
         }
 
-        public static List<Room> LoadRooms()
+        public static List<IBookable> LoadBookables()
         {
-            CreateRoomsFolders();
-
-            List<Room> rooms = new List<Room>();
+            List<IBookable> bookables = new List<IBookable>();
 
 
 
-            return rooms;
+            return bookables;
         }
 
-        public static void SaveRooms(List<Room> rooms)
+        public static void SaveRooms(List<IBookable> bookables)
         {
-            CreateRoomsFolders();
+            
         }
     }
 }
