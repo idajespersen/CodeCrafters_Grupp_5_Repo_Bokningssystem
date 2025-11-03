@@ -13,18 +13,8 @@ namespace Grupp_5_Bokningssystem
 
         static void Main(string[] args)
         {
-            ScreenManager screenManager = new ScreenManager();
-
-            BookingApp app = new BookingApp(screenManager);
-
-            // Add MainMenuScreen to be the root screen.
-            screenManager.Add(new MainMenuScreen());
-
-            // Add LanguageSelectionScreen to be the active screen.
-            screenManager.Add(new LanguageSelectionScreen());
-
             // Run the app. The app can be stopped by calling Stop() method.
-            app.Run();
+            BookingApp.Instance.Run();
 
             /*while (_runProgram == true)
             {

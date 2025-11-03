@@ -9,19 +9,28 @@ namespace Grupp_5_Bokningssystem
 {
     public sealed class BookingApp
     {
-        public static Language Language
-        {
-            get;
-            set;
-        } = Language.Swedish;
+        private static BookingApp _instance = null!;
 
+        public static BookingApp Instance
+        {
+            get
+            {
+                _instance ??= new BookingApp();
+
+                return _instance;
+            }
+        }
 
         private bool _isRunning = false;
         private readonly ScreenManager _screenManager;
 
-        public BookingApp(ScreenManager screenManager)
+        private BookingApp()
         {
-            _screenManager = screenManager;
+            _screenManager = new ScreenManager();
+            // Add MainMenuScreen to be the root screen.
+            _screenManager.Add(new MainMenuScreen());
+            // Add LanguageSelectionScreen to be the active screen.
+            _screenManager.Add(new LanguageSelectionScreen());
         }
 
         public bool IsRunning
@@ -29,9 +38,12 @@ namespace Grupp_5_Bokningssystem
             get { return _isRunning; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
+        public Language Language
+        {
+            get;
+            set;
+        } = Language.Swedish;
+
         /// <exception cref="Exception">Throws an exception if the app is currently running.</exception>
         public void Run()
         {

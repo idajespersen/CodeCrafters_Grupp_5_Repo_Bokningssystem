@@ -58,7 +58,7 @@ namespace Grupp_5_Bokningssystem.Screens
             if ((_errorAction & InputErrorAction.ClearConsole) != 0)
                 Console.Clear();
 
-            DisplayInputErrorMessage(BookingApp.Language);
+            DisplayInputErrorMessage(BookingApp.Instance.Language);
 
             if ((_errorAction & InputErrorAction.AwaitEnterKey) != 0)
                 Console.ReadKey();

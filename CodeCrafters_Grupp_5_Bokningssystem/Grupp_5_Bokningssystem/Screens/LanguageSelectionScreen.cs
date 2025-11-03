@@ -31,11 +31,11 @@ namespace Grupp_5_Bokningssystem.Screens
                     return;
                 case 1:
                     // Set the app language to Swedish
-                    BookingApp.Language = Language.Swedish;
+                    BookingApp.Instance.Language = Language.Swedish;
                     break;
                 case 2:
                     // Set the app language to English
-                    BookingApp.Language = Language.English;
+                    BookingApp.Instance.Language = Language.English;
                     break;
             }
 
