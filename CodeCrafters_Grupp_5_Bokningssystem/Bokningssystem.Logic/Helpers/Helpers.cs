@@ -1,11 +1,15 @@
-﻿using System;
+﻿
+using Bokningssystem.Logic.Rooms;
+using Bokningssystem.Logic.BookingClass;
+using Bokningssystem.Logic;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grupp_5_Bokningssystem.Helpers
+namespace Bokningssystem.Logic.Helpers
 {
     public static class Helper
     {
