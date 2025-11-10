@@ -206,12 +206,12 @@ namespace Grupp_5_Bokningssystem
                         int listBookingsChoice = Helper.ParseInt("", 0, 2);
                         switch (listBookingsChoice)
                         {
-                            case 1: // Om användaren väljer Klassrum.
+                            case 1: 
                                 Console.Clear();
 
                                 Helper.BackToMenu();
                                 break;
-                            case 2: // Om användaren väljer Grupprum.
+                            case 2: 
                                 Console.Clear();
 
                                 Helper.BackToMenu();
