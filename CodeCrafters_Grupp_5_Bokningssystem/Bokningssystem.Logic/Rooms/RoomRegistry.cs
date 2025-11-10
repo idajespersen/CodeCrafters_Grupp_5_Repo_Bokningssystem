@@ -1,6 +1,4 @@
-﻿using Bokningssystem.Logic.Helpers;
-using Bokningssystem.Logic.BookingClass;
-using Bokningssystem.Logic;
+﻿using Bokningssystem.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

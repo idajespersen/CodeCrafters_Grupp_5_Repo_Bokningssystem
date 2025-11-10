@@ -7,14 +7,30 @@
   "targets": {
     ".NETCoreApp,Version=v8.0": {
       "Grupp_5_Bokningssystem/1.0.0": {
+        "dependencies": {
+          "Bokningssystem.Logic": "1.0.0"
+        },
         "runtime": {
           "Grupp_5_Bokningssystem.dll": {}
+        }
+      },
+      "Bokningssystem.Logic/1.0.0": {
+        "runtime": {
+          "Bokningssystem.Logic.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
   },
   "libraries": {
     "Grupp_5_Bokningssystem/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Bokningssystem.Logic/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

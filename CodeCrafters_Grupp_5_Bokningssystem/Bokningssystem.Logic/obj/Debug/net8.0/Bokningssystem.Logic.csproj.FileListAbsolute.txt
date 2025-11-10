@@ -1,0 +1,12 @@
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.AssemblyInfoInputs.cache
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.AssemblyInfo.cs
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.csproj.CoreCompileInputs.cache
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.sourcelink.json
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\bin\Debug\net8.0\Bokningssystem.Logic.deps.json
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\bin\Debug\net8.0\Bokningssystem.Logic.dll
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\bin\Debug\net8.0\Bokningssystem.Logic.pdb
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.dll
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\refint\Bokningssystem.Logic.dll
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\Bokningssystem.Logic.pdb
+C:\Users\sarah\Source\Repos\CodeCrafters_Grupp_5_Repo_Bokningssystem_Correct\CodeCrafters_Grupp_5_Bokningssystem\Bokningssystem.Logic\obj\Debug\net8.0\ref\Bokningssystem.Logic.dll

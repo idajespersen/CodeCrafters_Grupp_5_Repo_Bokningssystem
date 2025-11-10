@@ -1,5 +1,4 @@
-﻿using Bokningssystem.Logic.Helpers;
-using Bokningssystem.Logic.Rooms;
+﻿using Bokningssystem.Logic.Rooms;
 using Bokningssystem.Logic;
 using System;
 using System.Collections.Generic;
@@ -12,17 +11,11 @@ namespace Bokningssystem.Logic.BookingClass
     // Klass som hanterar bokningar. Gjord av Sara.
     public class Booking
     {
-        // Namn på personen som bokar.
         public string BookerName { get; set; }
-        // Namn på rummet som bokas.
         public string RoomName { get; set; }
-        // Starttid för bokning.
         public DateTime StartTime { get; set; }
-        // Sluttid för bokning.
         public DateTime EndTime { get; set; }
-        // Längd av bokningen.
         public TimeSpan Duration => EndTime - StartTime;
-        // Konstruktor för att skapa ny bokning.
         public Booking(string bookerName, string roomName, DateTime startTime, DateTime endTime)
         {
             BookerName = bookerName;
