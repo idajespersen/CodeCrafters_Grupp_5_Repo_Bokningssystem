@@ -31,7 +31,7 @@ namespace Grupp_5_Bokningssystem.Screens
             if (screen != null)
             {
                 screen.DisplayMessage(BookingApp.Instance.Language);
-                screen.HandleInput();
+                screen.RequestInput();
             }
         }
 

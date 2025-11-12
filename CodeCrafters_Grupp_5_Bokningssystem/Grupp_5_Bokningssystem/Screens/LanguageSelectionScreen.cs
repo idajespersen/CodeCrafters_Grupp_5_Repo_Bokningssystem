@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Grupp_5_Bokningssystem.Screens
     public sealed class LanguageSelectionScreen : SelectionScreen
     {
         public LanguageSelectionScreen() 
-            : base(2)
+            : base(1, 2)
         {
         }
 
@@ -26,9 +27,6 @@ namespace Grupp_5_Bokningssystem.Screens
         {
             switch(choice)
             {
-                case 0:
-                    HandleInputError();
-                    return;
                 case 1:
                     // Set the app language to Swedish
                     BookingApp.Instance.Language = Language.Swedish;
@@ -43,12 +41,11 @@ namespace Grupp_5_Bokningssystem.Screens
             Close();
         }
 
-        protected override void DisplayInputErrorMessage(Language language)
+        protected override void DisplayWrongInputMessage(Language language)
         {
-            Console.WriteLine("Ogiltigt val. Försök igen.");
+            Console.WriteLine("Ogiltigt val / Invalid choice.");
+            Console.WriteLine("Försök igen / Try again.");
             Console.WriteLine("Tryck [ENTER] för att fortsätta.");
-            Console.WriteLine();
-            Console.WriteLine("Invalid choice. Try again.");
             Console.Write("Press [ENTER] to continue.");
         }
     }

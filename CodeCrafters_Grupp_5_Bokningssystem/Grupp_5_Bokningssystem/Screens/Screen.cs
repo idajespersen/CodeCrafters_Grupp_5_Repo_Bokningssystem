@@ -17,7 +17,7 @@ namespace Grupp_5_Bokningssystem.Screens
         /// <summary>
         /// Requests the user to input something in the console.
         /// </summary>
-        public void HandleInput()
+        public void RequestInput()
         {
             string? str = Console.ReadLine();
 
@@ -48,7 +48,7 @@ namespace Grupp_5_Bokningssystem.Screens
         public void DisplayScreen(Screen screen)
         {
             if (_screenManager == null)
-                throw new NullReferenceException(nameof(ScreenManager));
+                throw new NullReferenceException(nameof(_screenManager));
 
             _screenManager.Add(screen);
         }
@@ -61,7 +61,7 @@ namespace Grupp_5_Bokningssystem.Screens
         public bool Close()
         {
             if (_screenManager == null)
-                throw new NullReferenceException(nameof(ScreenManager));
+                throw new NullReferenceException(nameof(_screenManager));
 
             if(_screenManager.Remove(this))
             {
@@ -83,8 +83,8 @@ namespace Grupp_5_Bokningssystem.Screens
         /// <summary>
         /// Handle a string input from the user.
         /// </summary>
-        /// <param name="inputString">The string that the user input.</param>
-        protected abstract void HandleInput(string inputString);
+        /// <param name="input">The string that the user input.</param>
+        protected abstract void HandleInput(string input);
 
         /// <summary>
         /// An underlying method that is called from Initialized(...).

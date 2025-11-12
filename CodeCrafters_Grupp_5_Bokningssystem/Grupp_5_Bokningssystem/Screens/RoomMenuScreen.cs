@@ -9,7 +9,7 @@ namespace Grupp_5_Bokningssystem.Screens
     public sealed class RoomMenuScreen : SelectionScreen
     {
         public RoomMenuScreen()
-            : base(2)
+            : base(0, 2)
         {
         }
 

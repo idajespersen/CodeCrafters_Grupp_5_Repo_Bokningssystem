@@ -9,7 +9,7 @@ namespace Grupp_5_Bokningssystem.Screens
     public sealed class MainMenuScreen : SelectionScreen
     {
         public MainMenuScreen() 
-            : base(3)
+            : base(0, 3)
         {
         }
 
