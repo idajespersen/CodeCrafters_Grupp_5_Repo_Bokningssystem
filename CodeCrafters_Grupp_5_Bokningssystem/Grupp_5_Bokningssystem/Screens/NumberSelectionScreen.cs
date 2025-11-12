@@ -6,26 +6,14 @@ using System.Threading.Tasks;
 
 namespace Grupp_5_Bokningssystem.Screens
 {
-    [Flags]
-    public enum InputErrorAction
-    {
-        None                = 0,
-        ClearConsole        = 1,
-        AwaitEnterKey       = 2,
-        ClearAndAwaitKey    = ClearConsole | AwaitEnterKey
-    }
-
     public abstract class NumberSelectionScreen : Screen
     {
-        protected readonly InputErrorAction _errorAction;
-
-        protected NumberSelectionScreen(int maxChoice, InputErrorAction errorAction = InputErrorAction.ClearAndAwaitKey)
+        protected NumberSelectionScreen(int maxChoice)
         {
             if (maxChoice < 1)
                 throw new ArgumentException("maxChoice must be equal to or greater than 1");
 
             MaxChoice = maxChoice;
-            _errorAction = errorAction;
         }
 
         public int MaxChoice
@@ -55,13 +43,11 @@ namespace Grupp_5_Bokningssystem.Screens
         /// </summary>
         protected void HandleInputError()
         {
-            if ((_errorAction & InputErrorAction.ClearConsole) != 0)
-                Console.Clear();
+            Console.Clear();
 
             DisplayInputErrorMessage(BookingApp.Instance.Language);
 
-            if ((_errorAction & InputErrorAction.AwaitEnterKey) != 0)
-                Console.ReadKey();
+            Console.ReadKey();
         }
 
         protected virtual void DisplayInputErrorMessage(Language language)
