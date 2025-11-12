@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Grupp_5_Bokningssystem.Screens
 {
-    public abstract class NumberSelectionScreen : Screen
+    public abstract class SelectionScreen : Screen
     {
-        protected NumberSelectionScreen(int maxChoice)
+        protected SelectionScreen(int maxChoice)
         {
             if (maxChoice < 1)
                 throw new ArgumentException("maxChoice must be equal to or greater than 1");

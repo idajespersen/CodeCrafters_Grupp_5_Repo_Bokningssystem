@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grupp_5_Bokningssystem.Screens
 {
-    public sealed class MainMenuScreen : NumberSelectionScreen
+    public sealed class MainMenuScreen : SelectionScreen
     {
         public MainMenuScreen() 
             : base(3)
