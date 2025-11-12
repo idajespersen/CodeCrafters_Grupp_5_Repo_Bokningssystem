@@ -21,7 +21,10 @@ namespace Grupp_5_Bokningssystem.Screens
         {
             string? str = Console.ReadLine();
 
-            HandleInput(str!);
+            if (str == null)
+                return;
+
+            HandleInput(str);
         }
 
         /// <summary>
