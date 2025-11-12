@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+/CodeCrafters_Grupp_5_Bokningssystem/.vs/CodeCrafters_Grupp_5_Bokningssystem/FileContentIndex/1ac8d70c-1e8d-4060-9d76-44deeb75d51a.vsidx
+/CodeCrafters_Grupp_5_Bokningssystem/.vs/CodeCrafters_Grupp_5_Bokningssystem/FileContentIndex/1ac8d70c-1e8d-4060-9d76-44deeb75d51a.vsidx
+/.vs
 # User-specific files
 *.rsuser
 *.suo
