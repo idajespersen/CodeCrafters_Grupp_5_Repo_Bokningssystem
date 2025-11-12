@@ -20,6 +20,9 @@ namespace Grupp_5_Bokningssystem
             while (runProgram == true)
                 {
 
+                // Testing Git issues 2025-11-12 // Doesnt work
+                //try again
+
                 MainMenu();
 
                 }
