@@ -41,10 +41,9 @@ namespace Grupp_5_Bokningssystem.Screens
             Close();
         }
 
-        protected override void DisplayWrongInputMessage(Language language)
+        protected override void DisplayWrongInputMessage(Language language, string input)
         {
-            Console.WriteLine("Ogiltigt val / Invalid choice.");
-            Console.WriteLine("Försök igen / Try again.");
+            Console.WriteLine($"Ogiltigt val / Invalid choice: {input}");
             Console.WriteLine("Tryck [ENTER] för att fortsätta.");
             Console.Write("Press [ENTER] to continue.");
         }
