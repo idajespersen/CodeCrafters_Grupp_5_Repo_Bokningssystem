@@ -41,29 +41,21 @@ namespace Grupp_5_Bokningssystem.Screens
             }
             else
             {
-                HandleWrongInput();
+                Console.Clear();
+
+                DisplayWrongInputMessage(BookingApp.Instance.Language, inputString);
+
+                Console.ReadKey();
             } 
         }
 
-        /// <summary>
-        /// Handle input error by clearing console, display error message and await key.
-        /// </summary>
-        protected void HandleWrongInput()
-        {
-            Console.Clear();
-
-            DisplayWrongInputMessage(BookingApp.Instance.Language);
-
-            Console.ReadKey();
-        }
-
-        protected virtual void DisplayWrongInputMessage(Language language)
+        protected virtual void DisplayWrongInputMessage(Language language, string input)
         {
             if (language == Language.Swedish)
             {
                 Console.WriteLine("Felmeddelande:");
                 Console.WriteLine();
-                Console.WriteLine("Du skrev inte en giltig siffra.");
+                Console.WriteLine($"Du skrev inte en giltig siffra: {input}");
                 Console.WriteLine($"Vänligen skriv in en siffra mellan [{MinChoice}]-[{MaxChoice}].");
                 Console.WriteLine();
                 Console.Write("Tryck [ENTER] för att återgå till menyn.");
@@ -72,7 +64,7 @@ namespace Grupp_5_Bokningssystem.Screens
             {
                 Console.WriteLine("Error message:");
                 Console.WriteLine();
-                Console.WriteLine("The given input is invalid.");
+                Console.WriteLine($"The given input is invalid: {input}");
                 Console.WriteLine($"Please enter a number between [{MinChoice}]-[{MaxChoice}].");
                 Console.WriteLine();
                 Console.Write("Press [ENTER] to return to the menu.");
