@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+/CodeCrafters_Grupp_5_Bokningssystem/.vs/CodeCrafters_Grupp_5_Bokningssystem/FileContentIndex/1ac8d70c-1e8d-4060-9d76-44deeb75d51a.vsidx
+/CodeCrafters_Grupp_5_Bokningssystem/.vs/CodeCrafters_Grupp_5_Bokningssystem/FileContentIndex/1ac8d70c-1e8d-4060-9d76-44deeb75d51a.vsidx
+/.vs
 # User-specific files
 *.rsuser
 *.suo
@@ -361,3 +364,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/CodeCrafters_Grupp_5_Bokningssystem/Grupp_5_Bokningssystem/obj/Release/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+/CodeCrafters_Grupp_5_Bokningssystem/Grupp_5_Bokningssystem/obj/Release/net8.0/Grupp_5_Bokningssystem.AssemblyInfo.cs
+/CodeCrafters_Grupp_5_Bokningssystem/Grupp_5_Bokningssystem/obj/Release/net8.0/Grupp_5_Bokningssystem.AssemblyInfoInputs.cache
+/CodeCrafters_Grupp_5_Bokningssystem/Grupp_5_Bokningssystem/obj/Release/net8.0/Grupp_5_Bokningssystem.GeneratedMSBuildEditorConfig.editorconfig
+/CodeCrafters_Grupp_5_Bokningssystem/.vs/CodeCrafters_Grupp_5_Bokningssystem/CopilotIndices/17.14.1368.60722/CodeChunks.db
+/CodeCrafters_Grupp_5_Bokningssystem/.vs/CodeCrafters_Grupp_5_Bokningssystem/CopilotIndices/17.14.1368.60722/SemanticSymbols.db

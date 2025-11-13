@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 using Grupp_5_Bokningssystem.Screens;
 
 namespace Grupp_5_Bokningssystem
