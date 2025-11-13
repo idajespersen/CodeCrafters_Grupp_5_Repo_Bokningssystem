@@ -29,7 +29,7 @@ namespace Grupp_5_Bokningssystem
     // 2. Parent / Base class
     // ----------------------------------------------------------------
 
-    // Basklass som implementerar IBookable interface.
+    // Parent Class: Room inherits from interface IBookable
     public class Room : IBookable
     {
         // Unique empty list for each created room
@@ -42,9 +42,13 @@ namespace Grupp_5_Bokningssystem
         public int RoomCapacity { get; }
         // Variable for room availability
         bool RoomIsAvailable { get; }
+        // Standardvärde för max antal timmar ett rum kan bokas.
+        // Kan göra override för att ändra individuellt för olika typer rum.
         public virtual int MaxBookingHours => 8;
         // Skapar ett cultureinfo objekt för att läsa av lokal kultur för datum.
         CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        // Room Constructor
+        // Parent class accepts id, name, capacity and availability as parameters
         public Room(string iId, string iName, int iCapacity, bool iIsAvailable)
         {
             RoomId = iId;
@@ -106,12 +110,6 @@ namespace Grupp_5_Bokningssystem
                 bookings.Remove(bookingToRemove);
                 Console.WriteLine($"Bokningen har tagits bort");
             }
-        }
-
-
-        public void SearchRoom()
-        {
-            throw new NotImplementedException();
         }
 
         public void UpdateBooking()
@@ -242,12 +240,13 @@ namespace Grupp_5_Bokningssystem
                 break;
             }
         }
-
+        // - List all bookings
         public void ListBookings()
         {
             throw new NotImplementedException();
         }
-
+        // - List bookings from a specific year
+        // Will be inside the ListBookings in menu
         public void ListBookingsByYear()
         {
             throw new NotImplementedException();
