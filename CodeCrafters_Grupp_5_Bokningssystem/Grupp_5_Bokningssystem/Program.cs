@@ -1,9 +1,11 @@
+using Bokningssystem.Logic;
 using Grupp_5_Bokningssystem;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Xml.Serialization;
 using static RoomRegistry;
 using static RoomRegistry.Program;
+
 
 namespace Grupp_5_Bokningssystem
 {
@@ -13,17 +15,7 @@ namespace Grupp_5_Bokningssystem
     // Read from and write to these files as needed
     // Read when program starts
 
-    // ----------------------------------------------------------------
-    // 1. Interface - IBookable
-    // ----------------------------------------------------------------
-    public interface IBookable
-    {
-        void NewBooking();
-        void CancelBooking();
-        void UpdateBooking();
-        void ListBookings();
-        void ListBookingsByYear();
-    }
+
 
     // ----------------------------------------------------------------
     // 2. Parent / Base class
