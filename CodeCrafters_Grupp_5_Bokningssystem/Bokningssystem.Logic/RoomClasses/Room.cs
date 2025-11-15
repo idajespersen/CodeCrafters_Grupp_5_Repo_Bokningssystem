@@ -25,26 +25,32 @@ namespace Bokningssystem.Logic.RoomClasses
         // Variable for room capacity
         public int RoomCapacity { get; }
         // Variable for room availability
-        bool RoomIsAvailable { get; }
+        public bool IsCurrentlyAvailable
+        {
+            get
+            {
+                DateTime now = DateTime.Now;
+                return !bookings.Any(b => now >= b.StartTime && now < b.EndTime);
+            }
+        }
         // Standardvärde för max antal timmar ett rum kan bokas.
         // Kan göra override för att ändra individuellt för olika typer rum.
         public virtual int MaxBookingHours => 8;
         // Skapar ett cultureinfo objekt för att läsa av lokal kultur för datum.
         CultureInfo currentCulture = CultureInfo.CurrentCulture;
         // Room Constructor
-        // Parent class accepts id, name, capacity and availability as parameters
-        public Room(string iId, string iName, int iCapacity, bool iIsAvailable)
+        // Parent class accepts id, name, and capacity as parameters
+        public Room(string iId, string iName, int iCapacity)
         {
             RoomId = iId;
             RoomName = iName;
             RoomCapacity = iCapacity;
-            RoomIsAvailable = iIsAvailable;
-            // Registrerar rummet i den globala listan över rum.
-            RoomRegistry.RegisterRoom(this);
         }
+        
         // Metod för att skapa bokning. Gjord av Sara.
         public void NewBooking()
-        {   // Använder ReadName metod för att läsa in användarens namn.
+        {  
+            // Använder ReadName metod för att läsa in användarens namn.
             string bookerName = Helper.ReadName("Ange namn på den som bokar: ");
             // Använder ParseDateTime metod för att läsa in bokningens datum.
             DateTime bookingDate = Helper.ParseDateTime($"\nAnge datum för bokning", currentCulture);
@@ -167,7 +173,7 @@ namespace Bokningssystem.Logic.RoomClasses
                                 {
                                     Console.Clear();
                                     Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                                    Helper.BackToMenu();
+                                    Helper.BackToMenu("till menyn...");
                                 }
                                 // Ber användaren bekräfta uppdatering av bokning. Om de svarar ja så uppdateras datumet.
                                 if (Helper.ConfirmAction($"ändra datum för bokning {bookingToUpdate.BookerName} - {bookingToUpdate.StartTime.Day} {bookingToUpdate.StartTime:MMMM} {bookingToUpdate.StartTime.Year} kl {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm} till {newStartTime.Day} {newStartTime:MMMM} {newStartTime.Year}", "Uppdatering av datum har avbrutits"))
@@ -191,7 +197,7 @@ namespace Bokningssystem.Logic.RoomClasses
                                 {
                                     Console.Clear();
                                     Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                                    Helper.BackToMenu();
+                                    Helper.BackToMenu("till menyn...");
                                 }
                                 // Ber användaren bekräfta uppdatering av bokning. Om de svarar ja så uppdateras tiden.
                                 if (Helper.ConfirmAction($"ändra tiden för bokning {bookingToUpdate.BookerName} - {bookingToUpdate.StartTime.Day} {bookingToUpdate.StartTime:MMMM} {bookingToUpdate.StartTime.Year} kl {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm} till  {newStartTime} - {newEndTime}", "Uppdatering av tid har avbrutits"))
@@ -206,9 +212,8 @@ namespace Bokningssystem.Logic.RoomClasses
                                 updateMenuActive = false; // While loopen avslutas.
                                 break;
                             default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                                Console.Clear();
-                                Console.WriteLine("Vänligen skriv in en siffra mellan [1]-[2].\n");
-                                Helper.BackToMenu();
+                                Helper.DisplayMessage(0,2);
+                                Helper.BackToMenu("till menyn...");
                                 break;
                         }
                         break;
@@ -216,9 +221,8 @@ namespace Bokningssystem.Logic.RoomClasses
                         updateMenuActive = false; // While loopen avslutas.
                         break;
                     default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                        Console.Clear();
-                        Console.WriteLine("Vänligen skriv in en siffra mellan [1]-[2].\n");
-                        Helper.BackToMenu();
+                        Helper.DisplayMessage(0, 2);
+                        Helper.BackToMenu("till menyn...");
                         break;
                 }
                 break;

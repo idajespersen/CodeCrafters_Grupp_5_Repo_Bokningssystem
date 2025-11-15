@@ -10,8 +10,10 @@ namespace Bokningssystem.Logic.RoomClasses
     // Klass som håller reda på alla rum som skapats. Gjord av Sara.
     public static class RoomRegistry
     {
+        // Lista med rum. Private set så att endast klassen kan ändra själva listan.
         public static List<IBookable> AllRooms { get; private set; } = new();
 
+        // Metod för att registrera ett nytt rum i rumslistan.
         public static void RegisterRoom(IBookable room)
         {
             AllRooms.Add(room);
@@ -26,16 +28,11 @@ namespace Bokningssystem.Logic.RoomClasses
             bool isRunningMenu = true;
             while (isRunningMenu)
             {
-                Console.WriteLine("- Skapa ett nytt rum -\n");
-                Console.WriteLine("Typ av rum:\n\n" +
-                                    "[1] - Klassrum\n" +
-                                    "[2] - Grupprum\n\n" +
-                                    "[0] - Återgå till huvudmenyn\n");
+                Helper.TypeOfRoomMenu();
 
                 var newRoomType = "Room";
-                // Hár gjort hjälpmetod för int tryparse vill du använda det?
-                if (int.TryParse(Console.ReadLine()?.Trim(), out int typeChoice))
-                {
+                int typeChoice = Helper.ParseInt("Ange vad för rum du vill skapa: ", 0,2 );
+               
                     switch (typeChoice)
                     {
                         case 1:
@@ -48,17 +45,12 @@ namespace Bokningssystem.Logic.RoomClasses
                             isRunningMenu = false;
                             continue;
                         default:
-                            Helper.DisplayMessage();
+                            //Helper.DisplayMessage();
                             NewRoom();
                             continue;
                     }
-                }
-                else
-                {
-                    Helper.DisplayMessage();
-                    Helper.BackToMenu();
-                    continue;
-                }
+                
+               
                 // Name the room
                 Console.Write("\nNamnge rummet: ");
                 var newRoomName = "000";
@@ -125,16 +117,16 @@ namespace Bokningssystem.Logic.RoomClasses
                             isRunningMenu = false;
                             break;
                         default:
-                            Helper.DisplayMessage();
-                            Helper.BackToMenu();
+                            Helper.DisplayMessage(0,2);
+                            Helper.BackToMenu("vidare...");
                             NewRoom();
                             continue;
                     }
                 }
                 else
                 {
-                    Helper.DisplayMessage();
-                    Helper.BackToMenu();
+                    Helper.DisplayMessage(0,2);
+                    Helper.BackToMenu("vidare...");
                     NewRoom();
                     continue;
                 }
@@ -145,13 +137,13 @@ namespace Bokningssystem.Logic.RoomClasses
                 {
                     bool newRoomIsAvailable = true;
                     ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment, newRoomIsAvailable);
-                    RoomRegistry.AllRooms.Add(newRoom);
+                    RoomRegistry.RegisterRoom(newRoom);
                 }
                 if (newRoomType == "GroupRoom")
                 {
                     bool newRoomIsAvailable = true;
                     GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment, newRoomIsAvailable);
-                    RoomRegistry.AllRooms.Add(newRoom);
+                    RoomRegistry.RegisterRoom(newRoom);
                 }
 
                 Console.WriteLine($"\nSammanfattning:\n\n" +

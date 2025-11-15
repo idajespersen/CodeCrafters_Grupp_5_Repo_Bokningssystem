@@ -15,7 +15,7 @@ namespace Bokningssystem.Logic.HelperMethods
         {
             while (true) // Loop för att säkerställa att vi får ut ett giltigt val.
             {
-                Console.WriteLine(userPrompt);
+                Console.Write(userPrompt);
                 string? input = Console.ReadLine()?.Trim();
                 // Kontrollerar så att användaren skriver in något.
                 if (string.IsNullOrWhiteSpace(input))
@@ -32,7 +32,7 @@ namespace Bokningssystem.Logic.HelperMethods
                 else
                 {
                     // Ifall det inte är giltigt skickas ett felmeddelande.
-                    Console.WriteLine($"Du måste skriva in en siffra mellan {min}-{max}! Försök igen.");
+                    Console.WriteLine($"Du måste skriva in en siffra mellan {min}-{max}! Vänligen försök igen.");
                     continue;
                 }
 
@@ -159,18 +159,7 @@ namespace Bokningssystem.Logic.HelperMethods
             }
             return (bookingStartTime, bookingEndTime); // Returnerar start- och sluttid.
         }
-        // Metod för att visa alla klassrum/grupprum. Gjord av Sara.
-        public static void ShowAvailableRooms<T>(string type, List<T> typeOfRoom) where T : Room
-        {
-            Console.Clear();
-            // Visar varje rum med namn och kapacitet.
-            // Beroende på vilken rumslista man skickar in (grupprum/klassrum).
-            Console.WriteLine($"Tillgängliga {type}:");
-            for (int i = 0; i < typeOfRoom.Count; i++)
-            {
-                Console.WriteLine($"[{i + 1}] {typeOfRoom[i].RoomName} Kapacitet: {typeOfRoom[i].RoomCapacity}");
-            }
-        }
+    
         // Metod för att läsa in namn. Gjord av Sara.
         public static string ReadName(string userPrompt)
         {
@@ -234,34 +223,63 @@ namespace Bokningssystem.Logic.HelperMethods
                 else
                 {
                     Console.WriteLine($"Du måste bekräfta Ja eller Nej!");
-                    BackToMenu();
+                    BackToMenu("vidare...");
                     continue; // Skickar tillbaka användaren till början av loopen.
                 }
             }
             return false;
         }
 
-        public static void TypeOfRoomMenu(string userPrompt)
+        public static void TypeOfRoomMenu()
         {
             Console.Clear();
-            Console.WriteLine($"{userPrompt}");
-            Console.WriteLine("[1] Klassrum");
-            Console.WriteLine("[2] Grupprum");
-            Console.WriteLine("\n[0] Återgå till huvudmenyn");
+            Console.WriteLine("\n╔════════════════════════════════╗");
+            Console.WriteLine("║        Välj typ av rum         ║");
+            Console.WriteLine("╠════════════════════════════════╣");
+            Console.WriteLine("║                                ║");
+            Console.WriteLine("║   [1] Klassrum                 ║");
+            Console.WriteLine("║   [2] Grupprum                 ║");
+            Console.WriteLine("║   [0] Återgå till huvudmenyn   ║");
+            Console.WriteLine("║                                ║");
+            Console.WriteLine("╚════════════════════════════════╝");
         }
-        public static void BackToMenu()
+        // Metod för att visa alla klassrum/grupprum. Gjord av Sara.
+        public static void ShowAvailableRooms<T>(string type, List<T> typeOfRoom) where T : Room
+        {
+            Console.Clear();
+            // Visar varje rum med namn, kapacitet & status.
+            // Beroende på vilken rumslista man skickar in (grupprum/klassrum).
+            Console.WriteLine($"\n╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine($"║                      Tillgängliga {type}                       ║");
+            Console.WriteLine($"╚══════════════════════════════════════════════════════════════════╝\n");
+            for (int i = 0; i < typeOfRoom.Count; i++)
+            {
+                var currentBooking = typeOfRoom[i].bookings
+                .FirstOrDefault(b => DateTime.Now >= b.StartTime && DateTime.Now < b.EndTime);
+                Console.Write($"[{i + 1}] {typeOfRoom[i].RoomName} Kapacitet: {typeOfRoom[i].RoomCapacity} ");
+                if (typeOfRoom[i] is ClassRoom classRoom)
+                { Console.Write($" Projektor: {(classRoom.HasProjector ? "Ja " : "Nej")} "); }
+                if (typeOfRoom[i] is GroupRoom groupRoom)
+                { Console.Write($" Smartboard: {(groupRoom.HasSmartBoard ? "Ja " : "Nej")} "); }
+                Console.ForegroundColor = typeOfRoom[i].IsCurrentlyAvailable ? ConsoleColor.Green : ConsoleColor.Red;
+                Console.WriteLine(typeOfRoom[i].IsCurrentlyAvailable ? "Tillgängligt just nu."
+                    : currentBooking != null ? $"Upptaget just nu. Kan bokas efter kl {currentBooking.EndTime:HH:mm}."
+                    : "Upptaget just nu.");
+                Console.ResetColor();
+            }
+        }
+        public static void BackToMenu(string message)
         {
             Thread.Sleep(1000);
-            Console.WriteLine("\nTryck ENTER för att återgå till menyn");
+            Console.WriteLine($"\nTryck ENTER för att gå {message}");
             Console.ReadKey();
             Console.Clear();
         }
-        public static void DisplayMessage()
+        public static void DisplayMessage(int min, int max)
         {
             Console.Clear();
-            Console.WriteLine("Felmeddelande:\n\n" +
-                                "Du skrev inte en giltig siffra.\n" +
-                                "Vänligen försök igen.\n\n");
+            Console.WriteLine($"Du måste skriva in en siffra mellan {min}-{max}! Vänligen försök igen.");
+
         }
     }
 }
