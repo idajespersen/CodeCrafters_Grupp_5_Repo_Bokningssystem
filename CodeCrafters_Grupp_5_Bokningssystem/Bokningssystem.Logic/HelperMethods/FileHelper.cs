@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
+﻿using System.Reflection;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Bokningssystem.Logic.RoomClasses;
+
 
 namespace Bokningssystem.Logic.HelperMethods
 {
@@ -35,6 +27,9 @@ namespace Bokningssystem.Logic.HelperMethods
             _initialized = true;
         }
 
+        /// <summary>
+        /// Chain a type as key and create a folderpath as value
+        /// </summary>
         public static void AddFolderPath(Type type, string name)
         {
             string fullFolderPath = Path.Combine(_rootPath, name);
@@ -42,6 +37,9 @@ namespace Bokningssystem.Logic.HelperMethods
             _bookableDirectories.Add(type, fullFolderPath);
         }
 
+        /// <summary>
+        /// Get directory of the given type
+        /// </summary>
         public static string GetDirectory(Type type)
         {
             if (_bookableDirectories.TryGetValue(type, out string? path) && !string.IsNullOrEmpty(path))
@@ -60,6 +58,9 @@ namespace Bokningssystem.Logic.HelperMethods
             }
         }
 
+        /// <summary>
+        /// Try save an IBookable object as json file
+        /// </summary>
         public static bool TrySave(IBookable bookable)
         {
             CreateFolders();
@@ -79,7 +80,7 @@ namespace Bokningssystem.Logic.HelperMethods
 
                 File.WriteAllText(filePath, content);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine($"Kunde inte spara '{filePath}'.");
                 Console.Write("Tryck [Enter] för att fortsätta.");
@@ -89,41 +90,10 @@ namespace Bokningssystem.Logic.HelperMethods
 
             return true;
         }
-
-        public static bool TrySave(List<IBookable> bookables)
-        {
-            CreateFolders();
-
-            JsonSerializerOptions options = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-
-            foreach (IBookable bookable in bookables)
-            {
-                string directoryPath = GetDirectory(bookable.GetType());
-                string name = bookable.Name.Replace(' ', '_');
-                string filePath = Path.Combine(directoryPath, $"{name}.json");
-
-                try
-                {
-                    string content = JsonSerializer.Serialize(bookable, bookable.GetType(), options);
-
-                    File.WriteAllText(filePath, content);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Kunde inte spara '{filePath}'.");
-                    Console.Write("Tryck [Enter] för att fortsätta.");
-                    Console.ReadLine();
-                }
-            }
-
-            return true;
-        }
-
-       
-
+        
+        /// <summary>
+        /// Try load a generic type of IBookable from json file
+        /// </summary>
         public static bool TryLoad<T>(out List<T> loaded) where T : IBookable
         {
             CreateFolders();
