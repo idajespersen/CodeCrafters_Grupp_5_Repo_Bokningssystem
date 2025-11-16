@@ -10,11 +10,14 @@ namespace Bokningssystem.Logic.RoomClasses
     // Paramenters for constructor include projector availability
     public class ClassRoom : Room
     {
-        bool hasProjector;
-        public ClassRoom(string iId, string iName, int iCapacity, bool iIsAvailable, bool iHasProjector)
-            : base(iId, iName, iCapacity, iIsAvailable)
+        private bool _hasProjector;
+
+        public bool HasProjector => _hasProjector;
+
+        public ClassRoom(string roomId, string name, int roomCapacity, bool hasProjector)
+            : base(roomId, name, roomCapacity)
         {
-            hasProjector = iHasProjector;
+            _hasProjector = hasProjector;
         }
     }
 }

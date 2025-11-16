@@ -11,6 +11,11 @@ namespace Bokningssystem.Logic
     // ----------------------------------------------------------------
     public interface IBookable
     {
+        string Name
+        {
+            get;
+        }
+
         void NewBooking();
         void CancelBooking();
         void UpdateBooking();

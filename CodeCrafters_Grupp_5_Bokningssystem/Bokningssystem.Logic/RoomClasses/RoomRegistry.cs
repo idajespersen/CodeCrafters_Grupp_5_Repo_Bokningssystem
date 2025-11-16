@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,14 +11,47 @@ namespace Bokningssystem.Logic.RoomClasses
     // Klass som håller reda på alla rum som skapats. Gjord av Sara.
     public static class RoomRegistry
     {
+        private static bool _hasBeenLoaded = false;
+        // Lista med rum. Private set så att endast klassen kan ändra själva listan.
         public static List<IBookable> AllRooms { get; private set; } = new();
 
+        public static void SaveRoom(IBookable bookable)
+        {
+            FileHelper.TrySave(bookable);
+        }
+
+        public static void LoadRooms()
+        {
+            if (_hasBeenLoaded)
+                throw new Exception("Rooms has already been loaded.");
+
+            // Loads all class rooms
+            if(FileHelper.TryLoad<ClassRoom>(out var classRooms))
+            {
+                foreach(IBookable bookable in classRooms)
+                {
+                    AllRooms.Add(bookable);
+                }
+            }
+
+            // Loads all group rooms
+            if (FileHelper.TryLoad<GroupRoom>(out var groupRooms))
+            {
+                foreach (IBookable bookable in groupRooms)
+                {
+                    AllRooms.Add(bookable);
+                }
+            }
+
+            _hasBeenLoaded = true;
+        }
+
+        // Metod för att registrera ett nytt rum i rumslistan.
         public static void RegisterRoom(IBookable room)
         {
             AllRooms.Add(room);
+            SaveRoom(room);
         }
-     
-
     
         // - Ability to make new rooms with error handling for duplicate names
         public static void NewRoom()
@@ -26,39 +60,31 @@ namespace Bokningssystem.Logic.RoomClasses
             bool isRunningMenu = true;
             while (isRunningMenu)
             {
-                Console.WriteLine("- Skapa ett nytt rum -\n");
-                Console.WriteLine("Typ av rum:\n\n" +
-                                    "[1] - Klassrum\n" +
-                                    "[2] - Grupprum\n\n" +
-                                    "[0] - Återgå till huvudmenyn\n");
+                Helper.TypeOfRoomMenu();
 
                 var newRoomType = "Room";
-                // Hár gjort hjälpmetod för int tryparse vill du använda det?
-                if (int.TryParse(Console.ReadLine()?.Trim(), out int typeChoice))
+                int typeChoice = Helper.ParseInt("Ange vad för rum du vill skapa: ", 0,2 );
+               
+                switch (typeChoice)
                 {
-                    switch (typeChoice)
-                    {
-                        case 1:
-                            newRoomType = "ClassRoom";
-                            break;
-                        case 2:
-                            newRoomType = "GroupRoom";
-                            break;
-                        case 0:
-                            isRunningMenu = false;
-                            continue;
-                        default:
-                            Helper.DisplayMessage();
-                            NewRoom();
-                            continue;
-                    }
+                    case 1:
+                        newRoomType = "ClassRoom";
+                        break;
+                    case 2:
+                        newRoomType = "GroupRoom";
+                        break;
+                    case 0:
+                        isRunningMenu = false;
+                        continue;
+                    default:
+                        //Helper.DisplayMessage();
+                        NewRoom();
+                        //Tove: Added return to not make a recursive loop
+                        return;
+                        //continue;
                 }
-                else
-                {
-                    Helper.DisplayMessage();
-                    Helper.BackToMenu();
-                    continue;
-                }
+
+
                 // Name the room
                 Console.Write("\nNamnge rummet: ");
                 var newRoomName = "000";
@@ -70,16 +96,20 @@ namespace Bokningssystem.Logic.RoomClasses
                     {
                         Room room = (Room)item;
                         // Compare new room name to existing rooms ignoring upper/lower case while doing so
-                        if (string.Equals(room.RoomName, newRoomName, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(room.Name, newRoomName, StringComparison.OrdinalIgnoreCase))
                         {
-                            bool nameAlreadyExists = true;
-                            if (nameAlreadyExists)
-                            {
-                                Console.WriteLine($"\nFel: Rummet '{newRoomName}' finns redan!\n\nTryck [ENTER] för att återvända.");
-                                Console.ReadKey();
-                                NewRoom();
-                                continue;
-                            }
+                            //Tove: Commented out code, and added return to prevent crash
+                            //because of possible change in AllRooms.Count.
+                            //bool nameAlreadyExists = true;
+                            //if (nameAlreadyExists)
+                            //{
+                            Console.WriteLine($"\nFel: Rummet '{newRoomName}' finns redan!\n\nTryck [ENTER] för att återvända.");
+                            Console.ReadKey();
+                            NewRoom();
+                            //continue;
+                            
+                            return;
+                            //}
                         }
                     }
                 }
@@ -89,7 +119,9 @@ namespace Bokningssystem.Logic.RoomClasses
                     Console.WriteLine("Rummet måste ha ett namn.\n\nTryck [ENTER] för att återvända.");
                     Console.ReadKey();
                     NewRoom();
-                    continue;
+                    //Tove: Added return to not make a recursive loop
+                    return;
+                    //continue;
                 }
                 // Room capacity
                 Console.Write("\nAnge rummets kapacitet: ");
@@ -103,7 +135,9 @@ namespace Bokningssystem.Logic.RoomClasses
                     Console.WriteLine("\nVärdet måste vara större än 0.\n\nTryck [ENTER] för att återvända.");
                     Console.ReadKey();
                     NewRoom();
-                    continue;
+                    //Tove: Added return to not make a recursive loop
+                    return;
+                    //continue;
                 }
                 Console.WriteLine("\nHar rummet utrustning?\n\n" +
                                     "[1] - Ja\n" +
@@ -125,33 +159,38 @@ namespace Bokningssystem.Logic.RoomClasses
                             isRunningMenu = false;
                             break;
                         default:
-                            Helper.DisplayMessage();
-                            Helper.BackToMenu();
+                            Helper.DisplayMessage(0,2);
+                            Helper.BackToMenu("vidare...");
                             NewRoom();
-                            continue;
+                            //Tove: Added return to not make a recursive loop
+                            return;
+                            //continue;
                     }
                 }
                 else
                 {
-                    Helper.DisplayMessage();
-                    Helper.BackToMenu();
+                    Helper.DisplayMessage(0,2);
+                    Helper.BackToMenu("vidare...");
                     NewRoom();
-                    continue;
+
+                    //Tove: Added return to not make a recursive loop
+                    return;
+                    //continue;
                 }
                 // Add room to the list once user didn't trigger errors and assign ID
                 string newRoomId = Guid.NewGuid().ToString("N");
 
                 if (newRoomType == "ClassRoom")
                 {
-                    bool newRoomIsAvailable = true;
-                    ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment, newRoomIsAvailable);
-                    RoomRegistry.AllRooms.Add(newRoom);
+                    //bool newRoomIsAvailable = true;
+                    ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //newRoomIsAvailable);
+                    RoomRegistry.RegisterRoom(newRoom);
                 }
                 if (newRoomType == "GroupRoom")
                 {
-                    bool newRoomIsAvailable = true;
-                    GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment, newRoomIsAvailable);
-                    RoomRegistry.AllRooms.Add(newRoom);
+                    //bool newRoomIsAvailable = true;
+                    GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //newRoomIsAvailable);
+                    RoomRegistry.RegisterRoom(newRoom);
                 }
 
                 Console.WriteLine($"\nSammanfattning:\n\n" +
@@ -161,6 +200,9 @@ namespace Bokningssystem.Logic.RoomClasses
                                     $"Har utrustning: {newRoomEquipment}\n\n" +
                                     $"Rummet har lagts till.\n\n" +
                                     $"Tryck [ENTER] för att återgå till menyn.");
+
+                //Tove: Added Console.ReadLine() to make above text visible to the user.
+                Console.ReadLine();
             }
         }
 

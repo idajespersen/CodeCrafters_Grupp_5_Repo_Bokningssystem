@@ -14,11 +14,13 @@ namespace Bokningssystem.Logic.RoomClasses
     // Paramenters for constructor include smartboard availability
     public class GroupRoom : Room
     {
-        bool hasSmartBoard;
-        public GroupRoom(string iId, string iName, int iCapacity, bool iIsAvailable, bool iHasSmartboard)
-                   : base(iId, iName, iCapacity, iIsAvailable)
+        private bool _hasSmartBoard;
+        public bool HasSmartBoard => _hasSmartBoard;
+
+        public GroupRoom(string roomId, string name, int roomCapacity, bool hasSmartboard)
+                   : base(roomId, name, roomCapacity)
         {
-            hasSmartBoard = iHasSmartboard;
+            _hasSmartBoard = hasSmartboard;
         }
 
         public override int MaxBookingHours => 6;

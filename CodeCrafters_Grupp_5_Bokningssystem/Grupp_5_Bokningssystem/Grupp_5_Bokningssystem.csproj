@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="credits.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Bokningssystem.Logic\Bokningssystem.Logic.csproj" />
   </ItemGroup>
 
