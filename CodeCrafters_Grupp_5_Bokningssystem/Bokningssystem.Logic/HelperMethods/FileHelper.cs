@@ -107,7 +107,7 @@ namespace Bokningssystem.Logic.HelperMethods
             {
                 files = Directory.GetFiles(directoryPath);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }
@@ -156,7 +156,7 @@ namespace Bokningssystem.Logic.HelperMethods
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine($"Det var ett problem med att läsa in filen '{fileName}'.");
                 Console.WriteLine();

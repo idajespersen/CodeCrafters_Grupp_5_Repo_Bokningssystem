@@ -63,8 +63,8 @@ namespace Bokningssystem.Logic.RoomClasses
                 Helper.TypeOfRoomMenu();
 
                 var newRoomType = "Room";
-                int typeChoice = Helper.ParseInt("Ange vad för rum du vill skapa: ", 0,2 );
-               
+                int typeChoice = Helper.ParseInt("Ange vad för rum du vill skapa: ", 0, 2);
+
                 switch (typeChoice)
                 {
                     case 1:
@@ -83,7 +83,6 @@ namespace Bokningssystem.Logic.RoomClasses
                         return;
                         //continue;
                 }
-
 
                 // Name the room
                 Console.Write("\nNamnge rummet: ");
@@ -107,7 +106,7 @@ namespace Bokningssystem.Logic.RoomClasses
                             Console.ReadKey();
                             NewRoom();
                             //continue;
-                            
+
                             return;
                             //}
                         }
@@ -159,7 +158,7 @@ namespace Bokningssystem.Logic.RoomClasses
                             isRunningMenu = false;
                             break;
                         default:
-                            Helper.DisplayMessage(0,2);
+                            Helper.DisplayMessage(0, 2);
                             Helper.BackToMenu("vidare...");
                             NewRoom();
                             //Tove: Added return to not make a recursive loop
@@ -169,10 +168,9 @@ namespace Bokningssystem.Logic.RoomClasses
                 }
                 else
                 {
-                    Helper.DisplayMessage(0,2);
+                    Helper.DisplayMessage(0, 2);
                     Helper.BackToMenu("vidare...");
                     NewRoom();
-
                     //Tove: Added return to not make a recursive loop
                     return;
                     //continue;
@@ -183,13 +181,13 @@ namespace Bokningssystem.Logic.RoomClasses
                 if (newRoomType == "ClassRoom")
                 {
                     //bool newRoomIsAvailable = true;
-                    ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //newRoomIsAvailable);
+                    ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //, newRoomIsAvailable);
                     RoomRegistry.RegisterRoom(newRoom);
                 }
                 if (newRoomType == "GroupRoom")
                 {
                     //bool newRoomIsAvailable = true;
-                    GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //newRoomIsAvailable);
+                    GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //, newRoomIsAvailable);
                     RoomRegistry.RegisterRoom(newRoom);
                 }
 
@@ -205,7 +203,5 @@ namespace Bokningssystem.Logic.RoomClasses
                 Console.ReadLine();
             }
         }
-
     }
-
 }
