@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 namespace Bokningssystem.Logic.RoomClasses
 {
     // ----------------------------------------------------------------
-    // 2. Parent / Base class
+    //             Parent / Base class Room. Made by Ida.
     // ----------------------------------------------------------------
-
     // Parent Class: Room inherits from interface IBookable
     public class Room : IBookable
     {
@@ -29,7 +28,8 @@ namespace Bokningssystem.Logic.RoomClasses
         public string Name { get; }
         // Variable for room capacity
         public int RoomCapacity { get; }
-        // Variable for room availability
+        // Beräknar ifall rum är tillgängligt
+        // (Då aktuell tid inte är mellan pågående boknings start- och sluttid)
         public bool IsCurrentlyAvailable
         {
             get
@@ -39,10 +39,9 @@ namespace Bokningssystem.Logic.RoomClasses
             }
         }
         // Standardvärde för max antal timmar ett rum kan bokas.
-        // Kan göra override för att ändra individuellt för olika typer rum.
+        // Använd override för att ändra individuellt för olika typer rum/subklasser.
         public virtual int MaxBookingHours => 8;
-        // Skapar ett cultureinfo objekt för att läsa av lokal kultur för datum.
-        CultureInfo currentCulture = CultureInfo.CurrentCulture;
+
         // Room Constructor
         // Parent class accepts id, name, and capacity as parameters
         public Room(string roomId, string name, int roomCapacity)
@@ -51,20 +50,22 @@ namespace Bokningssystem.Logic.RoomClasses
             Name = name;
             RoomCapacity = roomCapacity;
         }
-        
-        // Metod för att skapa bokning. Gjord av Sara.
+        // ----------------------------------------------------------------
+        //           Metod för att skapa bokning. Gjord av Sara.
+        // ----------------------------------------------------------------
         public void NewBooking()
-        {  
-            // Använder ReadName metod för att läsa in användarens namn.
-            string bookerName = Helper.ReadName("Ange namn på den som bokar: ");
-            // Använder ParseDateTime metod för att läsa in bokningens datum.
-            DateTime bookingDate = Helper.ParseDateTime($"\nAnge datum för bokning", currentCulture);
-            // Använder ReadTimeSpan metod för att läsa in bokningens start- och sluttid.
-            var (bookingStartTime, bookingEndTime) = Helper.ReadTimeSpan("Ange starttid", "Ange sluttid", bookingDate, MaxBookingHours, currentCulture);
+        {
+            
+            // Läser in användarens namn.
+            string bookerName = InputHelper.ReadName("Ange namn: ");
+            // Läser in bokningens datum utefter lokal kultur.
+            DateTime bookingDate = InputHelper.ParseDateTime($"Ange bokningsdatum", CultureInfo.CurrentCulture);
+            // Läser in bokningens start- och sluttid.
+            var (bookingStartTime, bookingEndTime) = InputHelper.ReadTimeSpan("Ange starttid", "Ange sluttid", bookingDate, MaxBookingHours, CultureInfo.CurrentCulture);
             // Kombinerar datum och tider till DateTime objekt för bokningen.
             DateTime startTime = bookingDate + bookingStartTime;
             DateTime endTime = bookingDate + bookingEndTime;
-            // Skapar nytt Booking objekt.
+
             Booking newBooking = new Booking(bookerName, Name, startTime, endTime);
             // Kontrollerar så att den nya bokningen inte överlappar med befintliga bokningar.
             bool overlap = Bookings.Any(b => b.BookingsOverlap(newBooking));
@@ -72,105 +73,132 @@ namespace Bokningssystem.Logic.RoomClasses
             {
                 Console.Clear();
                 Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                return; // Avbryter bokningen. Skickar tillbaka användaren till föregående meny.
+                return; 
             }
-            // Om bokningen inte överlappar med någon annan läggs den till i bookings listan.
+            // Lägger till bokning.
             Bookings.Add(newBooking);
-            Console.Clear();
-            Console.WriteLine($"Bokning skapad:\n{bookerName} har bokat {Name} - {startTime.Day} {startTime:MMMM} {startTime.Year} kl {startTime:HH\\:mm}-{endTime:HH\\:mm}.");
             RoomRegistry.SaveRoom(this);
+            Console.Clear();
+            Console.WriteLine("\n╔════════════════════════════════╗");
+            Console.WriteLine("║          Bokning skapad        ║");
+            Console.WriteLine("╚════════════════════════════════╝\n");
+            Console.WriteLine($"Namn: {bookerName} ");
+            Console.WriteLine($"Rum: {Name} ");
+            Console.WriteLine($"Datum: {startTime:dd MMMM yyyy} ");
+            Console.WriteLine($"Tid: {startTime:HH\\:mm}-{endTime:HH\\:mm}");
+            if (newBooking.Duration.Minutes == 0)
+            {
+                Console.WriteLine($"Bokningslängd: {newBooking.Duration.Hours} timmar ");
+            }
+            else if (newBooking.Duration.Hours == 0)
+            {
+                Console.WriteLine($"Bokningslängd: {newBooking.Duration.Minutes} minuter ");
+            }
+            else
+            {
+                Console.WriteLine($"Bokningslängd: {newBooking.Duration.Hours} timmar {newBooking.Duration.Minutes} minuter ");
+            }
         }
-        // Metod för att ta bort bokning. Gjord av Sara.
+
+        // ----------------------------------------------------------------
+        //           Metod för att ta bort bokning. Gjord av Sara.
+        // ----------------------------------------------------------------
         public void CancelBooking()
         {
-            Console.Clear();
-            // Felmeddelande om det inte gjorts några bokningar på det valda rummet.
+            MenuHelper.CancelBookingMenu();
+            
             if (Bookings.Count == 0)
             {
                 Console.WriteLine($"Det finns inga bokningar för {Name}");
-                return; // Skickar tillbaka användaren till föregående meny.
+                return; 
             }
-            // Visar alla bokningar på det valda rummet.
+            
             Console.WriteLine($"Bokningar för {Name}:");
-            for (int i = 0; i < Bookings.Count; i++)
-            {
-                Console.WriteLine($"[{i + 1}] {Bookings[i].BookerName} - {Bookings[i].StartTime.Day} {Bookings[i].StartTime:MMMM} {Bookings[i].StartTime.Year} kl {Bookings[i].StartTime:HH\\:mm} - {Bookings[i].EndTime:HH\\:mm}");
-            }
-            // Använder metod ParseInt för att läsa in användarens val av bokning att ta bort.
-            int removeInput = Helper.ParseInt("Ange vilken bokning du vill ta bort: ", 1, Bookings.Count);
+            MenuHelper.ShowBookingsForRoom(this);
+
+            // Läser in användarens val av bokning som ska tas bort.
+            int removeInput = InputHelper.ParseInt("Ange bokningen du vill ta bort: ", 1, Bookings.Count);
             // Variabel för att ta bort bokning. - 1 för att nå rätt index.
             Booking bookingToRemove = Bookings[removeInput - 1];
-            // Ber användaren bekräfta borttagning av bokning. Om de svarar ja så tas bokning bort.
-            if (Helper.ConfirmAction($"ta bort bokningen för {bookingToRemove.BookerName} - {bookingToRemove.StartTime.Day} {bookingToRemove.StartTime:MMMM} {bookingToRemove.StartTime.Year} kl {bookingToRemove.StartTime:HH\\:mm}-{bookingToRemove.EndTime:HH\\:mm}", "Borttagning har avbrutits"))
+            // Användaren får bekräfta borttagning av bokning.
+            MenuHelper.CancelBookingMenu();
+            if (InputHelper.ConfirmAction($"ta bort bokningen för {bookingToRemove.BookerName} - {bookingToRemove.StartTime.Day} {bookingToRemove.StartTime:MMMM} {bookingToRemove.StartTime.Year} kl {bookingToRemove.StartTime:HH\\:mm}-{bookingToRemove.EndTime:HH\\:mm}", "Borttagning har avbrutits"))
             {
                 Bookings.Remove(bookingToRemove);
-                Console.WriteLine($"Bokningen har tagits bort");
+                Console.WriteLine($"\nBokningen har tagits bort");
                 RoomRegistry.SaveRoom(this);
             }
         }
-
+        // ----------------------------------------------------------------
+        //           Metod för att uppdatera bokning. Gjord av Sara.
+        // ----------------------------------------------------------------
         public void UpdateBooking()
         {
-            bool updateMenuActive = true; // Variabel som styr loop för menyn.
+            bool updateMenuActive = true; 
             while (updateMenuActive)
             {
-                Console.Clear();
-                // Felmeddelande om det inte gjorts några bokningar på det valda rummet.
+                MenuHelper.UpdateBookingMenu();
                 if (Bookings.Count == 0)
                 {
                     Console.WriteLine($"Det finns inga bokningar för {Name}");
-                    return; // Skickar tillbaka användaren till föregående meny.
+                    return; 
                 }
 
-                Console.WriteLine($"Välj bokningen du vill uppdatera:");
-                // Visar alla bokningar på det valda rummet.
                 Console.WriteLine($"Bokningar för {Name}:");
-                for (int i = 0; i < Bookings.Count; i++)
-                {
-                    Console.WriteLine($"[{i + 1}] {Bookings[i].BookerName} - {Bookings[i].StartTime.Day} {Bookings[i].StartTime:MMMM} {Bookings[i].StartTime.Year} kl {Bookings[i].StartTime:HH\\:mm} - {Bookings[i].EndTime:HH\\:mm}");
-                }
-                // Använder metod ParseInt för att läsa in användarens val av bokning att uppdatera.
-                int updateInput = Helper.ParseInt("Ange vilken bokning du vill uppdatera: ", 1, Bookings.Count);
+                MenuHelper.ShowBookingsForRoom(this);
+                // Läser in användarens val av bokning som ska uppdateras.
+                int updateInput = InputHelper.ParseInt("\nAnge bokningen du vill uppdatera: ", 1, Bookings.Count);
                 // Variabel för att uppdatera bokning. - 1 för att nå rätt index.
                 Booking bookingToUpdate = Bookings[updateInput - 1];
 
-                Console.WriteLine("Vad vill du ändra?");
-                Console.WriteLine("[1] Ändra namn på bokningen");
-                Console.WriteLine("[2] Ändra datum/tid på bokningen");
-                Console.WriteLine("[0] Återgå till bokningsmenyn");
-                // Använder metod ParseInt för att läsa in användarens val av vad som ska ändras.
-                int updateMenuChoice = Helper.ParseInt("", 0, 2);
+                MenuHelper.UpdateBookingMenuChoices();
+
+                // Läser in användarens val av vad som ska ändras.
+                int updateMenuChoice = InputHelper.ParseInt("", 0, 2);
                 switch (updateMenuChoice)
                 {
-                    case 1: // Om användaren väljer att ändra namn.
-                        Console.Clear();
-                        // Använder metod ReadName för att läsa in nytt namn.
-                        string newBookerName = Helper.ReadName("Ange nytt namn på den som bokar: ");
-                        // Ber användaren bekräfta uppdatering av bokning. Om de svarar ja så uppdateras namnet.
-                        if (Helper.ConfirmAction($"ändra namnet för bokning {bookingToUpdate.BookerName} - {bookingToUpdate.StartTime.Day} {bookingToUpdate.StartTime:MMMM} {bookingToUpdate.StartTime.Year}  kl {bookingToUpdate.StartTime:HH\\:mm}  {bookingToUpdate.EndTime:HH\\:mm} till {newBookerName}", "Uppdatering av namn har avbrutits"))
+                    case 1:
+                        // --------------------
+                        //   Uppdatera namn
+                        // --------------------
+                        MenuHelper.UpdateBookingMenu();
+                        // Läser in nytt namn.
+                        string newBookerName = InputHelper.ReadName("Ange nytt namn: ");
+                        string confirmMessageName = $"ändra bokningen: " +
+                           $"\n\nFrån: " +
+                           $"\nNamn: {bookingToUpdate.BookerName} " +
+                           $"\nDatum: {bookingToUpdate.StartTime:dd MMMM yyyy} " +
+                           $"\nTid {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm}" +
+                           $"\n\nTill: " +
+                           $"\nNamn: {newBookerName} " +
+                           $"\nDatum: {bookingToUpdate.StartTime:dd MMMM yyyy} " +
+                           $"\nTid {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm} " +
+                           $"\n\nSvara ";
+                        MenuHelper.UpdateBookingMenu();
+                        // Användaren får bekräfta ändring av namn.
+                        if (InputHelper.ConfirmAction(confirmMessageName, "\nUppdatering av namn har avbrutits."))
                         {
                             bookingToUpdate.BookerName = newBookerName;
                             Console.WriteLine("Namnet på bokningen har uppdaterats!");
                             RoomRegistry.SaveRoom(this);
                         }
                         break;
-                    case 2: // Om användaren väljer att ändra tid/datum.
-                            // Skapar nya DateTime objekt med samma värde som bokningen som ska uppdateras.
+                    case 2: 
+                        
                         DateTime newStartTime = bookingToUpdate.StartTime;
                         DateTime newEndTime = bookingToUpdate.EndTime;
-                        Console.Clear();
-                        Console.WriteLine("Vad vill du ändra?");
-                        Console.WriteLine("[1] Ändra datum på bokningen");
-                        Console.WriteLine("[2] Ändra tid på bokningen");
-                        Console.WriteLine("[0] Återgå till bokningsmenyn");
-                        // Använder metod ParseInt för att läsa in användarens val av vad som ska ändras.
-                        int updateMenuChoice2 = Helper.ParseInt("", 0, 2);
+                        MenuHelper.UpdateBookingMenuChoicesDateAndTime();
+                        // Läser in användarens val av vad som ska ändras.
+                        int updateMenuChoice2 = InputHelper.ParseInt("", 0, 2);
                         switch (updateMenuChoice2)
                         {
-                            case 1: // Om användaren väljer att ändra datum.
-                                Console.Clear();
-                                // Använder ParseDateTime metod för att läsa in nytt datum.
-                                DateTime newBookingDate = Helper.ParseDateTime($"\nAnge nytt datum för bokning:", currentCulture);
+                                // --------------------
+                                //   Uppdatera datum
+                                // --------------------
+                            case 1:
+                                MenuHelper.UpdateBookingMenu();
+                                // Läser in nytt datum.
+                                DateTime newBookingDate = InputHelper.ParseDateTime($"Ange nytt datum för bokning: ", CultureInfo.CurrentCulture);
                                 // Kombinerar datum och tider till ett nytt DateTime objekt för bokningen.
                                 newStartTime = newBookingDate + newStartTime.TimeOfDay;
                                 newEndTime = newBookingDate + newEndTime.TimeOfDay;
@@ -179,23 +207,36 @@ namespace Bokningssystem.Logic.RoomClasses
                                 bool overlap = Bookings.Any(b => b != bookingToUpdate && b.BookingsOverlap(tempBooking));
                                 if (overlap)
                                 {
-                                    Console.Clear();
                                     Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                                    Helper.BackToMenu("till menyn...");
+                                    MenuHelper.BackToMenu("till menyn...");
                                 }
-                                // Ber användaren bekräfta uppdatering av bokning. Om de svarar ja så uppdateras datumet.
-                                if (Helper.ConfirmAction($"ändra datum för bokning {bookingToUpdate.BookerName} - {bookingToUpdate.StartTime.Day} {bookingToUpdate.StartTime:MMMM} {bookingToUpdate.StartTime.Year} kl {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm} till {newStartTime.Day} {newStartTime:MMMM} {newStartTime.Year}", "Uppdatering av datum har avbrutits"))
+                                string confirmMessageDate = $"ändra bokningen: " +
+                             $"\n\nFrån: " +
+                             $"\nNamn: {bookingToUpdate.BookerName} " +
+                             $"\nDatum: {bookingToUpdate.StartTime:dd MMMM yyyy} " +
+                             $"\nTid {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm}" +
+                             $"\n\nTill: " +
+                             $"\nNamn: {bookingToUpdate.BookerName} " +
+                             $"\nDatum: {newStartTime:dd MMMM yyyy} " +
+                             $"\nTid {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm} " +
+                             $"\n\nSvara ";
+                                MenuHelper.UpdateBookingMenu();
+                                // Användaren får bekräfta ändring av datum.
+                                if (InputHelper.ConfirmAction(confirmMessageDate, "\nUppdatering av datum har avbrutits."))
                                 {
                                     bookingToUpdate.StartTime = newStartTime;
                                     bookingToUpdate.EndTime = newEndTime;
-                                    Console.WriteLine("Datumet på bokningen har uppdaterats!");
+                                    Console.WriteLine("\nDatumet på bokningen har uppdaterats!");
                                     RoomRegistry.SaveRoom(this);
                                 }
                                 break;
-                            case 2: // Om användaren väljer att ändra tid.
-                                Console.Clear();
-                                // Använder ReadTimeSpan metod för att läsa in ny start- och sluttid.
-                                var (newbookingStartTime, newBookingEndTime) = Helper.ReadTimeSpan("Ange ny starttid", "Ange ny sluttid", bookingToUpdate.StartTime.Date, MaxBookingHours, currentCulture);
+                            // --------------------
+                            //   Uppdatera tider
+                            // --------------------
+                            case 2:
+                                MenuHelper.UpdateBookingMenu();
+                                // Läser in ny start- och sluttid.
+                                var (newbookingStartTime, newBookingEndTime) = InputHelper.ReadTimeSpan("Ange ny starttid", "Ange ny sluttid", bookingToUpdate.StartTime.Date, MaxBookingHours, CultureInfo.CurrentCulture);
                                 // Kombinerar datum och tider till ett nytt DateTime objekt för bokningen.
                                 newStartTime = newStartTime.Date + newbookingStartTime;
                                 newEndTime = newEndTime.Date + newBookingEndTime;
@@ -204,34 +245,43 @@ namespace Bokningssystem.Logic.RoomClasses
                                 overlap = Bookings.Any(b => b != bookingToUpdate && b.BookingsOverlap(tempBooking2));
                                 if (overlap)
                                 {
-                                    Console.Clear();
                                     Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                                    Helper.BackToMenu("till menyn...");
+                                    MenuHelper.BackToMenu("till menyn...");
                                 }
-                                // Ber användaren bekräfta uppdatering av bokning. Om de svarar ja så uppdateras tiden.
-                                if (Helper.ConfirmAction($"ändra tiden för bokning {bookingToUpdate.BookerName} - {bookingToUpdate.StartTime.Day} {bookingToUpdate.StartTime:MMMM} {bookingToUpdate.StartTime.Year} kl {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm} till  {newStartTime} - {newEndTime}", "Uppdatering av tid har avbrutits"))
+                                string confirmMessageTime = $"ändra bokningen: " +
+                          $"\n\nFrån: " +
+                          $"\nNamn: {bookingToUpdate.BookerName} " +
+                          $"\nDatum: {bookingToUpdate.StartTime:dd MMMM yyyy} " +
+                          $"\nTid {bookingToUpdate.StartTime:HH\\:mm}-{bookingToUpdate.EndTime:HH\\:mm}" +
+                          $"\n\nTill: " +
+                          $"\nNamn: {bookingToUpdate.BookerName} " +
+                          $"\nDatum: {bookingToUpdate.StartTime:dd MMMM yyyy} " +
+                          $"\nTid {newStartTime:HH\\:mm}-{newEndTime:HH\\:mm} " +
+                          $"\n\nSvara ";
+                                // Användaren får bekräfta ändring av tider.
+                                if (InputHelper.ConfirmAction(confirmMessageTime, "\nUppdatering av tid har avbrutits."))
                                 {
                                     bookingToUpdate.StartTime = newStartTime;
                                     bookingToUpdate.EndTime = newEndTime;
                                     RoomRegistry.SaveRoom(this);
-                                    Console.WriteLine("Tiden på bokningen har uppdaterats!");
+                                    Console.WriteLine("\nTiden på bokningen har uppdaterats!");
                                 }
                                 break;
                             case 0: // Om användaren vill återgå till huvudmenyn
-                                updateMenuActive = false; // While loopen avslutas.
+                                updateMenuActive = false; 
                                 break;
-                            default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                                Helper.DisplayMessage(0,2);
-                                Helper.BackToMenu("till menyn...");
+                            default: 
+                                MenuHelper.DisplayMessage(0,2);
+                                MenuHelper.BackToMenu("till menyn...");
                                 break;
                         }
                         break;
                     case 0: // Om användaren vill återgå till huvudmenyn
-                        updateMenuActive = false; // While loopen avslutas.
+                        updateMenuActive = false;
                         break;
-                    default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                        Helper.DisplayMessage(0, 2);
-                        Helper.BackToMenu("till menyn...");
+                    default: 
+                        MenuHelper.DisplayMessage(0, 2);
+                        MenuHelper.BackToMenu("till menyn...");
                         break;
                 }
                 break;

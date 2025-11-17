@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bokningssystem.Logic.HelperMethods
 {
-    public static class Helper
+    public static class InputHelper
     {
         // Metod för att ändra string till int. (Används för menyer) Gjord av Sara.
         public static int ParseInt(string userPrompt, int min, int max)

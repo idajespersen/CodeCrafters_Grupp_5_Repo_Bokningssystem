@@ -73,16 +73,16 @@ namespace Grupp_5_Bokningssystem
                 Console.WriteLine("║                                ║");
                 Console.WriteLine("╚════════════════════════════════╝");
 
-                int userChoice = Helper.ParseInt("\nAnge menyval: ", 0, 3);
+                int userChoice = InputHelper.ParseInt("\nAnge menyval: ", 0, 3);
                 switch (userChoice)
                 {
                     case 1:
                         Console.Clear();
-                        BookingMenu();
+                        MenuHelper.BookingMenu();
                         break;
                     case 2:
                         Console.Clear();
-                        RoomMenu();
+                        MenuHelper.RoomMenu();
                         break;
                     case 3:
                         Console.Clear();
@@ -93,201 +93,201 @@ namespace Grupp_5_Bokningssystem
                     isRunningMenu = false;
                         break;
                     default:
-                    Helper.DisplayMessage(0, 3);
+                    MenuHelper.DisplayMessage(0, 3);
                     break;
                 }
             }
         }   
 
-        public static void BookingMenu()
-        {
-            bool isRunningMenu = true;
+        //public static void BookingMenu()
+        //{
+        //    bool isRunningMenu = true;
 
-            while (isRunningMenu)
-            {
+        //    while (isRunningMenu)
+        //    {
 
-                Console.Clear();
-                Console.WriteLine("\n╔════════════════════════════════╗");
-                Console.WriteLine("║         Bokningsmenyn          ║");
-                Console.WriteLine("╠════════════════════════════════╣");
-                Console.WriteLine("║                                ║");
-                Console.WriteLine("║   [1] Gör en ny bokning        ║");
-                Console.WriteLine("║   [2] Ta bort bokning          ║");
-                Console.WriteLine("║   [3] Ändra bokning            ║");
-                Console.WriteLine("║   [4] Visa bokningar           ║");
-                Console.WriteLine("║   [0] Återgå till huvudmenyn   ║");
-                Console.WriteLine("║                                ║");
-                Console.WriteLine("╚════════════════════════════════╝");
+        //        Console.Clear();
+        //        Console.WriteLine("\n╔════════════════════════════════╗");
+        //        Console.WriteLine("║         Bokningsmenyn          ║");
+        //        Console.WriteLine("╠════════════════════════════════╣");
+        //        Console.WriteLine("║                                ║");
+        //        Console.WriteLine("║   [1] Gör en ny bokning        ║");
+        //        Console.WriteLine("║   [2] Ta bort bokning          ║");
+        //        Console.WriteLine("║   [3] Ändra bokning            ║");
+        //        Console.WriteLine("║   [4] Visa bokningar           ║");
+        //        Console.WriteLine("║   [0] Återgå till huvudmenyn   ║");
+        //        Console.WriteLine("║                                ║");
+        //        Console.WriteLine("╚════════════════════════════════╝");
 
-                // Använder metod ParseInt för att läsa in användarens menyval.
-                int userChoice = Helper.ParseInt("\nAnge menyval: ", 0, 4);
+        //        // Använder metod ParseInt för att läsa in användarens menyval.
+        //        int userChoice = Helper.ParseInt("\nAnge menyval: ", 0, 4);
 
-                // Filtrerar alla rum i RoomRegistry och lägger endast ClassRoom/GroupRoom objekt i en lista.
-                var classRooms = RoomRegistry.AllRooms.OfType<ClassRoom>().ToList();
-                var groupRooms = RoomRegistry.AllRooms.OfType<GroupRoom>().ToList();
-                switch (userChoice)
-                {
-                    case 1: // Om användaren väljer "Gör en ny bokning". Gjorts av Sara.
-                        Helper.TypeOfRoomMenu();
-                        // Använder metod ParseInt för att läsa in användarens val av typ av rum.
-                        int newBookingChoice = Helper.ParseInt("\nAnge vad du vill boka: ", 0, 2);
-                        switch (newBookingChoice)
-                        {
-                            case 1: // Om användaren väljer Klassrum.
-                                Helper.ShowAvailableRooms("Klassrum", classRooms);
-                                // Använder metod ParseInt för att läsa in användarens val av rum.
-                                int classRoomChoice = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
-                                // Skapar en bokning för det valda rummet med metoden NewBooking. -1 för att nå rätt index.
-                                classRooms[classRoomChoice - 1].NewBooking();
-                                Helper.BackToMenu("till menyn...");
-                                break;
-                            case 2: // Om användaren väljer Grupprum.
-                                Helper.ShowAvailableRooms("Grupprum", groupRooms);
-                                int groupRoomChoice = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
-                                groupRooms[groupRoomChoice - 1].NewBooking();
-                                Helper.BackToMenu("till menyn...");
-                                break;
-                            case 0: // Om användaren vill återgå till huvudmenyn
-                                isRunningMenu = false; // While loopen avslutas.
-                                break;
-                            default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                                Helper.DisplayMessage(0, 2);
-                                Helper.BackToMenu("till menyn...");
-                                break;
-                        }
-                        break;
+        //        // Filtrerar alla rum i RoomRegistry och lägger endast ClassRoom/GroupRoom objekt i en lista.
+        //        var classRooms = RoomRegistry.AllRooms.OfType<ClassRoom>().ToList();
+        //        var groupRooms = RoomRegistry.AllRooms.OfType<GroupRoom>().ToList();
+        //        switch (userChoice)
+        //        {
+        //            case 1: // Om användaren väljer "Gör en ny bokning". Gjorts av Sara.
+        //                Helper.TypeOfRoomMenu();
+        //                // Använder metod ParseInt för att läsa in användarens val av typ av rum.
+        //                int newBookingChoice = Helper.ParseInt("\nAnge vad du vill boka: ", 0, 2);
+        //                switch (newBookingChoice)
+        //                {
+        //                    case 1: // Om användaren väljer Klassrum.
+        //                        Helper.ShowAvailableRooms("Klassrum", classRooms);
+        //                        // Använder metod ParseInt för att läsa in användarens val av rum.
+        //                        int classRoomChoice = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
+        //                        // Skapar en bokning för det valda rummet med metoden NewBooking. -1 för att nå rätt index.
+        //                        classRooms[classRoomChoice - 1].NewBooking();
+        //                        Helper.BackToMenu("till menyn...");
+        //                        break;
+        //                    case 2: // Om användaren väljer Grupprum.
+        //                        Helper.ShowAvailableRooms("Grupprum", groupRooms);
+        //                        int groupRoomChoice = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
+        //                        groupRooms[groupRoomChoice - 1].NewBooking();
+        //                        Helper.BackToMenu("till menyn...");
+        //                        break;
+        //                    case 0: // Om användaren vill återgå till huvudmenyn
+        //                        isRunningMenu = false; // While loopen avslutas.
+        //                        break;
+        //                    default: // Om användaren skriver in något annat än 1, 2 eller 0.
+        //                        Helper.DisplayMessage(0, 2);
+        //                        Helper.BackToMenu("till menyn...");
+        //                        break;
+        //                }
+        //                break;
 
-                    case 2: // Om användaren väljer "Ta bort bokning". Gjorts av Sara.
-                        Helper.TypeOfRoomMenu();
-                        // Använder metod ParseInt för att läsa in användarens val av typ av rum.
-                        int removeBookingChoice = Helper.ParseInt("\nAnge vad du vill ta bort: ", 0, 2);
-                        switch (removeBookingChoice)
-                        {
-                            case 1: // Om användaren väljer Klassrum.
-                                Console.Clear();
-                                Helper.ShowAvailableRooms("Klassrum", classRooms);
-                                // Använder metod ParseInt för att läsa in användarens val av rum.
-                                int classRoomChoiceCancel = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
-                                // Avbryter en bokning för det valda rummet med metoden CancelBooking. -1 för att nå rätt index.
-                                classRooms[classRoomChoiceCancel - 1].CancelBooking();
-                                Helper.BackToMenu("till menyn...");
-                                break;
-                            case 2: // Om användaren väljer Grupprum.
-                                Console.Clear();
-                                Helper.ShowAvailableRooms("Grupprum", groupRooms);
-                                int groupRoomChoiceCancel = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
-                                groupRooms[groupRoomChoiceCancel - 1].CancelBooking();
-                                Helper.BackToMenu("till menyn...");
-                                break;
-                            case 0: // Om användaren vill återgå till huvudmenyn.
-                                isRunningMenu = false; // While loopen avslutas.
-                                break;
-                            default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                                Helper.DisplayMessage(0, 2);
-                                Helper.BackToMenu("till menyn...");
-                                break;
-                        }
-                        break;
+        //            case 2: // Om användaren väljer "Ta bort bokning". Gjorts av Sara.
+        //                Helper.TypeOfRoomMenu();
+        //                // Använder metod ParseInt för att läsa in användarens val av typ av rum.
+        //                int removeBookingChoice = Helper.ParseInt("\nAnge vad du vill ta bort: ", 0, 2);
+        //                switch (removeBookingChoice)
+        //                {
+        //                    case 1: // Om användaren väljer Klassrum.
+        //                        Console.Clear();
+        //                        Helper.ShowAvailableRooms("Klassrum", classRooms);
+        //                        // Använder metod ParseInt för att läsa in användarens val av rum.
+        //                        int classRoomChoiceCancel = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
+        //                        // Avbryter en bokning för det valda rummet med metoden CancelBooking. -1 för att nå rätt index.
+        //                        classRooms[classRoomChoiceCancel - 1].CancelBooking();
+        //                        Helper.BackToMenu("till menyn...");
+        //                        break;
+        //                    case 2: // Om användaren väljer Grupprum.
+        //                        Console.Clear();
+        //                        Helper.ShowAvailableRooms("Grupprum", groupRooms);
+        //                        int groupRoomChoiceCancel = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
+        //                        groupRooms[groupRoomChoiceCancel - 1].CancelBooking();
+        //                        Helper.BackToMenu("till menyn...");
+        //                        break;
+        //                    case 0: // Om användaren vill återgå till huvudmenyn.
+        //                        isRunningMenu = false; // While loopen avslutas.
+        //                        break;
+        //                    default: // Om användaren skriver in något annat än 1, 2 eller 0.
+        //                        Helper.DisplayMessage(0, 2);
+        //                        Helper.BackToMenu("till menyn...");
+        //                        break;
+        //                }
+        //                break;
 
-                    case 3: // Om användaren väljer "Ändra bokning". Gjorts av Sara.
-                        bool updateMenuActive = true; // Variabel som styr loop för menyn.
-                        while (updateMenuActive)
-                        {
-                            Helper.TypeOfRoomMenu();
-                            // Använder metod ParseInt för att läsa in användarens val av typ av rum.
-                            int updateBookingChoice = Helper.ParseInt("\nAnge vad du vill uppdatera: ", 0, 2);
-                            switch (updateBookingChoice)
-                            {
-                                case 1: // Om användaren väljer Klassrum.
-                                    Helper.ShowAvailableRooms("Klassrum", classRooms);
-                                    // Använder metod ParseInt för att läsa in användarens val av rum.
-                                    int classRoomChoice = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
-                                    // Uppdaterar en bokning för det valda rummet med metoden UpdateBooking. - 1 för att nå rätt index.
-                                    classRooms[classRoomChoice - 1].UpdateBooking();
-                                    Helper.BackToMenu("till menyn...");
-                                    break;
-                                case 2: // Om användaren väljer Grupprum.
-                                    Helper.ShowAvailableRooms("Grupprum", groupRooms);
-                                    int groupRoomChoice = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
-                                    groupRooms[groupRoomChoice - 1].UpdateBooking();
-                                    Helper.BackToMenu("till menyn...");
-                                    break;
-                                case 0: // Om användaren vill återgå till huvudmenyn.
-                                    updateMenuActive = false;
-                                    isRunningMenu = false; // While looperna avslutas.
-                                    break;
-                                default: // Om användaren skriver in något annat än 1, 2 eller 0.
-                                    Helper.DisplayMessage(0, 2);
-                                    Helper.BackToMenu("till menyn...");
-                                    break;
-                            }
-                        }
-                        break;
-                    case 4:
-                        Console.Clear();
-                        // Temporary comment for testing
-                        Console.WriteLine("Här kommer en ListBookings finnas!");
-                        Console.ReadKey();
-                        // ListBookings();
-                        break;
-                    case 0:
-                        Console.Clear();
-                        isRunningMenu = false;
-                        break;
-                    default:
-                        Helper.DisplayMessage(0,4);
-                        Helper.BackToMenu("till menyn...");
-                        break;
-                }
+        //            case 3: // Om användaren väljer "Ändra bokning". Gjorts av Sara.
+        //                bool updateMenuActive = true; // Variabel som styr loop för menyn.
+        //                while (updateMenuActive)
+        //                {
+        //                    Helper.TypeOfRoomMenu();
+        //                    // Använder metod ParseInt för att läsa in användarens val av typ av rum.
+        //                    int updateBookingChoice = Helper.ParseInt("\nAnge vad du vill uppdatera: ", 0, 2);
+        //                    switch (updateBookingChoice)
+        //                    {
+        //                        case 1: // Om användaren väljer Klassrum.
+        //                            Helper.ShowAvailableRooms("Klassrum", classRooms);
+        //                            // Använder metod ParseInt för att läsa in användarens val av rum.
+        //                            int classRoomChoice = Helper.ParseInt("Välj rum: ", 1, classRooms.Count);
+        //                            // Uppdaterar en bokning för det valda rummet med metoden UpdateBooking. - 1 för att nå rätt index.
+        //                            classRooms[classRoomChoice - 1].UpdateBooking();
+        //                            Helper.BackToMenu("till menyn...");
+        //                            break;
+        //                        case 2: // Om användaren väljer Grupprum.
+        //                            Helper.ShowAvailableRooms("Grupprum", groupRooms);
+        //                            int groupRoomChoice = Helper.ParseInt("Välj rum: ", 1, groupRooms.Count);
+        //                            groupRooms[groupRoomChoice - 1].UpdateBooking();
+        //                            Helper.BackToMenu("till menyn...");
+        //                            break;
+        //                        case 0: // Om användaren vill återgå till huvudmenyn.
+        //                            updateMenuActive = false;
+        //                            isRunningMenu = false; // While looperna avslutas.
+        //                            break;
+        //                        default: // Om användaren skriver in något annat än 1, 2 eller 0.
+        //                            Helper.DisplayMessage(0, 2);
+        //                            Helper.BackToMenu("till menyn...");
+        //                            break;
+        //                    }
+        //                }
+        //                break;
+        //            case 4:
+        //                Console.Clear();
+        //                // Temporary comment for testing
+        //                Console.WriteLine("Här kommer en ListBookings finnas!");
+        //                Console.ReadKey();
+        //                // ListBookings();
+        //                break;
+        //            case 0:
+        //                Console.Clear();
+        //                isRunningMenu = false;
+        //                break;
+        //            default:
+        //                Helper.DisplayMessage(0,4);
+        //                Helper.BackToMenu("till menyn...");
+        //                break;
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
-        public static void RoomMenu()
-        {
-            bool isRunningMenu = true;
+        //public static void RoomMenu()
+        //{
+        //    bool isRunningMenu = true;
 
-            while (isRunningMenu)
-            {
-                Console.Clear();
-                Console.WriteLine("\n╔════════════════════════════════╗");
-                Console.WriteLine("║          Rumshantering         ║");
-                Console.WriteLine("╠════════════════════════════════╣");
-                Console.WriteLine("║                                ║");
-                Console.WriteLine("║   [1] Sök efter rum            ║");
-                Console.WriteLine("║   [2] Skapa ett nytt rum       ║");
-                Console.WriteLine("║   [0] Återgå till huvudmenyn   ║");
-                Console.WriteLine("║                                ║");
-                Console.WriteLine("╚════════════════════════════════╝");
+        //    while (isRunningMenu)
+        //    {
+        //        Console.Clear();
+        //        Console.WriteLine("\n╔════════════════════════════════╗");
+        //        Console.WriteLine("║          Rumshantering         ║");
+        //        Console.WriteLine("╠════════════════════════════════╣");
+        //        Console.WriteLine("║                                ║");
+        //        Console.WriteLine("║   [1] Sök efter rum            ║");
+        //        Console.WriteLine("║   [2] Skapa ett nytt rum       ║");
+        //        Console.WriteLine("║   [0] Återgå till huvudmenyn   ║");
+        //        Console.WriteLine("║                                ║");
+        //        Console.WriteLine("╚════════════════════════════════╝");
 
-                int userChoice = Helper.ParseInt("\nAnge menyval: ", 0, 2);
+        //        int userChoice = Helper.ParseInt("\nAnge menyval: ", 0, 2);
 
-                switch (userChoice)
-                {
-                    case 1:
-                        Console.Clear();
-                        // Temporary comment for testing
-                        Console.WriteLine("Här kommer en SearchRoom finnas!");
-                        Console.ReadKey();
-                        //SearchRoom();
-                        Console.Clear();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        RoomRegistry.NewRoom();
-                        Console.Clear();
-                        break;
-                    case 0:
-                        Console.Clear();
-                        isRunningMenu = false;
-                        break;
-                    default:
-                        Console.Clear();
-                        Helper.DisplayMessage(0,2);
-                        continue;
-                }
-            }
-        }
+        //        switch (userChoice)
+        //        {
+        //            case 1:
+        //                Console.Clear();
+        //                // Temporary comment for testing
+        //                Console.WriteLine("Här kommer en SearchRoom finnas!");
+        //                Console.ReadKey();
+        //                //SearchRoom();
+        //                Console.Clear();
+        //                break;
+        //            case 2:
+        //                Console.Clear();
+        //                RoomRegistry.NewRoom();
+        //                Console.Clear();
+        //                break;
+        //            case 0:
+        //                Console.Clear();
+        //                isRunningMenu = false;
+        //                break;
+        //            default:
+        //                Console.Clear();
+        //                Helper.DisplayMessage(0,2);
+        //                continue;
+        //        }
+        //    }
+        //}
 
         public static void AboutInfoscreen()
         {

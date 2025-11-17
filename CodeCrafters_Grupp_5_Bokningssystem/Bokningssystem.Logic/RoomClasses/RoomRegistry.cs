@@ -60,10 +60,10 @@ namespace Bokningssystem.Logic.RoomClasses
             bool isRunningMenu = true;
             while (isRunningMenu)
             {
-                Helper.TypeOfRoomMenu();
+                MenuHelper.TypeOfRoomMenu();
 
                 var newRoomType = "Room";
-                int typeChoice = Helper.ParseInt("Ange vad för rum du vill skapa: ", 0, 2);
+                int typeChoice = InputHelper.ParseInt("Ange vad för rum du vill skapa: ", 0, 2);
 
                 switch (typeChoice)
                 {
@@ -158,8 +158,8 @@ namespace Bokningssystem.Logic.RoomClasses
                             isRunningMenu = false;
                             break;
                         default:
-                            Helper.DisplayMessage(0, 2);
-                            Helper.BackToMenu("vidare...");
+                            MenuHelper.DisplayMessage(0, 2);
+                            MenuHelper.BackToMenu("vidare...");
                             NewRoom();
                             //Tove: Added return to not make a recursive loop
                             return;
@@ -168,8 +168,8 @@ namespace Bokningssystem.Logic.RoomClasses
                 }
                 else
                 {
-                    Helper.DisplayMessage(0, 2);
-                    Helper.BackToMenu("vidare...");
+                    MenuHelper.DisplayMessage(0, 2);
+                    MenuHelper.BackToMenu("vidare...");
                     NewRoom();
                     //Tove: Added return to not make a recursive loop
                     return;
