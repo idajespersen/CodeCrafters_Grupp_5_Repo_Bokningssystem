@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bokningssystem.Logic.RoomClasses
 {
-    // Klass som håller reda på alla rum som skapats. Gjord av Sara.
+    // ---------------------------------------------------------------------
+    //  Klass som håller reda på alla rum som skapats. Gjord av Sara & Tove.
+    // ---------------------------------------------------------------------
     public static class RoomRegistry
     {
         private static bool _hasBeenLoaded = false;
@@ -46,14 +48,17 @@ namespace Bokningssystem.Logic.RoomClasses
             _hasBeenLoaded = true;
         }
 
-        // Metod för att registrera ett nytt rum i rumslistan.
+        // Registrerar/Sparar nytt rum i rumslistan.
         public static void RegisterRoom(IBookable room)
         {
             AllRooms.Add(room);
             SaveRoom(room);
         }
-    
-        // - Ability to make new rooms with error handling for duplicate names
+
+        // ----------------------------------------------------------------
+        //            Method for making new rooms. Made by Ida.
+        // ----------------------------------------------------------------
+        // Ability to make new rooms with error handling for duplicate names
         public static void NewRoom()
         {
             Console.Clear();
@@ -63,7 +68,7 @@ namespace Bokningssystem.Logic.RoomClasses
                 MenuHelper.TypeOfRoomMenu();
 
                 var newRoomType = "Room";
-                int typeChoice = InputHelper.ParseInt("Ange vad för rum du vill skapa: ", 0, 2);
+                int typeChoice = InputHelper.ParseInt("Ange menyval: ", 0, 2);
 
                 switch (typeChoice)
                 {
@@ -77,13 +82,13 @@ namespace Bokningssystem.Logic.RoomClasses
                         isRunningMenu = false;
                         continue;
                     default:
-                        //Helper.DisplayMessage();
+                        MenuHelper.DisplayMessage(0,2);
                         NewRoom();
                         //Tove: Added return to not make a recursive loop
                         return;
                         //continue;
                 }
-
+                MenuHelper.NewRoomMenu();
                 // Name the room
                 Console.Write("\nNamnge rummet: ");
                 var newRoomName = "000";
@@ -102,8 +107,8 @@ namespace Bokningssystem.Logic.RoomClasses
                             //bool nameAlreadyExists = true;
                             //if (nameAlreadyExists)
                             //{
-                            Console.WriteLine($"\nFel: Rummet '{newRoomName}' finns redan!\n\nTryck [ENTER] för att återvända.");
-                            Console.ReadKey();
+                            Console.WriteLine($"\nFel: Rummet '{newRoomName}' finns redan!\n");
+                            MenuHelper.BackToMenu("tillbaka...");
                             NewRoom();
                             //continue;
 
@@ -115,8 +120,8 @@ namespace Bokningssystem.Logic.RoomClasses
                 // String was null/empty and error message is shown
                 else
                 {
-                    Console.WriteLine("Rummet måste ha ett namn.\n\nTryck [ENTER] för att återvända.");
-                    Console.ReadKey();
+                    Console.WriteLine("Rummet måste ha ett namn.\n");
+                    MenuHelper.BackToMenu("tillbaka...");
                     NewRoom();
                     //Tove: Added return to not make a recursive loop
                     return;
@@ -131,8 +136,8 @@ namespace Bokningssystem.Logic.RoomClasses
                 }
                 else
                 {
-                    Console.WriteLine("\nVärdet måste vara större än 0.\n\nTryck [ENTER] för att återvända.");
-                    Console.ReadKey();
+                    Console.WriteLine("\nVärdet måste vara större än 0.\n");
+                    MenuHelper.BackToMenu("tillbaka...");
                     NewRoom();
                     //Tove: Added return to not make a recursive loop
                     return;
@@ -159,7 +164,7 @@ namespace Bokningssystem.Logic.RoomClasses
                             break;
                         default:
                             MenuHelper.DisplayMessage(0, 2);
-                            MenuHelper.BackToMenu("vidare...");
+                            MenuHelper.BackToMenu("tillbaka till menyn...");
                             NewRoom();
                             //Tove: Added return to not make a recursive loop
                             return;
@@ -169,7 +174,7 @@ namespace Bokningssystem.Logic.RoomClasses
                 else
                 {
                     MenuHelper.DisplayMessage(0, 2);
-                    MenuHelper.BackToMenu("vidare...");
+                    MenuHelper.BackToMenu("tillbaka till menyn...");
                     NewRoom();
                     //Tove: Added return to not make a recursive loop
                     return;
@@ -196,11 +201,8 @@ namespace Bokningssystem.Logic.RoomClasses
                                     $"Namn: {newRoomName}\n" +
                                     $"Kapacitet: {newRoomCapacity}\n" +
                                     $"Har utrustning: {newRoomEquipment}\n\n" +
-                                    $"Rummet har lagts till.\n\n" +
-                                    $"Tryck [ENTER] för att återgå till menyn.");
-
-                //Tove: Added Console.ReadLine() to make above text visible to the user.
-                Console.ReadLine();
+                                    $"Rummet har lagts till.\n");
+                MenuHelper.BackToMenu("tillbaka till menyn...");
             }
         }
     }
