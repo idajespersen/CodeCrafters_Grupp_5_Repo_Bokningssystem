@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bokningssystem.Logic.RoomClasses
 {
+    // ----------------------------------------------------------------
+    //               Child class ClassRoom. Made by Ida.
+    // ----------------------------------------------------------------
     // Child class ClassRoom, inherits from Room and IBookable
     // Paramenters for constructor include projector availability
     public class ClassRoom : Room
