@@ -68,7 +68,7 @@ namespace Bokningssystem.Logic.RoomClasses
                 MenuHelper.TypeOfRoomMenu();
 
                 var newRoomType = "Room";
-                int typeChoice = InputHelper.ParseInt("Ange menyval: ", 0, 2);
+                int typeChoice = InputHelper.ParseInt("\nAnge menyval: ", 0, 2);
 
                 switch (typeChoice)
                 {
