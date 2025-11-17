@@ -47,8 +47,8 @@ namespace Bokningssystem.Logic.HelperMethods
                         int newBookingChoice = InputHelper.ParseInt("\nAnge vad du vill boka: ", 0, 2);
                         switch (newBookingChoice)
                         {
-                            case 1: // Om användaren väljer Klassrum.
-                                ShowRoomsType("Klassrum", classRooms);
+                            case 1: // Om användaren väljer klassrum.
+                                ShowRoomsType("klassrum", classRooms);
                                 if (classRooms.Count > 0)
                                 {
                                     int classRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, classRooms.Count);
@@ -57,8 +57,8 @@ namespace Bokningssystem.Logic.HelperMethods
                                     BackToMenu("tillbaka till menyn...");
                                 }
                                 break;
-                            case 2: // Om användaren väljer Grupprum.
-                                ShowRoomsType("Grupprum", groupRooms);
+                            case 2: // Om användaren väljer grupprum.
+                                ShowRoomsType("grupprum", groupRooms);
                                 if (groupRooms.Count > 0)
                                 {
                                     int groupRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, groupRooms.Count);
@@ -84,8 +84,8 @@ namespace Bokningssystem.Logic.HelperMethods
                         int removeBookingChoice = InputHelper.ParseInt("\nAnge vad du vill ta bort: ", 0, 2);
                         switch (removeBookingChoice)
                         {
-                            case 1: // Om användaren väljer Klassrum.
-                                ShowRoomsType("Klassrum", classRooms);
+                            case 1: // Om användaren väljer klassrum.
+                                ShowRoomsType("klassrum", classRooms);
                                 if (classRooms.Count > 0)
                                 {
                                     int classRoomChoiceCancel = InputHelper.ParseInt("\nVälj rum: ", 1, classRooms.Count);
@@ -94,8 +94,8 @@ namespace Bokningssystem.Logic.HelperMethods
                                     BackToMenu("tillbaka till menyn...");
                                 }
                                 break;
-                            case 2: // Om användaren väljer Grupprum.
-                                ShowRoomsType("Grupprum", groupRooms);
+                            case 2: // Om användaren väljer grupprum.
+                                ShowRoomsType("grupprum", groupRooms);
                                 if (groupRooms.Count > 0)
                                 {
                                     int groupRoomChoiceCancel = InputHelper.ParseInt("\nVälj rum: ", 1, groupRooms.Count);
@@ -122,8 +122,8 @@ namespace Bokningssystem.Logic.HelperMethods
                             int updateBookingChoice = InputHelper.ParseInt("\nAnge vad du vill uppdatera: ", 0, 2);
                             switch (updateBookingChoice)
                             {
-                                case 1: // Om användaren väljer Klassrum.
-                                    ShowRoomsType("Klassrum", classRooms);
+                                case 1: // Om användaren väljer klassrum.
+                                    ShowRoomsType("klassrum", classRooms);
                                     if (classRooms.Count > 0)
                                     {
                                         int classRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, classRooms.Count);
@@ -132,8 +132,8 @@ namespace Bokningssystem.Logic.HelperMethods
                                         BackToMenu("tillbaka till menyn...");
                                     }
                                     break;
-                                case 2: // Om användaren väljer Grupprum.
-                                    ShowRoomsType("Grupprum", groupRooms);
+                                case 2: // Om användaren väljer grupprum.
+                                    ShowRoomsType("grupprum", groupRooms);
                                     if (classRooms.Count > 0)
                                     {
                                         int groupRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, groupRooms.Count);
