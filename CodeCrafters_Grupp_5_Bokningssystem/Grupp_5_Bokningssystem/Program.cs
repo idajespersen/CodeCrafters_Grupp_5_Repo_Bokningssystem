@@ -25,16 +25,7 @@ namespace Grupp_5_Bokningssystem
             FileHelper.AddFolderPath(typeof(ClassRoom), "Klassrum");
             FileHelper.AddFolderPath(typeof(GroupRoom), "Grupprum");
 
-            // Hardcoded a few rooms to have something to work with
-            /*
-            RoomRegistry.RegisterRoom(new ClassRoom("AA9BF90B94804053B746950491256241", "Klassrum 101", 45, true, true));
-            RoomRegistry.RegisterRoom(new ClassRoom("6FCCFE8B37DF473B9598D08461B7AFF7", "Klassrum 102", 20, true, true));
-            RoomRegistry.RegisterRoom(new ClassRoom("32EE3ED541C44576BC175D13418BC557", "Klassrum 103", 30, true, true));
-            RoomRegistry.RegisterRoom(new ClassRoom("D5B43EDB95EB40B799B7D6B857CA8740", "Klassrum 104", 15, false, false));
-            RoomRegistry.RegisterRoom(new GroupRoom("E057DD50FC7F40539D01A9988185A923", "Grupprum 201", 6, false, false));
-            RoomRegistry.RegisterRoom(new GroupRoom("21E8740CF52648B587EB9FEBCC8C3C59", "Grupprum 202", 8, true, true));
-            RoomRegistry.RegisterRoom(new GroupRoom("247256E4889F4F0F8836141736C14163", "Grupprum 203", 4, false, false));
-            */
+
             RoomRegistry.LoadRooms();
 
             while (runProgram == true)
@@ -44,7 +35,7 @@ namespace Grupp_5_Bokningssystem
         }
 
         // ----------------------------------------------------------------
-        //                            Methods
+        //                            Menus
         // ----------------------------------------------------------------
         public static void MainMenu()
         {
@@ -100,7 +91,7 @@ namespace Grupp_5_Bokningssystem
             Console.WriteLine();
             Console.WriteLine(credits);
             Console.WriteLine();
-            MenuHelper.BackToMenu("tillbaka till menyn...");
+            MenuHelper.GoBack("tillbaka till menyn...");
         }
     }
 }

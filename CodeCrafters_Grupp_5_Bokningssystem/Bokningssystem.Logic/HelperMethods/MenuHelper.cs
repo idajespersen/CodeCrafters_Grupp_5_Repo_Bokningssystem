@@ -12,6 +12,11 @@ namespace Bokningssystem.Logic.HelperMethods
         // ----------------------------------------------------------------
         //                       MENYER OCH VISNING
         // ----------------------------------------------------------------
+
+        // ----------------------------------------------------------------
+        //                          BOKNINGSMENY 
+        // ----------------------------------------------------------------
+
         public static void BookingMenu()
         {
             bool isRunningMenu = true;
@@ -32,11 +37,11 @@ namespace Bokningssystem.Logic.HelperMethods
                 Console.WriteLine("║                                ║");
                 Console.WriteLine("╚════════════════════════════════╝");
 
-                int userChoice = InputHelper.ParseInt("\nAnge menyval: ", 0, 4);
-
                 // Filtrerar alla rum i RoomRegistry och lägger endast ClassRoom/GroupRoom objekt i en lista.
                 var classRooms = RoomRegistry.AllRooms.OfType<ClassRoom>().ToList();
                 var groupRooms = RoomRegistry.AllRooms.OfType<GroupRoom>().ToList();
+
+                int userChoice = InputHelper.ParseInt("\nAnge menyval: ", 0, 4);
                 switch (userChoice)
                 {
                     // -------------------------------
@@ -54,7 +59,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                     int classRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, classRooms.Count);
                                     // Skapar en bokning för det rummet som användaren valt. -1 för att nå rätt index.
                                     classRooms[classRoomChoice - 1].NewBooking();
-                                    BackToMenu("tillbaka till menyn...");
+                                    GoBack("tillbaka till menyn...");
                                 }
                                 break;
                             case 2: // Om användaren väljer grupprum.
@@ -63,7 +68,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                 {
                                     int groupRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, groupRooms.Count);
                                     groupRooms[groupRoomChoice - 1].NewBooking();
-                                    BackToMenu("tillbaka till menyn...");
+                                    GoBack("tillbaka till menyn...");
                                 }
                                 break;
                             case 0: // Om användaren vill återgå till huvudmenyn
@@ -71,7 +76,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                 break;
                             default:
                                 DisplayMessage(0, 2);
-                                BackToMenu("tillbaka till menyn...");
+                                GoBack("tillbaka till menyn...");
                                 break;
                         }
                         break;
@@ -91,7 +96,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                     int classRoomChoiceCancel = InputHelper.ParseInt("\nVälj rum: ", 1, classRooms.Count);
                                     // Tar bort en bokning för det rummet som användaren valt. -1 för att nå rätt index.
                                     classRooms[classRoomChoiceCancel - 1].CancelBooking();
-                                    BackToMenu("tillbaka till menyn...");
+                                    GoBack("tillbaka till menyn...");
                                 }
                                 break;
                             case 2: // Om användaren väljer grupprum.
@@ -100,7 +105,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                 {
                                     int groupRoomChoiceCancel = InputHelper.ParseInt("\nVälj rum: ", 1, groupRooms.Count);
                                     groupRooms[groupRoomChoiceCancel - 1].CancelBooking();
-                                    BackToMenu("tillbaka till menyn...");
+                                    GoBack("tillbaka till menyn...");
                                 }
                                 break;
                             case 0: // Om användaren vill återgå till huvudmenyn.
@@ -108,7 +113,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                 break;
                             default:
                                 DisplayMessage(0, 2);
-                                BackToMenu("tillbaka till menyn...");
+                                GoBack("tillbaka till menyn...");
                                 break;
                         }
                         break;
@@ -129,7 +134,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                         int classRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, classRooms.Count);
                                         // Uppdaterar bokning för det rummet som användaren valt. -1 för att nå rätt index.
                                         classRooms[classRoomChoice - 1].UpdateBooking();
-                                        BackToMenu("tillbaka till menyn...");
+                                        GoBack("tillbaka till menyn...");
                                     }
                                     break;
                                 case 2: // Om användaren väljer grupprum.
@@ -138,7 +143,7 @@ namespace Bokningssystem.Logic.HelperMethods
                                     {
                                         int groupRoomChoice = InputHelper.ParseInt("\nVälj rum: ", 1, groupRooms.Count);
                                         groupRooms[groupRoomChoice - 1].UpdateBooking();
-                                        BackToMenu("tillbaka till menyn...");
+                                        GoBack("tillbaka till menyn...");
                                     }
                                     break;
                                 case 0: // Om användaren vill återgå till huvudmenyn.
@@ -146,31 +151,60 @@ namespace Bokningssystem.Logic.HelperMethods
                                     break;
                                 default:
                                     DisplayMessage(0, 2);
-                                    BackToMenu("tillbaka till menyn...");
+                                    GoBack("tillbaka till menyn...");
                                     break;
                             }
                             break;
                         }
                         break;
+                    // ----------------------------------
+                    //  Visa bokningar. Gjord av Daniel.
+                    // ----------------------------------
                     case 4:
-                        Console.Clear();
-                        // Temporary comment for testing
-                        Console.WriteLine("Här kommer en ListBookings finnas!");
-                        Console.ReadKey();
-                        // ListBookings();
+                        ListbookingsMenuChoices();
+                        int listBookingChoice = InputHelper.ParseInt("Ange menyval: ", 0, 2);
+                        switch (listBookingChoice)
+                        {
+                            case 1:
+                                Console.Clear();
+                                ListBookingMenu();
+                                foreach (IBookable booking in RoomRegistry.AllRooms)
+                                {
+                                    booking.ListBookings();
+                                }
+                                GoBack("tillbaka till menyn...");
+                                break;
+                            case 2:
+                                Console.Clear();
+                                // Vi går till första bästa rum ur registret med FirstOrDefault().
+                                var ListByYear = RoomRegistry.AllRooms.FirstOrDefault(); // Eftersom metoden vi vill köra (ListBookingsByYear) inte är "static", så måste vi ha en instans av ett rum för att nå metoden.
+                                ListByYear?.ListBookingsByYear();
+                                GoBack("tillbaka till menyn...");
+                                break;
+                            case 0:
+                                isRunningMenu = false;
+                                break;
+                            default:
+                                DisplayMessage(0, 2);
+                                GoBack("tillbaka till menyn...");
+                                break;
+                        }
                         break;
+                        
                     case 0:
                         isRunningMenu = false;
                         break;
                     default:
                         DisplayMessage(0, 4);
-                        BackToMenu("tillbaka till menyn...");
+                        GoBack("tillbaka till menyn...");
                         break;
                 }
 
             }
         }
-
+        // ----------------------------------------------------------------
+        //                           RUMSMENY
+        // ----------------------------------------------------------------
         public static void RoomMenu()
         {
             bool isRunningMenu = true;
@@ -182,26 +216,25 @@ namespace Bokningssystem.Logic.HelperMethods
                 Console.WriteLine("║          Rumshantering         ║");
                 Console.WriteLine("╠════════════════════════════════╣");
                 Console.WriteLine("║                                ║");
-                Console.WriteLine("║   [1] Sök efter rum            ║");
+                Console.WriteLine("║   [1] Visa alla rum            ║");
                 Console.WriteLine("║   [2] Skapa ett nytt rum       ║");
                 Console.WriteLine("║   [0] Återgå till huvudmenyn   ║");
                 Console.WriteLine("║                                ║");
                 Console.WriteLine("╚════════════════════════════════╝");
+
+                var allRooms = RoomRegistry.AllRooms.OfType<Room>().ToList();
 
                 int userChoice = InputHelper.ParseInt("\nAnge menyval: ", 0, 2);
 
                 switch (userChoice)
                 {
                     case 1:
-                        Console.Clear();
-                        // Temporary comment for testing
-                        Console.WriteLine("Här kommer en SearchRoom finnas!");
-                        Console.ReadKey();
-                        //SearchRoom();
-                        Console.Clear();
+                        ShowRooms(allRooms);
+                        GoBack("tillbaka till menyn...");
                         break;
                     case 2:
                         RoomRegistry.NewRoom();
+                        GoBack("tillbaka till menyn...");
                         break;
                     case 0:
                         isRunningMenu = false;
@@ -215,9 +248,12 @@ namespace Bokningssystem.Logic.HelperMethods
             }
         }
         // ----------------------------------------------------------------
+        //                  METODER FÖR VISNING AV RUM
+        // ----------------------------------------------------------------
+        // ----------------------------------------------------------------
         //    Metod för att visa alla klassrum/grupprum. Gjord av Sara.
         // ----------------------------------------------------------------
-        public static void ShowRoomsType<T>(string type, List<T> typeOfRoom) where T : Room
+        public static void ShowRoomsType<T>(string type, List<T> rooms) where T : Room
         {
             Console.Clear();
             // Visar varje rum med namn, kapacitet & status.
@@ -225,11 +261,40 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine($"\n╔══════════════════════════════════════════════════════════════════╗");
             Console.WriteLine($"║                      Tillgängliga {type}                       ║");
             Console.WriteLine($"╚══════════════════════════════════════════════════════════════════╝\n");
-            if (typeOfRoom.Count > 0)
+            if (rooms.Count > 0)
             {
-                for (int i = 0; i < typeOfRoom.Count; i++)
+                RoomList(rooms);
+            }
+            else
+            {
+                Console.WriteLine($"Det finns inga {type}.");
+                GoBack("tillbaka till menyn...");
+            }
+        }
+           
+        public static void ShowRooms( List<Room> rooms) 
+        {
+            Console.Clear();
+            Console.WriteLine($"\n╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine($"║                         Tillgängliga rum                         ║");
+            Console.WriteLine($"╚══════════════════════════════════════════════════════════════════╝\n");
+            if (rooms.Count > 0)
+            {
+                RoomList(rooms);
+            }
+            else
+            {
+                Console.WriteLine($"Det finns inga rum.");
+                GoBack("tillbaka till menyn...");
+            }
+        }
+
+        public static void RoomList<T>(List<T> rooms) where T : Room
+        {
+           
+                for (int i = 0; i < rooms.Count; i++)
                 {
-                    var room = typeOfRoom[i];
+                    var room = rooms[i];
                     // Variabel som sparar ett boknings objekt ifall det är någon bokning som pågår just nu.
                     var currentBooking = room.Bookings
                     .FirstOrDefault(b => DateTime.Now >= b.StartTime && DateTime.Now < b.EndTime);
@@ -246,12 +311,6 @@ namespace Bokningssystem.Logic.HelperMethods
                     Console.ResetColor();
                 }
             }
-            else
-            {
-                Console.WriteLine($"Det finns inga {type}");
-                BackToMenu("tillbaka till menyn...");
-            }
-        }
         public static void ShowBookingsForRoom(Room rooms)
         {
             for (int i = 0; i < rooms.Bookings.Count; i++)
@@ -262,6 +321,9 @@ namespace Bokningssystem.Logic.HelperMethods
                     $"{booking.StartTime:HH\\:mm} - {booking.EndTime:HH\\:mm}");
             }
         }
+        // ----------------------------------------------------------------
+        //                            MENYER
+        // ----------------------------------------------------------------
         public static void TypeOfRoomMenu()
         {
             Console.Clear();
@@ -294,7 +356,7 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.Clear();
             Console.WriteLine("\n╔════════════════════════════════╗");
             Console.WriteLine("║        Uppdatera bokning       ║");
-            Console.WriteLine("╚════════════════════════════════╝\n");
+            Console.WriteLine("╚════════════════════════════════╝");
         }
         public static void UpdateBookingMenuChoices()
         {
@@ -302,9 +364,11 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine("\n╔═════════════════════════════════╗");
             Console.WriteLine("║        Uppdatera bokning        ║");
             Console.WriteLine("╠═════════════════════════════════╣");
+            Console.WriteLine("║                                 ║");
             Console.WriteLine("║  [1] Ändra namn på bokning      ║");
             Console.WriteLine("║  [2] Ändra datum/tid på bokning ║");
             Console.WriteLine("║  [0] Återgå till menyn          ║");
+            Console.WriteLine("║                                 ║");
             Console.WriteLine("╚═════════════════════════════════╝\n");
         }
         public static void UpdateBookingMenuChoicesDateAndTime()
@@ -313,9 +377,31 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine("\n╔════════════════════════════════╗");
             Console.WriteLine("║        Uppdatera bokning       ║");
             Console.WriteLine("╠════════════════════════════════╣");
+            Console.WriteLine("║                                ║");
             Console.WriteLine("║   [1] Ändra datum på bokning   ║");
             Console.WriteLine("║   [2] Ändra tid på bokning     ║");
             Console.WriteLine("║   [0] Återgå till menyn        ║");
+            Console.WriteLine("║                                ║");
+            Console.WriteLine("╚════════════════════════════════╝\n");
+        }
+        public static void ListBookingMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("\n╔════════════════════════════════╗");
+            Console.WriteLine("║         Visa bokningar         ║");
+            Console.WriteLine("╚════════════════════════════════╝\n");
+        }
+        public static void ListbookingsMenuChoices()
+        {
+            Console.Clear();
+            Console.WriteLine("\n╔════════════════════════════════╗");
+            Console.WriteLine("║         Visa bokningar         ║");
+            Console.WriteLine("╠════════════════════════════════╣");
+            Console.WriteLine("║                                ║");
+            Console.WriteLine("║   [1] Visa alla bokningar      ║");
+            Console.WriteLine("║   [2] Visa bokningar per år    ║");
+            Console.WriteLine("║   [0] Återgå till menyn        ║");
+            Console.WriteLine("║                                ║");
             Console.WriteLine("╚════════════════════════════════╝\n");
         }
         public static void NewRoomMenu()
@@ -325,7 +411,10 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine("║         Skapa nytt rum         ║");
             Console.WriteLine("╚════════════════════════════════╝");
         }
-        public static void BackToMenu(string message)
+        // ----------------------------------------------------------------
+        //                        HJÄLPMETODER (UI)
+        // ----------------------------------------------------------------
+        public static void GoBack(string message)
         {
             Thread.Sleep(1000);
             Console.WriteLine($"\nTryck [ENTER] för att gå {message}");

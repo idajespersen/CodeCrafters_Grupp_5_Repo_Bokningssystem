@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Bokningssystem.Logic
 {
     // ----------------------------------------------------------------
-    //                      Interface - IBookable
+    //                Interface - IBookable. Made by Ida.
     // ----------------------------------------------------------------
     public interface IBookable
     {

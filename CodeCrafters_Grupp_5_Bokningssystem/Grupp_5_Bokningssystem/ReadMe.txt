@@ -61,9 +61,11 @@ Flödet för bokningar:
            KÄNDA BEGRÄNSNINGAR
 =========================================
 
-Ingen hantering av att två personer försöker boka samtidigt (ifall programmet skull användas av flera personer).
+- Ingen hantering av att två personer försöker boka samtidigt (ifall programmet skull användas av flera personer).
 
-Programmet körs enbart i konsolmiljö, ingen GUI-version finns.
+- Programmet körs enbart i konsolmiljö, ingen GUI-version finns.
+
+- Rum kan enbart skapas. För att ta bort rum krävs att man tar bort den enskilda JSON-filen i mappen Klassrum / Grupprum under AppData\Roaming\Grupp_5_Bokningssystem\.
 
 
              ANSVARSOMRÅDEN
