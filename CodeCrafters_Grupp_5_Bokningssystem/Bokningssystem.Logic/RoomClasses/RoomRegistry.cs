@@ -102,18 +102,14 @@ namespace Bokningssystem.Logic.RoomClasses
                         // Compare new room name to existing rooms ignoring upper/lower case while doing so
                         if (string.Equals(room.Name, newRoomName, StringComparison.OrdinalIgnoreCase))
                         {
-                            //Tove: Commented out code, and added return to prevent crash
-                            //because of possible change in AllRooms.Count.
-                            //bool nameAlreadyExists = true;
-                            //if (nameAlreadyExists)
-                            //{
+                          
                             Console.WriteLine($"\nFel: Rummet '{newRoomName}' finns redan!\n");
                             MenuHelper.GoBack("tillbaka...");
                             NewRoom();
-                            //continue;
+                           
 
                             return;
-                            //}
+                         
                         }
                     }
                 }
@@ -123,9 +119,9 @@ namespace Bokningssystem.Logic.RoomClasses
                     Console.WriteLine("Rummet måste ha ett namn.\n");
                     MenuHelper.GoBack("tillbaka...");
                     NewRoom();
-                    //Tove: Added return to not make a recursive loop
+                  
                     return;
-                    //continue;
+                
                 }
                 // Room capacity
                 Console.Write("\nAnge rummets kapacitet: ");
@@ -139,9 +135,9 @@ namespace Bokningssystem.Logic.RoomClasses
                     Console.WriteLine("\nVärdet måste vara större än 0.\n");
                     MenuHelper.GoBack("tillbaka...");
                     NewRoom();
-                    //Tove: Added return to not make a recursive loop
+             
                     return;
-                    //continue;
+   
                 }
                 Console.WriteLine("\nHar rummet utrustning?\n\n" +
                                     "[1] - Ja\n" +
@@ -166,9 +162,9 @@ namespace Bokningssystem.Logic.RoomClasses
                             MenuHelper.DisplayMessage(0, 2);
                             MenuHelper.GoBack("tillbaka till menyn...");
                             NewRoom();
-                            //Tove: Added return to not make a recursive loop
+  
                             return;
-                            //continue;
+
                     }
                 }
                 else
@@ -176,23 +172,21 @@ namespace Bokningssystem.Logic.RoomClasses
                     MenuHelper.DisplayMessage(0, 2);
                     MenuHelper.GoBack("tillbaka till menyn...");
                     NewRoom();
-                    //Tove: Added return to not make a recursive loop
+
                     return;
-                    //continue;
+
                 }
                 // Add room to the list once user didn't trigger errors and assign ID
                 string newRoomId = Guid.NewGuid().ToString("N");
 
                 if (newRoomType == "ClassRoom")
                 {
-                    //bool newRoomIsAvailable = true;
-                    ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //, newRoomIsAvailable);
+                    ClassRoom newRoom = new ClassRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); 
                     RoomRegistry.RegisterRoom(newRoom);
                 }
                 if (newRoomType == "GroupRoom")
                 {
-                    //bool newRoomIsAvailable = true;
-                    GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); //, newRoomIsAvailable);
+                    GroupRoom newRoom = new GroupRoom(newRoomId, newRoomName, newRoomCapacity, newRoomEquipment); 
                     RoomRegistry.RegisterRoom(newRoom);
                 }
 
