@@ -31,7 +31,7 @@ namespace Bokningssystem.Logic.RoomClasses
         {
             if (Bookings.Count == 0) // Om rummet inte har några bokningar alls.
             {
-                Console.WriteLine($"{Name} inte bokad\n");
+                Console.WriteLine($"[{Name}] inte bokad\n");
             }
 
             foreach (var booking in Bookings) // Loopar igenom varje bokning som finns i rummet.
