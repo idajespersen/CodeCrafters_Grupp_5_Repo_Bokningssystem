@@ -13,6 +13,8 @@
 
 - Då programmet körs visas huvudmenyn: 
 
+<img width="317" height="331" alt="{CFFC4B97-44DA-4C45-9C24-4274FFE15A9C}" src="https://github.com/user-attachments/assets/a6c0daa6-e463-4b81-828f-5ea7ba75bd63" />
+
 [1] Bokningshantering
 Här kan användaren:
 
@@ -61,7 +63,19 @@ Flödet för bokningar:
 
 - Programmet körs enbart i konsolmiljö, ingen GUI-version finns.
 
+- Rum kan enbart skapas. För att ta bort rum krävs att man tar bort den enskilda JSON-filen i mappen Klassrum / Grupprum under AppData\Roaming\Grupp_5_Bokningssystem\.
 
 ## ANSVARSOMRÅDEN
 
-- Vilken student har huvudansvaret för vilka delar
+Daniel Skalk
+-
+
+Ida Jespersen
+-
+
+Sara Sundqvist
+- 
+- Skapa Readme
+
+Tove Rosén
+- Filhantering för att läsa in embedded text fil, samt läsa in / spara JSON filer.
