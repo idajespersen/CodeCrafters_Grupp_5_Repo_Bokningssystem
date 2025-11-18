@@ -12,6 +12,11 @@ namespace Bokningssystem.Logic.HelperMethods
         // ----------------------------------------------------------------
         //                       MENYER OCH VISNING
         // ----------------------------------------------------------------
+
+        // ----------------------------------------------------------------
+        //                          BOKNINGSMENY 
+        // ----------------------------------------------------------------
+
         public static void BookingMenu()
         {
             bool isRunningMenu = true;
@@ -197,7 +202,9 @@ namespace Bokningssystem.Logic.HelperMethods
 
             }
         }
-
+        // ----------------------------------------------------------------
+        //                           RUMSMENY
+        // ----------------------------------------------------------------
         public static void RoomMenu()
         {
             bool isRunningMenu = true;
@@ -241,9 +248,12 @@ namespace Bokningssystem.Logic.HelperMethods
             }
         }
         // ----------------------------------------------------------------
+        //                  METODER FÖR VISNING AV RUM
+        // ----------------------------------------------------------------
+        // ----------------------------------------------------------------
         //    Metod för att visa alla klassrum/grupprum. Gjord av Sara.
         // ----------------------------------------------------------------
-        public static void ShowRoomsType<T>(string type, List<T> typeOfRoom) where T : Room
+        public static void ShowRoomsType<T>(string type, List<T> rooms) where T : Room
         {
             Console.Clear();
             // Visar varje rum med namn, kapacitet & status.
@@ -251,26 +261,9 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine($"\n╔══════════════════════════════════════════════════════════════════╗");
             Console.WriteLine($"║                      Tillgängliga {type}                       ║");
             Console.WriteLine($"╚══════════════════════════════════════════════════════════════════╝\n");
-            if (typeOfRoom.Count > 0)
+            if (rooms.Count > 0)
             {
-                for (int i = 0; i < typeOfRoom.Count; i++)
-                {
-                    var room = typeOfRoom[i];
-                    // Variabel som sparar ett boknings objekt ifall det är någon bokning som pågår just nu.
-                    var currentBooking = room.Bookings
-                    .FirstOrDefault(b => DateTime.Now >= b.StartTime && DateTime.Now < b.EndTime);
-                    Console.Write($"[{i + 1}] {room.Name} Kapacitet: {room.RoomCapacity} ");
-                    if (room is ClassRoom classRoom)
-                    { Console.Write($" Projektor: {(classRoom.HasProjector ? "Ja " : "Nej")} "); }
-                    if (room is GroupRoom groupRoom)
-                    { Console.Write($" Smartboard: {(groupRoom.HasSmartBoard ? "Ja " : "Nej")} "); }
-                    // Visar status i olika färger beroende på om rummet är bokat just nu eller inte.
-                    Console.ForegroundColor = room.IsCurrentlyAvailable ? ConsoleColor.Green : ConsoleColor.Red;
-                    Console.WriteLine(room.IsCurrentlyAvailable ? "Tillgängligt just nu."
-                        : currentBooking != null ? $"Upptaget just nu. Kan bokas efter kl {currentBooking.EndTime:HH:mm}."
-                        : "Upptaget just nu.");
-                    Console.ResetColor();
-                }
+                RoomList(rooms);
             }
             else
             {
@@ -278,6 +271,7 @@ namespace Bokningssystem.Logic.HelperMethods
                 GoBack("tillbaka till menyn...");
             }
         }
+           
         public static void ShowRooms( List<Room> rooms) 
         {
             Console.Clear();
@@ -286,6 +280,18 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine($"╚══════════════════════════════════════════════════════════════════╝\n");
             if (rooms.Count > 0)
             {
+                RoomList(rooms);
+            }
+            else
+            {
+                Console.WriteLine($"Det finns inga rum.");
+                GoBack("tillbaka till menyn...");
+            }
+        }
+
+        public static void RoomList<T>(List<T> rooms) where T : Room
+        {
+           
                 for (int i = 0; i < rooms.Count; i++)
                 {
                     var room = rooms[i];
@@ -305,12 +311,6 @@ namespace Bokningssystem.Logic.HelperMethods
                     Console.ResetColor();
                 }
             }
-            else
-            {
-                Console.WriteLine($"Det finns inga rum.");
-                GoBack("tillbaka till menyn...");
-            }
-        }
         public static void ShowBookingsForRoom(Room rooms)
         {
             for (int i = 0; i < rooms.Bookings.Count; i++)
@@ -321,6 +321,9 @@ namespace Bokningssystem.Logic.HelperMethods
                     $"{booking.StartTime:HH\\:mm} - {booking.EndTime:HH\\:mm}");
             }
         }
+        // ----------------------------------------------------------------
+        //                            MENYER
+        // ----------------------------------------------------------------
         public static void TypeOfRoomMenu()
         {
             Console.Clear();
@@ -353,7 +356,7 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.Clear();
             Console.WriteLine("\n╔════════════════════════════════╗");
             Console.WriteLine("║        Uppdatera bokning       ║");
-            Console.WriteLine("╚════════════════════════════════╝\n");
+            Console.WriteLine("╚════════════════════════════════╝");
         }
         public static void UpdateBookingMenuChoices()
         {
@@ -408,6 +411,9 @@ namespace Bokningssystem.Logic.HelperMethods
             Console.WriteLine("║         Skapa nytt rum         ║");
             Console.WriteLine("╚════════════════════════════════╝");
         }
+        // ----------------------------------------------------------------
+        //                        HJÄLPMETODER (UI)
+        // ----------------------------------------------------------------
         public static void GoBack(string message)
         {
             Thread.Sleep(1000);

@@ -102,13 +102,13 @@ namespace Bokningssystem.Logic.HelperMethods
 
                 if (string.IsNullOrWhiteSpace(startTimeInput))
                 {
-                    Console.WriteLine("\nDu måste skriva in en tid! Vänligen försök igen.\n");
+                    Console.WriteLine("\nDu måste skriva in en tid! Vänligen försök igen.");
                     continue;
                 }
                 // Kontrollerar ifall användarens input är en giltig tid utefter kultur.
                 if (!DateTime.TryParse(startTimeInput, culture, DateTimeStyles.None, out DateTime parsedStartTime))
                 {
-                    Console.WriteLine($"Felaktigt tidsformat! (Korrekt format: {exampleTime})");
+                    Console.WriteLine($"\nFelaktigt tidsformat! (Korrekt format: {exampleTime})");
                     continue;
                 }
                 // Ändrar DateTime objekt till TimeSpan.
@@ -145,13 +145,13 @@ namespace Bokningssystem.Logic.HelperMethods
                 string endTimeInput = Console.ReadLine().Trim().Replace(".", ":").Replace(" ", "");
                 if (string.IsNullOrWhiteSpace(endTimeInput))
                 {
-                    Console.WriteLine("\nDu måste skriva in en tid! Vänligen försök igen.\n");
+                    Console.WriteLine("\nDu måste skriva in en tid! Vänligen försök igen.");
                     continue;
                 }
                 // Kontrollerar ifall användarens input är en giltig tid utefter kultur.
                 if (!DateTime.TryParse(endTimeInput, culture, DateTimeStyles.None, out DateTime parsedEndTime))
                 {
-                    Console.WriteLine($"Felaktigt tidsformat! (Korrekt format {exampleTime}).");
+                    Console.WriteLine($"\nFelaktigt tidsformat! (Korrekt format {exampleTime}).");
                     continue;
                 }
                 bookingEndTime = parsedEndTime.TimeOfDay;
@@ -248,12 +248,13 @@ namespace Bokningssystem.Logic.HelperMethods
         public static bool IsLetter(string userInput)
         {
             foreach (char c in userInput)
-            {
+            {// För varje karaktär i den inmatade strängen så hämtas dess ASCII-kod.
                 int code = (int)c;
-
+                // Kontrollerar att tecknet är en engelsk eller svensk bokstav.
                 bool isAsciiLetter = (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
 
                 bool isSwedishLetter = c == 'å' || c == 'ä' || c == 'ö' || c == 'Å' || c == 'Ä' || c == 'Ö';
+                // Om tecknet inte är en bokstav returneras false.
                 if (!isAsciiLetter && !isSwedishLetter)
                 {
                     return false;

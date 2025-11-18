@@ -36,10 +36,9 @@ namespace Bokningssystem.Logic.RoomClasses
 
             foreach (var booking in Bookings)
             {
-                Console.WriteLine($"{booking.RoomName} {booking.BookerName} {booking.StartTime} - {booking.EndTime}");
+                Console.WriteLine($"[{booking.RoomName}] {booking.BookerName} Projektor: {(HasProjector ? "Ja" : "Nej")} ({booking.StartTime}) - ({booking.EndTime})\n");
             }
-
         }
 
-    }
+        }
 }

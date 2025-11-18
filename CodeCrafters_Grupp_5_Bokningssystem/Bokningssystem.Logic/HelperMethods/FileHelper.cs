@@ -4,6 +4,9 @@ using System.Text.Json;
 
 namespace Bokningssystem.Logic.HelperMethods
 {
+    // -------------------------------------------------------------------------
+    //                       FileHelper Klass. Gjord av Tove.
+    // -------------------------------------------------------------------------
     public static class FileHelper
     {
         private static bool _initialized = false;
