@@ -31,12 +31,12 @@ namespace Bokningssystem.Logic.RoomClasses
         {
             if (Bookings.Count == 0)
             {
-                Console.WriteLine($"{Name} inte bokad");
+                Console.WriteLine($"{Name} inte bokad\n");
             }
 
             foreach (var booking in Bookings)
             {
-                Console.WriteLine($"[{booking.RoomName}] {booking.BookerName} Projektor: {(HasProjector ? "Ja" : "Nej")} ({booking.StartTime}) - ({booking.EndTime})\n");
+                Console.WriteLine($"[{booking.RoomName}] Bokad av: {booking.BookerName} Projektor: {(HasProjector ? "Ja" : "Nej")} ({booking.StartTime}) - ({booking.EndTime})\n");
             }
         }
 
