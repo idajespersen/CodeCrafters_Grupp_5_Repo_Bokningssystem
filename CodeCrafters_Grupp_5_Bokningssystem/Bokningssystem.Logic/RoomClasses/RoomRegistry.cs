@@ -84,9 +84,9 @@ namespace Bokningssystem.Logic.RoomClasses
                     default:
                         MenuHelper.DisplayMessage(0,2);
                         NewRoom();
-                        //Tove: Added return to not make a recursive loop
+                
                         return;
-                        //continue;
+                   
                 }
                 MenuHelper.NewRoomMenu();
                 // Name the room
