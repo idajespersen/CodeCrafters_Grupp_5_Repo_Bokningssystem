@@ -29,12 +29,12 @@ namespace Bokningssystem.Logic.RoomClasses
         // -------------------------------
         public override void ListBookings()
         {
-            if (Bookings.Count == 0)
+            if (Bookings.Count == 0) // Om rummet inte har några bokningar alls.
             {
                 Console.WriteLine($"{Name} inte bokad\n");
             }
 
-            foreach (var booking in Bookings)
+            foreach (var booking in Bookings) // Loopar igenom varje bokning som finns i rummet.
             {
                 Console.WriteLine($"[{booking.RoomName}] Bokad av: {booking.BookerName} Projektor: {(HasProjector ? "Ja" : "Nej")} ({booking.StartTime}) - ({booking.EndTime})\n");
             }
