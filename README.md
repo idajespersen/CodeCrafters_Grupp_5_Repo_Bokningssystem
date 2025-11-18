@@ -67,16 +67,28 @@ Flödet för bokningar:
 
 ## ANSVARSOMRÅDEN
 
-Daniel Skalk
--
-- Lista bokningar per år, Visa alla bokningar.
+**Daniel Skalk**
+- Lista bokningar per år.
   
-Ida Jespersen
--
+- Visa alla bokningar.
+  
+**Ida Jespersen**
+- Interface IBookable
 
-Sara Sundqvist
-- 
-- Skapa Readme
+- Bas- och arvsklasser Room, ClassRoom och GroupRoom.
 
-Tove Rosén
-- Filhantering för att läsa in embedded text fil, samt läsa in / spara JSON filer.
+- Metod för att skapa nya rum. 
+  
+**Sara Sundqvist**
+- Bokningslogik (Newbooking, UpdateBooking, Cancelbooking)
+  
+- Klass Booking
+
+- Strukturerat & skapat hjälpklasser.
+
+- Skapa Readme fil.
+
+**Tove Rosén**
+- Filhantering för att läsa in embedded text fil.
+  
+-  Läsa in / spara JSON filer.
