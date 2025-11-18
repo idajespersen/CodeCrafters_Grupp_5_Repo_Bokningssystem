@@ -55,7 +55,7 @@ namespace Bokningssystem.Logic.RoomClasses
         // ----------------------------------------------------------------
         public void NewBooking()
         {
-            
+
             // Läser in användarens namn.
             string bookerName = InputHelper.ReadName("Ange namn: ");
             // Läser in bokningens datum utefter lokal kultur.
@@ -73,7 +73,7 @@ namespace Bokningssystem.Logic.RoomClasses
             {
                 Console.Clear();
                 Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                return; 
+                return;
             }
             // Lägger till bokning.
             Bookings.Add(newBooking);
@@ -106,13 +106,13 @@ namespace Bokningssystem.Logic.RoomClasses
         public void CancelBooking()
         {
             MenuHelper.CancelBookingMenu();
-            
+
             if (Bookings.Count == 0)
             {
                 Console.WriteLine($"Det finns inga bokningar för {Name}");
-                return; 
+                return;
             }
-            
+
             Console.WriteLine($"Bokningar för {Name}:");
             MenuHelper.ShowBookingsForRoom(this);
 
@@ -134,14 +134,14 @@ namespace Bokningssystem.Logic.RoomClasses
         // ----------------------------------------------------------------
         public void UpdateBooking()
         {
-            bool updateMenuActive = true; 
+            bool updateMenuActive = true;
             while (updateMenuActive)
             {
                 MenuHelper.UpdateBookingMenu();
                 if (Bookings.Count == 0)
                 {
                     Console.WriteLine($"Det finns inga bokningar för {Name}");
-                    return; 
+                    return;
                 }
 
                 Console.WriteLine($"Bokningar för {Name}:");
@@ -183,8 +183,8 @@ namespace Bokningssystem.Logic.RoomClasses
                             RoomRegistry.SaveRoom(this);
                         }
                         break;
-                    case 2: 
-                        
+                    case 2:
+
                         DateTime newStartTime = bookingToUpdate.StartTime;
                         DateTime newEndTime = bookingToUpdate.EndTime;
                         MenuHelper.UpdateBookingMenuChoicesDateAndTime();
@@ -192,9 +192,9 @@ namespace Bokningssystem.Logic.RoomClasses
                         int updateMenuChoice2 = InputHelper.ParseInt("", 0, 2);
                         switch (updateMenuChoice2)
                         {
-                                // --------------------
-                                //   Uppdatera datum
-                                // --------------------
+                            // --------------------
+                            //   Uppdatera datum
+                            // --------------------
                             case 1:
                                 MenuHelper.UpdateBookingMenu();
                                 // Läser in nytt datum.
@@ -208,7 +208,7 @@ namespace Bokningssystem.Logic.RoomClasses
                                 if (overlap)
                                 {
                                     Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                                    MenuHelper.BackToMenu("till menyn...");
+                                    MenuHelper.GoBack("till menyn...");
                                 }
                                 string confirmMessageDate = $"ändra bokningen: " +
                              $"\n\nFrån: " +
@@ -246,7 +246,7 @@ namespace Bokningssystem.Logic.RoomClasses
                                 if (overlap)
                                 {
                                     Console.WriteLine("\nTiden är redan bokad. Din bokning kunde inte genomföras.");
-                                    MenuHelper.BackToMenu("till menyn...");
+                                    MenuHelper.GoBack("till menyn...");
                                 }
                                 string confirmMessageTime = $"ändra bokningen: " +
                           $"\n\nFrån: " +
@@ -268,37 +268,96 @@ namespace Bokningssystem.Logic.RoomClasses
                                 }
                                 break;
                             case 0: // Om användaren vill återgå till huvudmenyn
-                                updateMenuActive = false; 
+                                updateMenuActive = false;
                                 break;
-                            default: 
-                                MenuHelper.DisplayMessage(0,2);
-                                MenuHelper.BackToMenu("till menyn...");
+                            default:
+                                MenuHelper.DisplayMessage(0, 2);
+                                MenuHelper.GoBack("till menyn...");
                                 break;
                         }
                         break;
                     case 0: // Om användaren vill återgå till huvudmenyn
                         updateMenuActive = false;
                         break;
-                    default: 
+                    default:
                         MenuHelper.DisplayMessage(0, 2);
-                        MenuHelper.BackToMenu("till menyn...");
+                        MenuHelper.GoBack("till menyn...");
                         break;
                 }
                 break;
             }
         }
 
-        // - List all bookings
-        public void ListBookings()
+        public virtual void ListBookings() { }
+
+        // -------------------------------
+        //  ListBookingsByYear gjord av Daniel
+        // -------------------------------
+        public virtual void ListBookingsByYear()
         {
-            throw new NotImplementedException();
-        }
-        // - List bookings from a specific year
-        // Will be inside the ListBookings in menu
-        public void ListBookingsByYear()
-        {
-            throw new NotImplementedException();
+            {
+                Console.Clear();
+                MenuHelper.ListBookingMenu();
+
+                // Här sätter vi upp startvärden för att hitta första och sista året.
+                // Vi sätter min till MaxValue och max till MinValue för att garantera att första bokningen vi hittar kommer skriva över dessa värden.
+
+
+                int minYear = int.MaxValue;  // Här sätter vi upp startvärden för att hitta första och sista året.
+                int maxYear = int.MinValue;  // Vi sätter min till MaxValue och max till MinValue för att garantera att första bokningen vi hittar kommer skriva över dessa värden.
+
+                foreach (Room room in RoomRegistry.AllRooms) // Vi loopar igenom varenda rum i systemet
+                {
+                    foreach (var booking in room.Bookings)
+                    {
+                        int year = booking.StartTime.Year; // Plocka ut bara årtalet från starttiden.
+
+                        if (year < minYear) minYear = year; // om här året är mindre än det minsta vi sett hittills så sparar vi det i MinYear
+                        if (year > maxYear) maxYear = year; // om det här året är större än det största vi sett så sparar det i MaxYear
+                    }
+                }
+
+
+                if (minYear == int.MaxValue) // Om minYear fortfarande är int.MaxValue betyder det att det inte finns några bokningar
+                {
+                    Console.WriteLine("Det finns inga bokningar.");
+                    MenuHelper.GoBack("tillbaka...");
+                    return;
+                }
+
+                int inputMinYear = InputHelper.ParseInt($"Ange fr.o.m år ({minYear}-{maxYear}): ", minYear, maxYear); // Ber användaren skriva in start år, baserat på faktiska bokningar i systemet som intervaller.
+                int inputMaxYear = InputHelper.ParseInt($"\nAnge t.o.m år ({inputMinYear}-{maxYear}): ", inputMinYear, maxYear); // Ber användaren skriva in slut år, kan nu inte ange ett tidigare år än först input.
+
+                var resultsByYear = new List<(Room room, Booking booking)>(); // Skapar en lista för att spara undan träffarna, för att kontrollera om vi fick en träff senare
+
+                Console.Clear();
+
+                Console.WriteLine("\n╔════════════════════════════════════════════════════════════╗");
+                Console.WriteLine($"║            Bokningar mellan år {inputMinYear} och {inputMaxYear}               ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════════════╝\n");
+
+                foreach (Room room in RoomRegistry.AllRooms)
+                {
+                    foreach (var booking in room.Bookings)
+                    {
+                        int year = booking.StartTime.Year;
+
+                        if (year >= inputMinYear && year <= inputMaxYear) // Ligger bokningen inom intervallet?
+                        {
+                            resultsByYear.Add((room, booking)); // Spara ner den i vår resultatlista.
+                            Console.WriteLine($" {room.Name}: {booking.BookerName} {booking.StartTime} - {booking.EndTime}");
+                        }
+                    }
+                }
+
+                if (resultsByYear.Count == 0) // Om listan är tom betyder det att användaren valde ett intervall där det inte fanns någon bokning
+                {
+                    Console.Clear();
+                    Console.WriteLine("\nInga bokningar hittades inom valt intervall.");
+                }
+
+            }
         }
     }
-}
 
+}

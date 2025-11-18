@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bokningssystem.Logic.BookingClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,23 @@ namespace Bokningssystem.Logic.RoomClasses
         {
             _hasProjector = hasProjector;
         }
+
+        // -------------------------------
+        //  ListBookings gjord av Daniel
+        // -------------------------------
+        public override void ListBookings()
+        {
+            if (Bookings.Count == 0)
+            {
+                Console.WriteLine($"{Name} inte bokad");
+            }
+
+            foreach (var booking in Bookings)
+            {
+                Console.WriteLine($"{booking.RoomName} {booking.BookerName} {booking.StartTime} - {booking.EndTime}");
+            }
+
+        }
+
     }
 }

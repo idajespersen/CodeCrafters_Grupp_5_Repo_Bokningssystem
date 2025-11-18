@@ -22,13 +22,13 @@ namespace Bokningssystem.Logic.HelperMethods
                
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    Console.WriteLine("Du måste skriva in en siffra! Försök igen.");
+                    Console.WriteLine("\nDu måste skriva in en siffra! Försök igen.");
                     continue; 
                 }
                 // Kontrollerar ifall användarens input är en siffra inom givet intervall.
                 if (!int.TryParse(input, out int val) || val < min || val > max)
                 {
-                    Console.WriteLine($"Du måste skriva in en siffra mellan {min}-{max}! Vänligen försök igen.");
+                    Console.WriteLine($"\nDu måste skriva in en siffra mellan {min}-{max}! Vänligen försök igen.");
                     continue;
                 }
                 return val;
@@ -236,7 +236,7 @@ namespace Bokningssystem.Logic.HelperMethods
                 else
                 {
                     Console.WriteLine($"\nDu måste bekräfta Ja eller Nej!");
-                    MenuHelper.BackToMenu("vidare...");
+                    MenuHelper.GoBack("vidare...");
                     continue; 
                 }
             }
